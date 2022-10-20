@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { 
-  Alert,
   Button,
   StyleSheet,
   Text, 
@@ -8,10 +7,23 @@ import {
   View
 } from 'react-native';
 
-// libreria material ui 
-export default function App() {
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
+
+interface AuthContextValue  {
+  isAuthenticated: boolean;
+  setIsAuthenticated: (isAuthenticated: boolean) => void;
+};
+
+const AuthContext = createContext({} as AuthContextValue);
+
+function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const { setIsAuthenticated } = useContext(AuthContext);
 
   return (
     <View style={styles.container}>
@@ -28,9 +40,32 @@ export default function App() {
       />
       <Button
         title="Iniciar Sesión"
-        onPress={() => Alert.alert('navigate to home')}
+        onPress={() => setIsAuthenticated(true)}
       />
     </View>
+  );
+}
+
+function HomeScreen({ navigation }) {
+  return (
+    <View style={styles.container}>
+      <Text>Home</Text>
+    </View>
+  );
+}
+
+// libreria material ui 
+export default function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  return (
+    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          {!isAuthenticated ? <Stack.Screen name="Login" component={Login} /> : <Stack.Screen name="Home" component={HomeScreen} />}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AuthContext.Provider>
   );
 }
 
