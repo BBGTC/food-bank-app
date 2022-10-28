@@ -1,0 +1,23 @@
+name: Tests CI
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    name: Run frontend unit tests
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Setup node TS enviornment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.18.0
+      - name: Install dependencies
+        run: cd food-bank-app
+        run: npm ci
+      - name: Run tests
+        run: npm run tests
