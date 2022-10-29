@@ -12,7 +12,7 @@ To manage Python versions, install **pyenv**.
 3. [PyEnv for WSL (Ubuntu)](https://www.liquidweb.com/kb/how-to-install-pyenv-on-ubuntu-18-04/)
 4. [PyEnv for homebew (macOS)](https://github.com/pyenv/pyenv#homebrew-in-macos)
 
-> Make sure to install and use **python 3.10-dev**.
+> Make sure to install and use **python 3.10-8**.
 
 ### 2. Installing Pipenv
 Pipenv will be our virtual environment tool. It will allow us to define a specific environment where we will be installing and using all our depencencies (found in Pipfile). 
