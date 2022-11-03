@@ -5,5 +5,6 @@ from .views import HelloWorldView
 
 urlpatterns = [
   path('hello', HelloWorldView.as_view()),
-  path('auth/', include('api.auth.urls'))
+  path('auth/', include('api.auth.urls')),
+  path('users/', include('api.users.urls')),
 ]

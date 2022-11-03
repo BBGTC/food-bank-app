@@ -18,5 +18,4 @@ class ContributorData(models.Model):
     surname = models.CharField(null=False, blank=False, max_length=20)
     second_surname = models.CharField(null=False, blank=False, max_length=20)
     phone = PhoneNumberField(null=False, blank=False, unique=False)
-    
     rfc = models.CharField(null=True, blank=False, max_length=13)
