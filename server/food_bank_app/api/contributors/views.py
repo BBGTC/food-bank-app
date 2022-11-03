@@ -1,8 +1,9 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
-from contributors.selectors import select_contributor_data
-from contributors.services import set_contributor_data
+from users.models import Contributor, ContributorData
+from users.selectors import select_contributor_data
+from users.services import set_contributor_data
 
 from rest_framework.response import Response
 from .serializers import ContributorSerializer
@@ -17,7 +18,7 @@ class ContributorViewSet(viewsets.ViewSet):
       contributor_data = select_contributor_data(request.user)
 
       if contributor_data is None:
-        raise exceptions.ContributorDataNotSetException()
+        raise exceptions.UserDataNotSetException()
       
       serializer = ContributorSerializer(contributor_data)
       
