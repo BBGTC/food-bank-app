@@ -1,6 +1,6 @@
 from rest_framework.exceptions import APIException
 
-class UserDataNotSetException(APIException):
+class ContributorDataNotSetException(APIException):
   status_code = 409
   default_code = 'user_data_not_set'
   default_detail = 'Your user data has not been set yet. Create your user profile and try later.'

@@ -1,7 +1,9 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
-from users.models import Contributor, ContributorData
+from users.selectors import select_contributor_data
+from users.services import set_contributor_data
+
 from rest_framework.response import Response
 from .serializers import ContributorSerializer
 
@@ -12,10 +14,10 @@ class UserViewSet(viewsets.ViewSet):
     permission_classes = IsAuthenticated,
 
     def retrieve(self, request):
-      try:
-        contributor_data = ContributorData.objects.all().get(contributor_id=request.user)
-      except ContributorData.DoesNotExist:
-        raise exceptions.UserDataNotSetException()
+      contributor_data = select_contributor_data(request.user)
+
+      if contributor_data is None:
+        raise exceptions.ContributorDataNotSetException()
       
       serializer = ContributorSerializer(contributor_data)
       
@@ -23,16 +25,12 @@ class UserViewSet(viewsets.ViewSet):
 
     def create(self, request):
 
-      if ContributorData.objects.filter(contributor_id=request.user).count() == 1:
+      if select_contributor_data(request.user) is not None:
         raise exceptions.ContributorDataExistsException()
 
       serializer = ContributorSerializer(data=request.data)
       serializer.is_valid(raise_exception=True)
 
-      contributor = ContributorData.objects.create(
-        **serializer.data,
-        contributor_id=request.user 
-      )
-      contributor.save()
+      set_contributor_data(request.user, serializer.data)
 
       return Response(serializer.data)

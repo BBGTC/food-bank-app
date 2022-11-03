@@ -10,7 +10,7 @@ class Contributor(AbstractUser):
                               editable=False, max_length=20)
 
 class ContributorData(models.Model):
-    contributor_id = models.OneToOneField(
+    contributor = models.OneToOneField(
         Contributor, on_delete=models.CASCADE, primary_key=True)
 
     first_name = models.CharField(null=False, blank=False, max_length=20)
