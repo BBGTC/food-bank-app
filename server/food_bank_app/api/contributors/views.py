@@ -1,8 +1,8 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
-from users.selectors import select_contributor_data
-from users.services import set_contributor_data
+from contributors.selectors import select_contributor_data
+from contributors.services import set_contributor_data
 
 from rest_framework.response import Response
 from .serializers import ContributorSerializer
@@ -10,7 +10,7 @@ from .serializers import ContributorSerializer
 from api import exceptions
 
 
-class UserViewSet(viewsets.ViewSet):
+class ContributorViewSet(viewsets.ViewSet):
     permission_classes = IsAuthenticated,
 
     def retrieve(self, request):

@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from users.models import Contributor
+from contributors.models import Contributor
 from .serializers import SignUpviewSerializer, GetTokensViewSerializer
 
 class SomeView(APIView):

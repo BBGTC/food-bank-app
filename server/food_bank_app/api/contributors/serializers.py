@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from users.models import ContributorData
+from contributors.models import ContributorData
 
 class ContributorSerializer(serializers.ModelSerializer):
   

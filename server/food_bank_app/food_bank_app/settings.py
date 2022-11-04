@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'users',
+    'contributors',
     'api'
 ]
 
@@ -91,7 +91,7 @@ DATABASES = {
 }
 
 
-AUTH_USER_MODEL = 'users.Contributor'
+AUTH_USER_MODEL = 'contributors.Contributor'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
