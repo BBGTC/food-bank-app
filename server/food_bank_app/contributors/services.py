@@ -5,9 +5,9 @@ def create_contributor(associated_user, data):
     address = Address.objects.create(**address_data)
 
     contributor = Contributor.objects.create(
-          **data,
-          address=address,
-          user=associated_user
+        **data,
+        address=address,
+        user=associated_user
     )
     contributor.save()
 
