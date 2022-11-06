@@ -3,21 +3,20 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from contributors.models import Contributor
+from contributors.models import User
 
 # The serializer for fetching tokens (access & refresh)
-
 class GetTokensViewSerializer(TokenObtainPairSerializer):
     @classmethod
-    def get_token(cls, user: Contributor):
+    def get_token(cls, user: User):
         token = super(TokenObtainPairSerializer, cls).get_token(user)
         token['username'] = user.username
         return token
 
-class SignUpviewSerializer(serializers.ModelSerializer):
+class SignUpViewSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         required=True,
-        validators=[UniqueValidator(queryset=Contributor.objects.all())]
+        validators=[UniqueValidator(queryset=User.objects.all())]
     )
 
     password = serializers.CharField(
@@ -25,7 +24,7 @@ class SignUpviewSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(write_only=True, required=True)
 
     class Meta:
-        model = Contributor
+        model = User
         fields = ('email', 'password', 'confirm_password')
 
     def validate(self, attrs):
@@ -35,11 +34,13 @@ class SignUpviewSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
-        contributor = Contributor.objects.create(
+        user = User.objects.create(
             email=validated_data['email'],
             username=validated_data['email']
         )
-        contributor.set_password(validated_data['password'])
-        contributor.save()
 
-        return contributor
+        user.set_password(validated_data['password'])
+        user.save()
+
+        return user
+

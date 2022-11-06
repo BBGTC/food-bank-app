@@ -1,17 +1,31 @@
 import uuid
-from django.db import models
+
 from django.contrib.auth.models import AbstractUser
+from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
-# Create your models here.
 
-class Contributor(AbstractUser):
+class User(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    email = models.EmailField(null=False, unique=True,
-                              editable=False, max_length=20)
+    email = models.EmailField(
+            null=False,
+            unique=True,
+            editable=False,
+            max_length=20
+    )
 
-class ContributorData(models.Model):
-    contributor = models.OneToOneField(
-        Contributor, on_delete=models.CASCADE, primary_key=True)
+class Address(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
+    street = models.CharField(null=False, max_length=30)
+    exterior_number = models.CharField(null=False, max_length=8)
+    interior_number = models.CharField(null=False, max_length=5)
+    zip_code = models.IntegerField(null=False)
+    state = models.CharField(null=False, max_length=30)
+    municipality = models.CharField(null=False, max_length=30)
+    neighborhood = models.CharField(null=False, max_length=30)
+
+class Contributor(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    address = models.OneToOneField(Address, on_delete=models.SET_NULL, null=True)
 
     first_name = models.CharField(null=False, blank=False, max_length=20)
     middle_name = models.CharField(null=False, blank=True, max_length=20)
