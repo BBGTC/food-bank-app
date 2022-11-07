@@ -1,8 +1,9 @@
-from .models import ContributorData
+from .models import Contributor
 
-def select_contributor_data(contributor):
+def select_contributor(user):
   try:
-    object = ContributorData.objects.get(contributor=contributor)
-  except ContributorData.DoesNotExist:
-    object = None
-  return object
+    contributor = Contributor.objects.get(user=user)
+  except Contributor.DoesNotExist:
+    contributor = None
+
+  return contributor
