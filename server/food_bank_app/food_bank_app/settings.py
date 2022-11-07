@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'authentication',
     'contributors',
     'events',
+    'donations',
+    'inventory'
 ]
 
 MIDDLEWARE = [
