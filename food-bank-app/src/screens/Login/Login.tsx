@@ -1,6 +1,21 @@
+<<<<<<< HEAD
 import { Link } from '@react-navigation/native'
 import { useState } from 'react'
 import { Text, View } from 'react-native'
+=======
+import { Link } from "@react-navigation/native"
+import { useState } from "react";
+import {
+  Button,
+  Text,
+  Image,
+  View
+} from 'react-native';
+import { useAuthContext } from "../../contexts/AuthContext";
+import { styles } from "../../styles/styles";
+import { FooterButton, TextInputWithIcon } from "../../components";
+import SVG from '../../components/SVG'
+>>>>>>> add svgs and keyboard hidding
 
 import { useAuthContext } from '../../contexts/AuthContext'
 import { styles } from '../../styles/styles'
@@ -23,8 +38,14 @@ const Login = (): JSX.Element => {
 
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: 48 }}>Bienvenido</Text>
       <View>
+<<<<<<< HEAD
+=======
+        <SVG></SVG>
+        <Text style={{ fontSize: 48 }}>Bienvenido</Text>
+      </View>
+      <View>
+>>>>>>> add svgs and keyboard hidding
         <TextInputWithIcon
           placeholder="Email"
           icon="email"
