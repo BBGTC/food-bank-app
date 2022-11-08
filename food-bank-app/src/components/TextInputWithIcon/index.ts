@@ -1,3 +1,3 @@
-import TextInputWithIcon from "./TextInputWithIcon";
+import TextInputWithIcon from './TextInputWithIcon'
 
-export default TextInputWithIcon;
+export default TextInputWithIcon

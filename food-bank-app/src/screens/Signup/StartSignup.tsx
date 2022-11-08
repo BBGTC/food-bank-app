@@ -1,27 +1,22 @@
-import { Link } from "@react-navigation/native"
-import { useState } from "react";
-import {
-  Text,
-  View
-} from 'react-native';
-import { useAuthContext } from "../../contexts/AuthContext";
-import { styles } from "../../styles/styles";
-import { FooterButton, TextInputWithIcon } from "../../components";
-// import BAMX from '../../assets/bamx.svg';
+import { Link } from '@react-navigation/native'
+import { useState } from 'react'
+import { Text, View } from 'react-native'
+import type { NativeStackScreenProps } from '@react-navigation/native-stack'
 
-export default function StartSignup({navigation}) {
+import { styles } from '../../styles/styles'
+import { FooterButton, TextInputWithIcon } from '../../components'
+
+const StartSignup = ({ navigation }: NativeStackScreenProps<{}>): JSX.Element => {
   const [credentials, setCredentials] = useState({
-    email: "",
-    password: "",
-    passwordConfirm: "",
-  });
+    email: '',
+    password: '',
+    passwordConfirm: ''
+  })
 
-  const { setIsAuthenticated } = useAuthContext();
-
-  const handleChange = (type: string, value: string) => {
+  const handleChange = (type: string, value: string): void => {
     setCredentials((prevCredentials) => ({
       ...prevCredentials,
-      [type]: value,
+      [type]: value
     }))
   }
 
@@ -57,12 +52,14 @@ export default function StartSignup({navigation}) {
           onPress={() => navigation.navigate('PersonalSignup')}
         />
         <Text
-          style={{ textAlign: "center", margin: 10 }}>
+          style={{ textAlign: 'center', margin: 10 }}>
           ¿Ya tienes una cuenta? <Link
             to={{ screen: 'Login' }}
-            style={{ color: "green" }}>Inicia sesión</Link>
+            style={{ color: 'green' }}>Inicia sesión</Link>
         </Text>
       </View>
     </View>
-  );
-}  
+  )
+}
+
+export default StartSignup

@@ -1,10 +1,9 @@
-import { AuthProvider } from './src/contexts/AuthContext';
-import { ThemeProvider, Button, createTheme } from '@rneui/themed';
+import { AuthProvider } from './src/contexts/AuthContext'
+import { ThemeProvider } from '@rneui/themed'
 
-import Main from './Main';
-import FooterButton from './src/components/FooterButton';
+import Main from './Main'
 
-export default function App() {
+const App = (): JSX.Element => {
   return (
     <AuthProvider>
       <ThemeProvider>
@@ -13,3 +12,5 @@ export default function App() {
     </AuthProvider>
   )
 }
+
+export default App

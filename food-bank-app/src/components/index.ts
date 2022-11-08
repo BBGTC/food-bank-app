@@ -1,7 +1,7 @@
-import FooterButton from "./FooterButton";
-import TextInputWithIcon from "./TextInputWithIcon";
+import FooterButton from './FooterButton'
+import TextInputWithIcon from './TextInputWithIcon'
 
 export {
-    FooterButton,
-    TextInputWithIcon,
-};
+  FooterButton,
+  TextInputWithIcon
+}

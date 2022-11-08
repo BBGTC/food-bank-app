@@ -1,19 +1,19 @@
-import { useTheme, Button } from '@rneui/themed';
+import { useTheme, Button } from '@rneui/themed'
 
-type FooterButtonProps = {
-  title: string;
-  onPress: () => void;
+interface FooterButtonProps {
+  title: string
+  onPress: () => void
 }
 
-const FooterButton = ({ title, onPress }: FooterButtonProps) => {
-  const { theme } = useTheme();
+const FooterButton = ({ title, onPress }: FooterButtonProps): JSX.Element => {
+  const { theme } = useTheme()
   return (
     <Button title={title}
       onPress={onPress}
       buttonStyle={{
         height: 60,
         backgroundColor: theme.colors.black,
-        borderRadius: 10,
+        borderRadius: 10
       }}
       containerStyle={{
         width: 300
