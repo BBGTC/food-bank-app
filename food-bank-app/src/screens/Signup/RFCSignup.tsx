@@ -1,9 +1,7 @@
 import { Link } from "@react-navigation/native"
 import { useState } from "react";
 import {
-  Button,
   Text,
-  Image,
   View
 } from 'react-native';
 import { useAuthContext } from "../../contexts/AuthContext";
@@ -11,10 +9,11 @@ import { styles } from "../../styles/styles";
 import { FooterButton, TextInputWithIcon } from "../../components";
 // import BAMX from '../../assets/bamx.svg';
 
-export default function Login() {
+export default function StartSignup() {
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
+    passwordConfirm: "",
   });
 
   const { setIsAuthenticated } = useAuthContext();
@@ -28,35 +27,24 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: 48 }}>Bienvenido</Text>
-      <View>
-        {/* <BAMX width={120} height={40} />; */}
-        <TextInputWithIcon
-          placeholder="Email"
-          icon="email"
-          value={credentials.email}
-          type="email"
-          handleChange={handleChange}
-        ></TextInputWithIcon>
-        <TextInputWithIcon
-          placeholder="Contraseña"
-          icon="lock"
-          value={credentials.password}
-          type="password"
-          handleChange={handleChange}
-        />
+      <Text style={{ fontSize: 48 }}>Por último, tu RFC</Text>
+      <View style={{ width: 300 }}>
+        <View>
+          <TextInputWithIcon
+            placeholder="RFC"
+            icon="article"
+            value={credentials.email}
+            type="email"
+            handleChange={handleChange}
+          ></TextInputWithIcon>
+        </View>
+        <Text style={{textAlign: "center"}}>Es opcional, nos ayudará a generar tus recibos deducibles. Más información</Text>
       </View>
       <View>
         <FooterButton
-          title="Iniciar Sesión"
+          title="Siguiente"
           onPress={() => setIsAuthenticated(true)}
         />
-        <Text
-          style={{ textAlign: "center", margin: 10 }}>
-          ¿Aun no tienes cuenta? <Link
-            to={{ screen: 'StartSignup' }}
-            style={{ color: "green" }}>Regístrate</Link>
-        </Text>
       </View>
     </View>
   );

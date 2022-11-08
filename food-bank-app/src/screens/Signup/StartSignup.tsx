@@ -9,7 +9,7 @@ import { styles } from "../../styles/styles";
 import { FooterButton, TextInputWithIcon } from "../../components";
 // import BAMX from '../../assets/bamx.svg';
 
-export default function Signup() {
+export default function StartSignup({navigation}) {
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -46,7 +46,7 @@ export default function Signup() {
         <TextInputWithIcon
           placeholder="Confirma tu contraseña"
           icon="lock"
-          value={credentials.password}
+          value={credentials.passwordConfirm}
           type="passwordConfirm"
           handleChange={handleChange}
         />
@@ -54,7 +54,7 @@ export default function Signup() {
       <View>
         <FooterButton
           title="Siguiente"
-          onPress={() => setIsAuthenticated(true)}
+          onPress={() => navigation.navigate('PersonalSignup')}
         />
         <Text
           style={{ textAlign: "center", margin: 10 }}>
