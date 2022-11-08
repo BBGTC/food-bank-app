@@ -23,21 +23,22 @@ const theme = createTheme({
 function Main() {
   const { isAuthenticated } = useAuthContext();
   return (
-
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false
-        }}>
-        {!isAuthenticated ? <>
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="StartSignup" component={StartSignup} />
-          <Stack.Screen name="PersonalSignup" component={PersonalSignup} />
-          <Stack.Screen name="RFCSignup" component={RFCSignup} />
-        </> :
-          <Stack.Screen name="Home" component={HomeScreen} />}
-      </Stack.Navigator>
-    </NavigationContainer >
+    <ThemeProvider theme={theme}>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false
+          }}>
+          {!isAuthenticated ? <>
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="StartSignup" component={StartSignup} />
+            <Stack.Screen name="PersonalSignup" component={PersonalSignup} />
+            <Stack.Screen name="RFCSignup" component={RFCSignup} />
+          </> :
+            <Stack.Screen name="Home" component={HomeScreen} />}
+        </Stack.Navigator>
+      </NavigationContainer >
+    </ThemeProvider>
   )
 }
 

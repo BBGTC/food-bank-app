@@ -24,7 +24,7 @@ const TextInputWithIcon = ({ placeholder, icon, value, type, handleChange }: Tex
       inputContainerStyle={{
         borderBottomWidth: 0,
         borderRadius: 10,
-        backgroundColor: theme.colors.gray.A
+        backgroundColor: theme.colors.gray.B
       }}
       containerStyle={{
         width: 300,
