@@ -20,11 +20,12 @@ class ContributorSerializer(serializers.ModelSerializer):
   class Meta:
     model = Contributor
     fields = (
-            'first_name',
-            'middle_name',
-            'surname',
-            'second_surname',
-            'phone',
-            'rfc',
-            'address'
+            "first_name",
+            "middle_name",
+            "surname",
+            "second_surname",
+            "phone",
+            "rfc",
+            "address",
+            "get_full_name"
     )
