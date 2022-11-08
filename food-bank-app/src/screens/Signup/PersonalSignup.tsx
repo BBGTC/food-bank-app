@@ -1,5 +1,15 @@
+<<<<<<< HEAD
 import { useState } from 'react'
 import { Text, View } from 'react-native'
+=======
+import { Link } from "@react-navigation/native"
+import { View, KeyboardAvoidingView, TextInput, StyleSheet, Text, Platform, TouchableWithoutFeedback, Button, Keyboard } from 'react-native';
+import { useState } from "react";
+import { styles } from "../../styles/styles";
+import { FooterButton, TextInputWithIcon } from "../../components";
+import { SafeAreaView } from "react-native-safe-area-context";
+// import BAMX from '../../assets/bamx.svg';
+>>>>>>> add svgs and keyboard hidding
 
 import { styles } from '../../styles/styles'
 import { FooterButton, TextInputWithIcon } from '../../components'
@@ -20,7 +30,10 @@ const PersonalSignup = ({ navigation }): JSX.Element => {
   }
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
       <Text style={{ fontSize: 48 }}>Agrega tu información personal</Text>
       <View>
         <TextInputWithIcon
@@ -58,8 +71,15 @@ const PersonalSignup = ({ navigation }): JSX.Element => {
           onPress={() => navigation.navigate('RFCSignup')}
         />
       </View>
+<<<<<<< HEAD
     </View>
   )
 }
 
 export default PersonalSignup
+=======
+    </KeyboardAvoidingView>
+
+  );
+}  
+>>>>>>> add svgs and keyboard hidding
