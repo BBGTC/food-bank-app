@@ -10,6 +10,7 @@ django-cors-headers = "*"
 djangorestframework-simplejwt = "*"
 django-phonenumber-field = "*"
 django-phonenumbers = "*"
+django-extensions= "*"
 
 [dev-packages]
 

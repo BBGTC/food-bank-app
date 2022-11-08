@@ -30,6 +30,15 @@ class Contributor(models.Model):
     first_name = models.CharField(null=False, blank=False, max_length=20)
     middle_name = models.CharField(null=False, blank=True, max_length=20)
     surname = models.CharField(null=False, blank=False, max_length=20)
-    second_surname = models.CharField(null=False, blank=False, max_length=20)
+    second_surname = models.CharField(null=False, blank=True, max_length=20)
     phone = PhoneNumberField(null=False, blank=False, unique=False)
     rfc = models.CharField(null=True, blank=False, max_length=13)
+
+    def get_full_name(self):
+        names = [ self.first_name, self.middle_name, self.surname, self.second_surname ]
+
+        while ('' in names):
+            names.remove('')
+
+        return ' '.join(names)
+
