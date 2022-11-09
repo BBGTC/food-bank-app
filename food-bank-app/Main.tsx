@@ -19,14 +19,20 @@ const Stack = createNativeStackNavigator()
 const theme = createTheme({
   lightColors: {
     gray: {
+<<<<<<< HEAD
       A: '#616161',
       B: '#f3f3f3',
       date: '#b5babf'
     },
     green: '#00953B',
     shadow: '#2e2e2e',
-    buttonBorder: '#e0e0e0',
-    red: '#dd576c'
+    buttonBorder: '#e0e0e0'
+=======
+      A: "#616161",
+      B: "#f3f3f3"
+    },
+    green: "#00953b",
+>>>>>>> 32ff5dcc (add category card for donation)
   },
   mode: 'light', // your light or dark mode value
   components: {
@@ -43,10 +49,20 @@ const Main = (): JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          {isLoadingAuth && <Stack.Screen name="Loading" component={LoadingScreen} />}
-          {(!isLoadingAuth && !isAuthenticated) && (
-          <>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false
+          }}>
+          {!isAuthenticated
+            ? <>
+<<<<<<< HEAD
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="StartSignup" component={StartSignup} />
+              <Stack.Screen name="PersonalSignup" component={PersonalSignup} />
+              <Stack.Screen name="RFCSignup" component={RFCSignup} />
+            </>
+            : <Stack.Screen name="Home" component={HomeScreen} />}
+=======
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="SignupStart" component={SignupStart} />
             <Stack.Screen name="SignupPersonal" component={SignupPersonal} />
@@ -62,7 +78,7 @@ const Main = (): JSX.Element => {
           )}
         </Stack.Navigator>
       </NavigationContainer >
-    </ThemeProvider>
+    </ThemeProvider >
   )
 }
 
