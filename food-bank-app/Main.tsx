@@ -21,8 +21,15 @@ const theme = createTheme({
     shadow: '#2e2e2e',
     buttonBorder: '#e0e0e0'
   },
-  mode: 'light' // your light or dark mode value
-})
+  mode: 'light', // your light or dark mode value
+  components: {
+    Input: {
+      containerStyle: {
+        paddingHorizontal: 0
+      }
+    }
+  }
+});
 
 const Main = (): JSX.Element => {
   const { isAuthenticated } = useAuthContext()

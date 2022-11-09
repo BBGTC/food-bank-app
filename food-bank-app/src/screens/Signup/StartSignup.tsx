@@ -1,13 +1,20 @@
 import { Link } from '@react-navigation/native'
 import { useState } from 'react'
-import { Alert, Text, View } from 'react-native'
-import type { NativeStackScreenProps } from '@react-navigation/native-stack'
+import {
+  Alert,
+  Text,
+  View,
+  KeyboardAvoidingView,
+  Platform
+} from 'react-native'
 
+import { useClient } from '../../hooks'
 import { styles } from '../../styles/styles'
 import { FooterButton, TextInputWithIcon } from '../../components'
-import { useClient } from '../../hooks'
 
-const StartSignup = ({ navigation }: NativeStackScreenProps<{}>): JSX.Element => {
+import { EclipseSvg, StarSvg } from '../../components/svg'
+
+const StartSignup = ({ navigation }): JSX.Element => {
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
@@ -34,8 +41,16 @@ const StartSignup = ({ navigation }: NativeStackScreenProps<{}>): JSX.Element =>
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={{ fontSize: 48 }}>Crea tu cuenta</Text>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}
+    >
+      <View>
+        <View style={{ flexDirection: 'row-reverse' }}>
+          <StarSvg />
+        </View>
+        <Text style={{ fontSize: 48 }}>Crea tu cuenta</Text>
+      </View>
       <View>
         <TextInputWithIcon
           placeholder="Email"
@@ -44,6 +59,9 @@ const StartSignup = ({ navigation }: NativeStackScreenProps<{}>): JSX.Element =>
           type="email"
           handleChange={handleChange}
         ></TextInputWithIcon>
+
+      </View>
+      <View>
         <TextInputWithIcon
           placeholder="Contraseña"
           icon="lock"
@@ -59,20 +77,21 @@ const StartSignup = ({ navigation }: NativeStackScreenProps<{}>): JSX.Element =>
           handleChange={handleChange}
         />
       </View>
-      <View>
+      <View style={{ width: '100%' }}>
         <FooterButton
           title="Siguiente"
           onPress={handleSubmit}
         />
         <Text
-          style={{ textAlign: 'center', margin: 10 }}>
+          style={{ textAlign: 'center', margin: 10, fontSize: 16 }}>
           ¿Ya tienes una cuenta? <Link
             to={{ screen: 'Login' }}
             style={{ color: 'green' }}>Inicia sesión</Link>
         </Text>
       </View>
-    </View>
+      <View style={{ position: 'absolute', left: 0, bottom: '30%' }}>
+        <EclipseSvg />
+      </View>
+    </KeyboardAvoidingView>
   )
 }
-
-export default StartSignup

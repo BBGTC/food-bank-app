@@ -1,18 +1,8 @@
-<<<<<<< HEAD
-import { useState } from 'react'
-import { Text, View } from 'react-native'
-=======
-import { Link } from "@react-navigation/native"
-import { View, KeyboardAvoidingView, TextInput, StyleSheet, Text, Platform, TouchableWithoutFeedback, Button, Keyboard } from 'react-native';
+import { View, KeyboardAvoidingView, Text, Platform } from 'react-native';
 import { useState } from "react";
 import { styles } from "../../styles/styles";
 import { FooterButton, TextInputWithIcon } from "../../components";
-import { SafeAreaView } from "react-native-safe-area-context";
-// import BAMX from '../../assets/bamx.svg';
->>>>>>> add svgs and keyboard hidding
-
-import { styles } from '../../styles/styles'
-import { FooterButton, TextInputWithIcon } from '../../components'
+import { EclipseLarge } from "../../components/svg";
 
 const PersonalSignup = ({ navigation }): JSX.Element => {
   const [personalInfo, setPersonalInfo] = useState({
@@ -34,6 +24,9 @@ const PersonalSignup = ({ navigation }): JSX.Element => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
+      <View style={{ position: 'absolute', right: 0 }}>
+        <EclipseLarge />
+      </View>
       <Text style={{ fontSize: 48 }}>Agrega tu información personal</Text>
       <View>
         <TextInputWithIcon
@@ -65,21 +58,11 @@ const PersonalSignup = ({ navigation }): JSX.Element => {
           handleChange={handleChange}
         />
       </View>
-      <View>
-        <FooterButton
-          title="Siguiente"
-          onPress={() => navigation.navigate('RFCSignup')}
-        />
-      </View>
-<<<<<<< HEAD
-    </View>
-  )
-}
-
-export default PersonalSignup
-=======
+      <FooterButton
+        title="Siguiente"
+        onPress={() => navigation.navigate('RFCSignup')}
+      />
     </KeyboardAvoidingView>
 
   );
-}  
->>>>>>> add svgs and keyboard hidding
+}
