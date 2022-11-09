@@ -1,25 +1,27 @@
 import { Link } from "@react-navigation/native"
 import { useState } from "react";
 import {
+  Button,
   Text,
+  Image,
   View,
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-
 import { useAuthContext } from "../../contexts/AuthContext";
 import { styles } from "../../styles/styles";
 import { FooterButton, TextInputWithIcon } from "../../components";
 
-import { EclipseSvg, StarSvg } from "../../components/svg";
+import { PetalsSvg } from "../../components/svg";
+import { SmallEclipseSvg } from "../../components/svg";
 
-
-const StartSignup = ({ navigation }): JSX.Element => {
+const Login = (): JSX.Element => {
   const [credentials, setCredentials] = useState({
     email: '',
-    password: '',
-    passwordConfirm: ''
+    password: ''
   })
+
+  const { setIsAuthenticated } = useAuthContext()
 
   const handleChange = (type: string, value: string): void => {
     setCredentials((prevCredentials) => ({
@@ -33,11 +35,12 @@ const StartSignup = ({ navigation }): JSX.Element => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
+
       <View>
         <View style={{ flexDirection: 'row-reverse' }}>
-          <StarSvg />
+          <PetalsSvg />
         </View>
-        <Text style={{ fontSize: 48 }}>Crea tu cuenta</Text>
+        <Text style={{ fontSize: 48 }}>Bienvenido</Text>
       </View>
       <View>
         <TextInputWithIcon
@@ -47,9 +50,6 @@ const StartSignup = ({ navigation }): JSX.Element => {
           type="email"
           handleChange={handleChange}
         ></TextInputWithIcon>
-
-      </View>
-      <View>
         <TextInputWithIcon
           placeholder="Contraseña"
           icon="lock"
@@ -57,29 +57,23 @@ const StartSignup = ({ navigation }): JSX.Element => {
           type="password"
           handleChange={handleChange}
         />
-        <TextInputWithIcon
-          placeholder="Confirma tu contraseña"
-          icon="lock"
-          value={credentials.passwordConfirm}
-          type="passwordConfirm"
-          handleChange={handleChange}
-        />
       </View>
-      <View style={{width: '100%'}}>
+      <View style={{ margin: 0, width: '100%' }}>
         <FooterButton
-          title="Siguiente"
-          onPress={() => navigation.navigate('PersonalSignup')}
+          title="Iniciar Sesión"
+          onPress={() => setIsAuthenticated(true)}
         />
         <Text
           style={{ textAlign: "center", margin: 10, fontSize: 16 }}>
-          ¿Ya tienes una cuenta? <Link
-            to={{ screen: 'Login' }}
-            style={{ color: 'green' }}>Inicia sesión</Link>
+          ¿Aun no tienes cuenta? <Link
+            to={{ screen: 'StartSignup' }}
+            style={{ color: 'green' }}>Regístrate</Link>
         </Text>
       </View>
       <View style={{ position: 'absolute', left: 0, bottom: '30%' }}>
-        <EclipseSvg />
+        <SmallEclipseSvg />
       </View>
     </KeyboardAvoidingView>
+
   );
 }  

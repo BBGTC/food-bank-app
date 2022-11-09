@@ -12,7 +12,7 @@ import { FooterButton, TextInputWithIcon } from "../../components";
 import { LargePetalsSvg } from "../../components/svg";
 import { Link } from "@react-navigation/native";
 
-export default function RFCSignup() {
+export const SignupRFC = () => {
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',

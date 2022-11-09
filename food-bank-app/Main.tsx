@@ -2,12 +2,8 @@ import { NavigationContainer } from "@react-navigation/native"
 import { ThemeProvider, Button, createTheme } from '@rneui/themed';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAuthContext } from "./src/contexts/AuthContext";
-import HomeScreen from "./src/screens/HomeScreen";
-import Donation from "./src/screens/Donation";
-import Login from "./src/screens/Login/Login";
-import StartSignup from "./src/screens/Signup/StartSignup";
-import PersonalSignup from "./src/screens/Signup/PersonalSignup";
-import RFCSignup from "./src/screens/Signup/RFCSignup";
+
+import { HomeScreen, Donation, Login, SignupStart, SignupPersonal, SignupRFC } from "./src/screens";
 
 const Stack = createNativeStackNavigator()
 
@@ -42,9 +38,9 @@ const Main = (): JSX.Element => {
           }}>
           {!isAuthenticated ? <>
             <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="StartSignup" component={StartSignup} />
-            <Stack.Screen name="PersonalSignup" component={PersonalSignup} />
-            <Stack.Screen name="RFCSignup" component={RFCSignup} />
+            <Stack.Screen name="StartSignup" component={SignupStart} />
+            <Stack.Screen name="PersonalSignup" component={SignupPersonal} />
+            <Stack.Screen name="RFCSignup" component={SignupRFC} />
           </> :
             <>
               <Stack.Screen name="Home" component={HomeScreen} />

@@ -1,27 +1,25 @@
 import { Link } from "@react-navigation/native"
 import { useState } from "react";
 import {
-  Button,
   Text,
-  Image,
   View,
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
+
 import { useAuthContext } from "../../contexts/AuthContext";
 import { styles } from "../../styles/styles";
 import { FooterButton, TextInputWithIcon } from "../../components";
 
-import { PetalsSvg } from "../../components/svg";
-import { EclipseSvg } from "../../components/svg";
+import { SmallEclipseSvg, StarSvg } from "../../components/svg";
 
-const Login = (): JSX.Element => {
+
+export const SignupStart = ({ navigation }) => {
   const [credentials, setCredentials] = useState({
     email: '',
-    password: ''
+    password: '',
+    passwordConfirm: ''
   })
-
-  const { setIsAuthenticated } = useAuthContext()
 
   const handleChange = (type: string, value: string): void => {
     setCredentials((prevCredentials) => ({
@@ -35,12 +33,11 @@ const Login = (): JSX.Element => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
-
       <View>
         <View style={{ flexDirection: 'row-reverse' }}>
-          <PetalsSvg />
+          <StarSvg />
         </View>
-        <Text style={{ fontSize: 48 }}>Bienvenido</Text>
+        <Text style={{ fontSize: 48 }}>Crea tu cuenta</Text>
       </View>
       <View>
         <TextInputWithIcon
@@ -50,6 +47,9 @@ const Login = (): JSX.Element => {
           type="email"
           handleChange={handleChange}
         ></TextInputWithIcon>
+
+      </View>
+      <View>
         <TextInputWithIcon
           placeholder="Contraseña"
           icon="lock"
@@ -57,23 +57,29 @@ const Login = (): JSX.Element => {
           type="password"
           handleChange={handleChange}
         />
+        <TextInputWithIcon
+          placeholder="Confirma tu contraseña"
+          icon="lock"
+          value={credentials.passwordConfirm}
+          type="passwordConfirm"
+          handleChange={handleChange}
+        />
       </View>
-      <View style={{ margin: 0, width: '100%' }}>
+      <View style={{width: '100%'}}>
         <FooterButton
-          title="Iniciar Sesión"
-          onPress={() => setIsAuthenticated(true)}
+          title="Siguiente"
+          onPress={() => navigation.navigate('PersonalSignup')}
         />
         <Text
           style={{ textAlign: "center", margin: 10, fontSize: 16 }}>
-          ¿Aun no tienes cuenta? <Link
-            to={{ screen: 'StartSignup' }}
-            style={{ color: 'green' }}>Regístrate</Link>
+          ¿Ya tienes una cuenta? <Link
+            to={{ screen: 'Login' }}
+            style={{ color: 'green' }}>Inicia sesión</Link>
         </Text>
       </View>
       <View style={{ position: 'absolute', left: 0, bottom: '30%' }}>
-        <EclipseSvg />
+        <SmallEclipseSvg />
       </View>
     </KeyboardAvoidingView>
-
   );
 }  
