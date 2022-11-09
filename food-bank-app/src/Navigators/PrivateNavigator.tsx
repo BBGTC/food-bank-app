@@ -1,8 +1,8 @@
 import {
-  NewsFeed,
-  Profile
+  NewsFeed
 } from '../screens'
 import HomeNavigator from './HomeNavigator'
+import ProfileNavigator from './ProfileNavigator'
 import { Icon, useTheme } from '@rneui/themed'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { getDynamicTabBarIconProps } from './utils'
@@ -16,16 +16,16 @@ const PrivateNavigator = (): JSX.Element => {
         headerShown: false,
         tabBarIcon: ({ focused, color, size }) => {
           const { iconName, iconType } = getDynamicTabBarIconProps(route.name, focused)
-          return <Icon name={iconName} type={iconType} color={color} size={size}/>
+          return <Icon name={iconName} type={iconType} color={color} size={size} />
         },
         tabBarActiveTintColor: theme.colors.red,
         tabBarInactiveTintColor: theme.colors.gray.A
       })}
-        initialRouteName="Inicio"
+      initialRouteName="Inicio"
     >
-        <Tab.Screen name="Comunidad" component={NewsFeed}/>
-        <Tab.Screen name="Inicio" component={HomeNavigator} />
-        <Tab.Screen name="Perfil" component={Profile} />
+      <Tab.Screen name="Comunidad" component={NewsFeed} />
+      <Tab.Screen name="Inicio" component={HomeNavigator} />
+      <Tab.Screen name="Perfil" component={ProfileNavigator} />
     </Tab.Navigator>
   )
 }

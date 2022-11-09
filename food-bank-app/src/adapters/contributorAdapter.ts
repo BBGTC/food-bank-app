@@ -9,6 +9,7 @@ export interface ContributorPayload {
   phone: string
   rfc: string | null
   address: AddressPayload
+  email: string
 }
 
 export const contributorAdapter = (contributor: ContributorModel): ContributorPayload => {
@@ -19,6 +20,7 @@ export const contributorAdapter = (contributor: ContributorModel): ContributorPa
     second_surname: contributor.secondSurname,
     phone: contributor.phone,
     rfc: contributor.rfc,
+    email: contributor.email,
     address: {
       street: contributor.address.street,
       exterior_number: contributor.address.exteriorNumber,
@@ -39,6 +41,7 @@ export const inwardsContributorAdapter = (contributor: ContributorPayload): Cont
     secondSurname: contributor.second_surname,
     phone: contributor.phone,
     rfc: contributor.rfc,
+    email: contributor.email,
     address: {
       street: contributor.address.street,
       exteriorNumber: contributor.address.exterior_number,

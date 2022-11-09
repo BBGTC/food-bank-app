@@ -7,6 +7,7 @@ import { isEmptyString } from '../../util'
 import { useSignupDataContext } from '../../contexts/SignupDataContext'
 
 import { SignupStep } from './SignupStep'
+import { useNavigation } from '@react-navigation/native'
 
 const INITIAL_PERSONAL_INFO = {
   name: '',
@@ -28,7 +29,7 @@ interface Errors {
   allFields: string[]
 }
 
-export const SignupPersonal = ({ navigation }: any): JSX.Element => {
+export const SignupPersonal = (): JSX.Element => {
   const [personalInfo, setPersonalInfo] = useState<PersonalInfo>(INITIAL_PERSONAL_INFO)
   const [errors, setErrors] = useState<Errors>({
     name: [],
@@ -38,6 +39,8 @@ export const SignupPersonal = ({ navigation }: any): JSX.Element => {
     phone: [],
     allFields: []
   })
+
+  const navigation = useNavigation()
 
   const { setSignupData } = useSignupDataContext()
 
