@@ -33,10 +33,10 @@ const Main = (): JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
       <NavigationContainer>
-        { isLoadingAuth && <LoadingScreen /> }
-        { !isLoadingAuth && isAuthenticated && profile === null && <EnrollmentNavigator />}
-        { !isLoadingAuth && isAuthenticated && profile !== null && <PrivateNavigator />}
-        { !isLoadingAuth && !isAuthenticated && profile === null && <PublicNavigator />}
+        {isLoadingAuth && <LoadingScreen />}
+        {!isLoadingAuth && isAuthenticated && profile === null && <EnrollmentNavigator />}
+        {!isLoadingAuth && isAuthenticated && profile !== null && <PrivateNavigator />}
+        {!isLoadingAuth && !isAuthenticated && profile === null && <PublicNavigator />}
       </NavigationContainer>
     </ThemeProvider>
   )
