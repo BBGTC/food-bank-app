@@ -1,25 +1,19 @@
-<<<<<<< HEAD
-import { Link } from '@react-navigation/native'
-import { useState } from 'react'
-import { Text, View } from 'react-native'
-=======
 import { Link } from "@react-navigation/native"
 import { useState } from "react";
 import {
   Button,
   Text,
   Image,
-  View
+  View,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { useAuthContext } from "../../contexts/AuthContext";
 import { styles } from "../../styles/styles";
 import { FooterButton, TextInputWithIcon } from "../../components";
-import SVG from '../../components/SVG'
->>>>>>> add svgs and keyboard hidding
 
-import { useAuthContext } from '../../contexts/AuthContext'
-import { styles } from '../../styles/styles'
-import { FooterButton, TextInputWithIcon } from '../../components'
+import { PetalsSvg } from "../../components/svg";
+import { EclipseSvg } from "../../components/svg";
 
 const Login = (): JSX.Element => {
   const [credentials, setCredentials] = useState({
@@ -37,15 +31,18 @@ const Login = (): JSX.Element => {
   }
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+
       <View>
-<<<<<<< HEAD
-=======
-        <SVG></SVG>
+        <View style={{ flexDirection: 'row-reverse' }}>
+          <PetalsSvg />
+        </View>
         <Text style={{ fontSize: 48 }}>Bienvenido</Text>
       </View>
       <View>
->>>>>>> add svgs and keyboard hidding
         <TextInputWithIcon
           placeholder="Email"
           icon="email"
@@ -61,20 +58,22 @@ const Login = (): JSX.Element => {
           handleChange={handleChange}
         />
       </View>
-      <View>
+      <View style={{ margin: 0, width: '100%' }}>
         <FooterButton
           title="Iniciar Sesión"
           onPress={() => setIsAuthenticated(true)}
         />
         <Text
-          style={{ textAlign: 'center', margin: 10 }}>
+          style={{ textAlign: "center", margin: 10, fontSize: 16 }}>
           ¿Aun no tienes cuenta? <Link
             to={{ screen: 'StartSignup' }}
             style={{ color: 'green' }}>Regístrate</Link>
         </Text>
       </View>
-    </View>
-  )
-}
+      <View style={{ position: 'absolute', left: 0, bottom: '30%' }}>
+        <EclipseSvg />
+      </View>
+    </KeyboardAvoidingView>
 
-export default Login
+  );
+}  

@@ -1,12 +1,11 @@
 import * as React from "react"
 import Svg, { SvgProps, Path } from "react-native-svg"
 
-const SvgComponent = (props: SvgProps) => (
+export const PetalsSvg = (props: SvgProps) => (
   <Svg
-    width={56}
+    width={100}
     height={56}
     fill="none"
-    xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
     <Path
@@ -14,7 +13,10 @@ const SvgComponent = (props: SvgProps) => (
       fill="#CE0E2D"
       fillOpacity={0.7}
     />
+    <Path
+      d="M99.87 36.99c0-10.215-8.28-18.495-18.494-18.495s-18.494 8.28-18.494 18.494v18.495h18.494c10.215 0 18.495-8.28 18.495-18.495Z"
+      fill="#00953B"
+    />
   </Svg>
 )
 
-export default SvgComponent
