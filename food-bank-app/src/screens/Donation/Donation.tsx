@@ -38,7 +38,7 @@ const renderItem = ({ item }) => (
   />
 )
 
-const Donation = () => {
+export const Donation = () => {
   return (
     <SafeAreaView>
       <FlatList
@@ -47,6 +47,4 @@ const Donation = () => {
       />
     </SafeAreaView>
   )
-}
-
-export default Donation
+};

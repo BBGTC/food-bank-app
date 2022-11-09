@@ -13,7 +13,7 @@ import { styles } from "../../styles/styles";
 import { FooterButton, TextInputWithIcon } from "../../components";
 
 import { PetalsSvg } from "../../components/svg";
-import { EclipseSvg } from "../../components/svg";
+import { SmallEclipseSvg } from "../../components/svg";
 
 const Login = (): JSX.Element => {
   const [credentials, setCredentials] = useState({
@@ -71,7 +71,7 @@ const Login = (): JSX.Element => {
         </Text>
       </View>
       <View style={{ position: 'absolute', left: 0, bottom: '30%' }}>
-        <EclipseSvg />
+        <SmallEclipseSvg />
       </View>
     </KeyboardAvoidingView>
 

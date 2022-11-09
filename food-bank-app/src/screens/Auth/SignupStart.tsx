@@ -12,9 +12,9 @@ import { useClient } from '../../hooks'
 import { styles } from '../../styles/styles'
 import { FooterButton, TextInputWithIcon } from '../../components'
 
-import { EclipseSvg, StarSvg } from '../../components/svg'
+import { SmallEclipseSvg, StarSvg } from '../../components/svg'
 
-const StartSignup = ({ navigation }): JSX.Element => {
+export const SignupStart = ({ navigation }) => {
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
@@ -90,7 +90,7 @@ const StartSignup = ({ navigation }): JSX.Element => {
         </Text>
       </View>
       <View style={{ position: 'absolute', left: 0, bottom: '30%' }}>
-        <EclipseSvg />
+        <SmallEclipseSvg />
       </View>
     </KeyboardAvoidingView>
   )

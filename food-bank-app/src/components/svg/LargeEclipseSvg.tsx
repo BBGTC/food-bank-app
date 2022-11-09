@@ -1,7 +1,7 @@
 import React from 'react';
 import Svg, { SvgProps, Circle } from "react-native-svg"
 
-export const EclipseLarge = (props: SvgProps) => {
+export const LargeEclipseSvg = (props: SvgProps) => {
   return (
     <Svg
     width={66}

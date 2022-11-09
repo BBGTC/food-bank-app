@@ -2,9 +2,9 @@ import { View, KeyboardAvoidingView, Text, Platform } from 'react-native';
 import { useState } from "react";
 import { styles } from "../../styles/styles";
 import { FooterButton, TextInputWithIcon } from "../../components";
-import { EclipseLarge } from "../../components/svg";
+import { LargeEclipseSvg } from "../../components/svg";
 
-const PersonalSignup = ({ navigation }): JSX.Element => {
+export const SignupPersonal = ({ navigation }) => {
   const [personalInfo, setPersonalInfo] = useState({
     name: '',
     surnames: '',
@@ -25,7 +25,7 @@ const PersonalSignup = ({ navigation }): JSX.Element => {
       style={styles.container}
     >
       <View style={{ position: 'absolute', right: 0 }}>
-        <EclipseLarge />
+        <LargeEclipseSvg />
       </View>
       <Text style={{ fontSize: 48 }}>Agrega tu información personal</Text>
       <View>
