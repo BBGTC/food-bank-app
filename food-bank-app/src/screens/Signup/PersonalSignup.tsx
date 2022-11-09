@@ -1,25 +1,21 @@
-import { Link } from "@react-navigation/native"
-import { useState } from "react";
-import {
-  Text,
-  View
-} from 'react-native';
-import { styles } from "../../styles/styles";
-import { FooterButton, TextInputWithIcon } from "../../components";
-// import BAMX from '../../assets/bamx.svg';
+import { useState } from 'react'
+import { Text, View } from 'react-native'
 
-export default function StartSignup({ navigation }) {
+import { styles } from '../../styles/styles'
+import { FooterButton, TextInputWithIcon } from '../../components'
+
+const PersonalSignup = ({ navigation }): JSX.Element => {
   const [personalInfo, setPersonalInfo] = useState({
-    name: "",
-    surnames: "",
-    phone: "",
-    address: ""
-  });
+    name: '',
+    surnames: '',
+    phone: '',
+    address: ''
+  })
 
-  const handleChange = (type: string, value: string) => {
+  const handleChange = (type: string, value: string): void => {
     setPersonalInfo((prevCredentials) => ({
       ...prevCredentials,
-      [type]: value,
+      [type]: value
     }))
   }
 
@@ -63,5 +59,7 @@ export default function StartSignup({ navigation }) {
         />
       </View>
     </View>
-  );
-}  
+  )
+}
+
+export default PersonalSignup

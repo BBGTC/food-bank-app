@@ -1,11 +1,10 @@
-import { useTheme, Button, ListItem } from '@rneui/themed';
+import { ListItem } from '@rneui/themed'
 
-type PriorityListItem = {
-  title: string;
+interface Props {
+  title: string
 }
 
-const PriorityListItem = ({ title }: PriorityListItem) => {
-  const { theme } = useTheme();
+const PriorityListItem = ({ title }: Props): JSX.Element => {
   return (
     <ListItem>
       <ListItem.Content>
@@ -16,7 +15,7 @@ const PriorityListItem = ({ title }: PriorityListItem) => {
           Vice Chairman
         </ListItem.Subtitle>
       </ListItem.Content>
-      <ListItem.Chevron  />
+      <ListItem.Chevron />
     </ListItem>
   )
 }

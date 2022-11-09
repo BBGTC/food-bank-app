@@ -1,24 +1,24 @@
-import { useAuthContext } from '../contexts/AuthContext';
-import { styles } from '../styles/styles';
-import { 
+import { useAuthContext } from '../contexts/AuthContext'
+import { styles } from '../styles/styles'
+import {
   Button,
-  Text, 
+  Text,
   View
-} from 'react-native';
-import PriorityListItem from '../components/PriorityListItem/PriorityListItem';
+} from 'react-native'
+import PriorityListItem from '../components/PriorityListItem/PriorityListItem'
 
-export default function HomeScreen() {
-    const { setIsAuthenticated }= useAuthContext();
-    return (
+const HomeScreen = (): JSX.Element => {
+  const { setIsAuthenticated } = useAuthContext()
+  return (
       <View style={styles.container}>
         <Text>Home</Text>
         <PriorityListItem title='hola' />
         <Button
-        title= "Cerrar Sesión"
-        onPress={() => setIsAuthenticated(false)}/>
+          title= "Cerrar Sesión"
+          onPress={() => setIsAuthenticated(false)}
+        />
       </View>
-    );
+  )
 }
 
-
-  
+export default HomeScreen

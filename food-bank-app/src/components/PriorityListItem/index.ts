@@ -1,3 +1,3 @@
-import PriorityListItem from "./PriorityListItem";
+import PriorityListItem from './PriorityListItem'
 
-export default PriorityListItem;
+export default PriorityListItem

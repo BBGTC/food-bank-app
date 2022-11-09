@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from 'react'
 
-export type UseAuth = {
-  isAuthenticated : boolean,
-  setIsAuthenticated : React.Dispatch<React.SetStateAction<boolean>>
-};
+export interface UseAuth {
+  isAuthenticated: boolean
+  setIsAuthenticated: (newAuthValue: boolean) => void
+}
 
 export const useAuth = (newAuthValue: boolean): UseAuth => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   useEffect(() => {
-    setIsAuthenticated(newAuthValue);
-  }, [newAuthValue]);
+    setIsAuthenticated(newAuthValue)
+  }, [newAuthValue])
 
-  return {isAuthenticated, setIsAuthenticated};
-};
+  return { isAuthenticated, setIsAuthenticated }
+}

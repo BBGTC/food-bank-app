@@ -1,25 +1,25 @@
-import { useTheme, Input, Icon } from '@rneui/themed';
+import { useTheme, Input, Icon } from '@rneui/themed'
 
-type TextInputWithIconProps = {
-  placeholder: string;
-  icon: string;
-  value: string;
-  type: string;
-  handleChange: (type: string, event: string) => void;
+interface TextInputWithIconProps {
+  placeholder: string
+  icon: string
+  value: string
+  type: string
+  handleChange: (type: string, event: string) => void
 }
 
-const TextInputWithIcon = ({ placeholder, icon, value, type, handleChange }: TextInputWithIconProps) => {
-  const { theme } = useTheme();
+const TextInputWithIcon = ({ placeholder, icon, value, type, handleChange }: TextInputWithIconProps): JSX.Element => {
+  const { theme } = useTheme()
   return (
     <Input
       value={value}
       placeholder={placeholder}
-      onChangeText={value => handleChange(type, value)}
+      onChangeText={newValue => handleChange(type, newValue)}
       rightIcon={
         <Icon name={icon} type="material" color={theme.colors.gray.A}></Icon>
       }
       inputStyle={{
-        paddingHorizontal: 12,
+        paddingHorizontal: 12
       }}
       inputContainerStyle={{
         borderBottomWidth: 0,
@@ -27,7 +27,7 @@ const TextInputWithIcon = ({ placeholder, icon, value, type, handleChange }: Tex
         backgroundColor: theme.colors.gray.B
       }}
       containerStyle={{
-        width: 300,
+        width: 300
       }}
     />
   )

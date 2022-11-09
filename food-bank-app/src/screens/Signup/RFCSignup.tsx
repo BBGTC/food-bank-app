@@ -1,27 +1,23 @@
-import { Link } from "@react-navigation/native"
-import { useState } from "react";
-import {
-  Text,
-  View
-} from 'react-native';
-import { useAuthContext } from "../../contexts/AuthContext";
-import { styles } from "../../styles/styles";
-import { FooterButton, TextInputWithIcon } from "../../components";
-// import BAMX from '../../assets/bamx.svg';
+import { useState } from 'react'
+import { Text, View } from 'react-native'
 
-export default function StartSignup() {
+import { useAuthContext } from '../../contexts/AuthContext'
+import { styles } from '../../styles/styles'
+import { FooterButton, TextInputWithIcon } from '../../components'
+
+const RFCSignup = (): JSX.Element => {
   const [credentials, setCredentials] = useState({
-    email: "",
-    password: "",
-    passwordConfirm: "",
-  });
+    email: '',
+    password: '',
+    passwordConfirm: ''
+  })
 
-  const { setIsAuthenticated } = useAuthContext();
+  const { setIsAuthenticated } = useAuthContext()
 
-  const handleChange = (type: string, value: string) => {
+  const handleChange = (type: string, value: string): void => {
     setCredentials((prevCredentials) => ({
       ...prevCredentials,
-      [type]: value,
+      [type]: value
     }))
   }
 
@@ -38,7 +34,7 @@ export default function StartSignup() {
             handleChange={handleChange}
           ></TextInputWithIcon>
         </View>
-        <Text style={{textAlign: "center"}}>Es opcional, nos ayudará a generar tus recibos deducibles. Más información</Text>
+        <Text style={{ textAlign: 'center' }}>Es opcional, nos ayudará a generar tus recibos deducibles. Más información</Text>
       </View>
       <View>
         <FooterButton
@@ -47,5 +43,7 @@ export default function StartSignup() {
         />
       </View>
     </View>
-  );
-}  
+  )
+}
+
+export default RFCSignup
