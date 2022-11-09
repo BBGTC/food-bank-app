@@ -1,10 +1,15 @@
-import { AuthProvider } from './contexts/AuthContext';
-import Main from './Main';
+import { AuthProvider } from './src/contexts/AuthContext';
+import { ThemeProvider, Button, createTheme } from '@rneui/themed';
 
-export default function App(){    
+import Main from './Main';
+import FooterButton from './src/components/FooterButton';
+
+export default function App() {
   return (
     <AuthProvider>
-        <Main/>
+      <ThemeProvider>
+        <Main />
+      </ThemeProvider>
     </AuthProvider>
   )
 }
