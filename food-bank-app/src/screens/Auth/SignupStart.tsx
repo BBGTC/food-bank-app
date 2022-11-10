@@ -13,6 +13,11 @@ import { styles } from '../../styles/styles'
 import { FooterButton, TextInputWithIcon } from '../../components'
 
 import { SmallEclipseSvg, StarSvg } from '../../components/svg'
+import { isValidEmail } from '../../util/emailUtils'
+
+interface Errors {
+  [key: string]: string[]
+}
 
 export const SignupStart = ({ navigation }) => {
   const [credentials, setCredentials] = useState({
@@ -22,8 +27,9 @@ export const SignupStart = ({ navigation }) => {
   })
 
   const client = useClient()
+  const [errors, setErrors] = useState<Errors>({})
 
-  const handleChange = (type: string, value: string): void => {
+  const handleChange = (type: string, value: string) => {
     setCredentials((prevCredentials) => ({
       ...prevCredentials,
       [type]: value
@@ -32,6 +38,10 @@ export const SignupStart = ({ navigation }) => {
 
   const handleSubmit = async (): Promise<void> => {
     const { email, password, passwordConfirm } = credentials
+
+    if (!isValidEmail(credentials.email)) setErrors({ ...errors, email: ['Introduce un email correcto'] })
+
+    if (password !== passwordConfirm) setErrors({ ...errors, password: [''] })
 
     const { email: username } = await client.signup(email, password, passwordConfirm)
 
