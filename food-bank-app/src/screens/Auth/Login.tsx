@@ -1,16 +1,14 @@
 import { Link } from "@react-navigation/native"
 import { useState } from "react";
 import {
-  Button,
   Text,
-  Image,
   View,
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
 import { useAuthContext } from "../../contexts/AuthContext";
 import { styles } from "../../styles/styles";
-import { FooterButton, TextInputWithIcon } from "../../components";
+import { FooterButton, FormError, TextInputWithIcon } from "../../components";
 
 import { PetalsSvg } from "../../components/svg";
 import { SmallEclipseSvg } from "../../components/svg";
@@ -21,7 +19,9 @@ const Login = (): JSX.Element => {
     password: ''
   })
 
-  const { setIsAuthenticated } = useAuthContext()
+  const [error, setError] = useState<string>('');
+
+  const { setIsAuthenticated } = useAuthContext();
 
   const handleChange = (type: string, value: string): void => {
     setCredentials((prevCredentials) => ({
@@ -30,41 +30,57 @@ const Login = (): JSX.Element => {
     }))
   }
 
+  const handleSubmit = () => {
+
+    setError('');
+
+    if (!credentials.email.trim() || !credentials.password.trim()) {
+      setError('Todos los campos son necesarios');
+      return;
+    }
+
+    setIsAuthenticated(true);
+  }
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
-
       <View>
         <View style={{ flexDirection: 'row-reverse' }}>
           <PetalsSvg />
         </View>
         <Text style={{ fontSize: 48 }}>Bienvenido</Text>
       </View>
-      <View>
+      <View style={{position: 'relative', top: 10}}>
         <TextInputWithIcon
           placeholder="Email"
           icon="email"
           value={credentials.email}
           type="email"
           handleChange={handleChange}
-        ></TextInputWithIcon>
+          ></TextInputWithIcon>
         <TextInputWithIcon
           placeholder="Contraseña"
           icon="lock"
           value={credentials.password}
           type="password"
           handleChange={handleChange}
-        />
+          />
+          {error && (
+            <View style={{position: 'relative', top: 10, margin: 0}}>
+              <FormError message={error}/>
+            </View>
+          )}
       </View>
       <View style={{ margin: 0, width: '100%' }}>
         <FooterButton
           title="Iniciar Sesión"
-          onPress={() => setIsAuthenticated(true)}
+          onPress={handleSubmit}
         />
         <Text
-          style={{ textAlign: "center", margin: 10, fontSize: 16 }}>
+          style={{ textAlign: "center", fontSize: 16, marginTop: 10 }}>
           ¿Aun no tienes cuenta? <Link
             to={{ screen: 'StartSignup' }}
             style={{ color: 'green' }}>Regístrate</Link>

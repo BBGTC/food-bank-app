@@ -12,7 +12,11 @@ import { styles } from "../../styles/styles";
 import { FooterButton, TextInputWithIcon } from "../../components";
 
 import { SmallEclipseSvg, StarSvg } from "../../components/svg";
+import { isValidEmail } from "../../util/emailUtils";
 
+interface Errors {
+  [key: string]: string[],
+}
 
 export const SignupStart = ({ navigation }) => {
   const [credentials, setCredentials] = useState({
@@ -21,11 +25,24 @@ export const SignupStart = ({ navigation }) => {
     passwordConfirm: ''
   })
 
-  const handleChange = (type: string, value: string): void => {
+  const [errors, setErrors] = useState<Errors>({});
+
+  const { setIsAuthenticated } = useAuthContext();
+
+  const handleChange = (type: string, value: string) => {
     setCredentials((prevCredentials) => ({
       ...prevCredentials,
       [type]: value
     }))
+  }
+
+  const handleSubmit = () => {
+    const { email, password, passwordConfirm } = credentials;
+    // Email errors
+    if (!isValidEmail(credentials.email)) setErrors({ ...errors, email: ['Introduce un email correcto'] });
+
+    if (password != passwordConfirm) setErrors({...errors, password: ['']})
+
   }
 
   return (
@@ -65,10 +82,10 @@ export const SignupStart = ({ navigation }) => {
           handleChange={handleChange}
         />
       </View>
-      <View style={{width: '100%'}}>
+      <View style={{ width: '100%' }}>
         <FooterButton
           title="Siguiente"
-          onPress={() => navigation.navigate('PersonalSignup')}
+          onPress={handleSubmit}
         />
         <Text
           style={{ textAlign: "center", margin: 10, fontSize: 16 }}>
