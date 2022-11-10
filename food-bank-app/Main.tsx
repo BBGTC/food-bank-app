@@ -15,7 +15,10 @@ const theme = createTheme({
     gray: {
       A: '#616161',
       B: '#f3f3f3'
-    }
+    },
+    green: '#00953B',
+    shadow: '#2e2e2e',
+    buttonBorder: '#e0e0e0'
   },
   mode: 'light' // your light or dark mode value
 })
