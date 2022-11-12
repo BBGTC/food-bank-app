@@ -14,14 +14,6 @@ const HomeScreen = (): JSX.Element => {
   const { setIsAuthenticated } = useAuthContext()
   return (
     /*
-    <EventCard
-    title='Basílica de Zapopan'
-    location='Calle Eva Briseño 152, Zapopan, Jal.'
-    startDate='12 Octubre'
-    endDate='14 Octubre'
-    startTime='8:00AM'
-    endTime='4:00PM'
-    />
     <Text>Home</Text>
   <Button
   title= "Cerrar Sesión"
@@ -35,7 +27,7 @@ const HomeScreen = (): JSX.Element => {
 */
 import { StyleSheet, View } from 'react-native'
 import EventCarousel from '../components/EventCarousel/EventCarousel'
-
+import PriorityQueue from '../components/PriorityQueueItem/PriorityQueue'
 const HomeScreen = (): JSX.Element => {
   return (
     <View style={styles.container }>
@@ -65,7 +57,28 @@ const HomeScreen = (): JSX.Element => {
           endTime: '4:00PM',
           imageUrl: 'https://udg.mx/sites/default/files/img_noticias/190130_la_naturaleza_el_centro_de_dos_exposiciones_en_la_biblioteca_publica_del_estado_juan_jose_arreola_udg.jpg'
         }]}
+      />
+      <View style={{
+        width: '100%'
+      }}>
+        <PriorityQueue
+          items={[{
+            title: 'Canasta básica',
+            priorityLevel: 3,
+            imageUrl: 'https://www.gob.mx/cms/uploads/image/file/475639/canasta_ba_sica2.jpg'
+          }, {
+            title: 'Frutas y verduras',
+            priorityLevel: 2,
+            imageUrl: 'https://s1.eestatic.com/2021/05/28/ciencia/nutricion/584702647_186499572_1024x576.jpg'
+          }, {
+            title: 'Embutidos y lácteos',
+            priorityLevel: 2,
+            imageUrl: 'https://agraria.pe/imgs/a/lx/en-nuestro-pais-se-consume-2-5-kilos-de-embutidos-por-person-19553.jpg'
+          }]}
         />
+      </View>
+      {/* fdsadf
+      */}
     </View>
   )
 }
