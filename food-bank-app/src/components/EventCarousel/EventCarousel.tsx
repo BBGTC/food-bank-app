@@ -1,61 +1,43 @@
-import { View, ScrollView, Text } from 'react-native'
+import { View, ScrollView, Text, StyleSheet } from 'react-native'
 import { useState } from 'react'
-import { styles } from './styles'
 
 interface EventCarouselProps {
   children: JSX.Element[]
-  itemsPerInterval?: number
 }
 
-const EventCarousel = ({ children, itemsPerInterval }: EventCarouselProps): JSX.Element => {
-  const items = itemsPerInterval === undefined
-    ? 1
-    : itemsPerInterval
-
-  const [interval, setInterval] = useState(1)
-  const [intervals, setIntervals] = useState(1)
+const EventCarousel = ({ children }: EventCarouselProps): JSX.Element => {
+  const [interval, setInterval] = useState(0)
+  const [totalItems, setTotalItems] = useState(1)
   const [width, setWidth] = useState(0)
 
-  const init = (initWidth: number): void => {
-    // initialise width
-    setWidth(initWidth)
-    // initialise total intervals
-    const totalItems = children.length
-    setIntervals(Math.ceil(totalItems / items))
+  const init = (newWidth: number): void => {
+    setWidth(newWidth)
+    const items = children.length
+    setTotalItems(items)
   }
 
   const getInterval = (offset: number): number => {
-    for (let i = 1; i <= intervals; i++) {
-      if (offset + 1 < (width / intervals) * i) {
-        return i
-      }
-      if (i === intervals) {
-        return i
-      }
-    }
-    return 0
+    const itemWidth = width / totalItems
+    return Math.floor(((offset + 1) / itemWidth))
   }
 
-  const bullets = []
-  for (let i = 1; i <= intervals; i++) {
-    bullets.push(
-      <Text
-        key={i}
-        style={{
-          ...styles.bullet,
-          opacity: interval === i ? 0.5 : 0.1
-        }}
-      >
-        &bull;
-      </Text>
-    )
-  }
+  const bullets = Array.from({ length: totalItems }, (_, i) => {
+    return <Text
+            key={i}
+            style={{
+              ...styles.bullet,
+              opacity: interval === i ? 0.5 : 0.1
+            }}
+          >
+            &bull;
+          </Text>
+  })
 
   return (
     <View style={styles.container}>
       <ScrollView
         horizontal={true}
-        contentContainerStyle={{ ...styles.scrollView, width: `${100 * intervals}%` }}
+        contentContainerStyle={{ ...styles.scrollView, width: `${100 * totalItems}%` }}
         showsHorizontalScrollIndicator={false}
         onContentSizeChange={(w, h) => init(w)}
         onScroll={data => {
@@ -74,5 +56,33 @@ const EventCarousel = ({ children, itemsPerInterval }: EventCarouselProps): JSX.
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    width: '98%',
+    marginTop: 10,
+    maxHeight: 220
+  },
+  scrollView: {
+    flexDirection: 'row',
+    overflow: 'hidden',
+    maxHeight: 225,
+    paddingBottom: 10
+  },
+  bullets: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    display: 'flex',
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
+    paddingHorizontal: 10,
+    paddingTop: 5
+  },
+  bullet: {
+    paddingHorizontal: 5,
+    fontSize: 20
+  }
+})
 
 export default EventCarousel

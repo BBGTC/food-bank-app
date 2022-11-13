@@ -16,6 +16,7 @@ const EventCard = ({
   hideButtons = false
 }: EventCardProps): JSX.Element => {
   const { theme } = useTheme()
+
   const getAddress = (): string => {
     const addressData = [
       event.address.street,
@@ -26,6 +27,7 @@ const EventCard = ({
 
     return addressData.join(', ')
   }
+
   return (
       <View
         style={[styles.cardContainer, {
@@ -33,7 +35,7 @@ const EventCard = ({
           height: !hideButtons ? 180 : 120
         }]}>
         <Image
-          source={{ uri: getAddress() === '' ? event.imageUrl : nopictureUrl }}
+          source={{ uri: event.imageUrl !== '' ? event.imageUrl : nopictureUrl }}
           style={{
             width: '30%',
             flex: 1

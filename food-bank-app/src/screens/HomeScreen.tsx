@@ -1,73 +1,55 @@
-/*
-import { useAuthContext } from '../contexts/AuthContext'
-import { styles } from '../styles/styles'
-import {
-  Button,
-  Text,
-  View
-} from 'react-native'
-import EventCarousel from '../components/EventCarousel/EventCarousel'
-
-import EventCard from '../components/EventCard'
-
-const HomeScreen = (): JSX.Element => {
-  const { setIsAuthenticated } = useAuthContext()
-  return (
-    /*
-    <Text>Home</Text>
-  <Button
-  title= "Cerrar Sesión"
-  onPress={() => setIsAuthenticated(false)}
-  />
-  <View style={styles.container}>
-    <EventCarousel items={[]} />
-  </View>
-  )
-}
-*/
-import { StyleSheet, View } from 'react-native'
+import { Button, StyleSheet, View } from 'react-native'
 import EventCarousel from '../components/EventCarousel/EventCarousel'
 import PriorityQueue from '../components/PriorityQueueItem/PriorityQueue'
 import EventCard from '../components/EventCard'
+import { useAuthContext } from '../contexts/AuthContext'
+
+const eventCards = [
+  {
+    address: {
+      street: 'asdasa',
+      exteriorNumber: '12',
+      interiorNumber: '123',
+      zipCode: '43219',
+      state: 'Jalisco',
+      municipality: 'Guadalajara',
+      neighborhood: 'centro'
+    },
+    place: 'Bosque Colomos',
+    startDate: new Date(2022, 12, 12),
+    endDate: new Date(2022, 12, 15),
+    startTime: '10:00AM',
+    endTime: '5:00PM',
+    imageUrl: ''
+  },
+  {
+    address: {
+      street: 'asdasa',
+      exteriorNumber: '12',
+      interiorNumber: '123',
+      zipCode: '43219',
+      state: 'Jalisco',
+      municipality: 'Guadalajara',
+      neighborhood: 'centro'
+    },
+    place: 'Bosque Colomos',
+    startDate: new Date(2022, 12, 12),
+    endDate: new Date(2022, 12, 15),
+    startTime: '10:00AM',
+    endTime: '5:00PM',
+    imageUrl: ''
+  }
+]
 
 const HomeScreen = (): JSX.Element => {
+  const { setIsAuthenticated } = useAuthContext()
+
   return (
     <View style={styles.container }>
     <EventCarousel>
-      <EventCard event={{
-        address: {
-          street: 'asdasa',
-          exteriorNumber: '12',
-          interiorNumber: '123',
-          zipCode: '43219',
-          state: 'Jalisco',
-          municipality: 'Guadalajara',
-          neighborhood: 'centro'
-        },
-        place: 'Bosque Colomos',
-        startDate: new Date(2022, 12, 12),
-        endDate: new Date(2022, 12, 15),
-        startTime: '10:00AM',
-        endTime: '5:00PM',
-        imageUrl: ''
-      }}/>
-      <EventCard event={{
-        address: {
-          street: 'asdasa',
-          exteriorNumber: '12',
-          interiorNumber: '123',
-          zipCode: '43219',
-          state: 'Jalisco',
-          municipality: 'Guadalajara',
-          neighborhood: 'centro'
-        },
-        place: 'Bosque Colomos',
-        startDate: new Date(2022, 12, 12),
-        endDate: new Date(2022, 12, 15),
-        startTime: '10:00AM',
-        endTime: '5:00PM',
-        imageUrl: ''
-      }}/>
+      { eventCards.map((event, index) => {
+        return <EventCard event={event} key={index}/>
+      })}
     </EventCarousel>
       <View style={{
         width: '100%'
@@ -88,6 +70,10 @@ const HomeScreen = (): JSX.Element => {
           }]}
         />
       </View>
+      <Button
+        title= "Cerrar Sesión"
+        onPress={() => setIsAuthenticated(false)}
+      />
     </View>
   )
 }
