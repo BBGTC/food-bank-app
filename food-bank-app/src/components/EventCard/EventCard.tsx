@@ -1,54 +1,41 @@
-import { Image, Text, View } from 'react-native'
+import { Image, Text, View, StyleSheet } from 'react-native'
 import EventCardField from './EventCardField'
 import EventButton from './EventButton'
 import { useTheme } from '@rneui/themed'
+import DonationEvent from '../../models/DonationEventModel'
 
 const nopictureUrl = 'https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg'
 
 interface EventCardProps {
-  title: string
-  location: string
-  startDate: string
-  endDate: string
-  startTime: string
-  endTime: string
-  imageUrl: string
+  event: DonationEvent
   hideButtons?: boolean
 }
 
 const EventCard = ({
-  title,
-  location,
-  startDate = '',
-  endDate = '',
-  startTime = '',
-  endTime = '',
-  imageUrl = nopictureUrl,
+  event,
   hideButtons = false
 }: EventCardProps): JSX.Element => {
   const { theme } = useTheme()
+  const getAddress = (): string => {
+    const addressData = [
+      event.address.street,
+      event.address.exteriorNumber,
+      event.address.municipality,
+      event.address.zipCode
+    ]
+
+    return addressData.join(', ')
+  }
   return (
       <View
-        style={{
-          flexBasis: '100%',
-          flex: 1,
-          maxWidth: '96%',
-          flexDirection: 'row',
-          backgroundColor: 'white',
-          borderRadius: 10,
-          marginTop: 30,
+        style={[styles.cardContainer, {
           shadowColor: theme.colors.shadow,
-          shadowOffset: { width: 2, height: 4 },
-          shadowOpacity: 0.5,
-          shadowRadius: 3,
-          height: !hideButtons ? 180 : 120,
-          marginRight: 10
-        }}>
+          height: !hideButtons ? 180 : 120
+        }]}>
         <Image
-          source={{ uri: imageUrl }}
+          source={{ uri: getAddress() === '' ? event.imageUrl : nopictureUrl }}
           style={{
             width: '30%',
-            height: undefined,
             flex: 1
           }}
           borderRadius={10}
@@ -71,35 +58,27 @@ const EventCard = ({
                 margin: 10
               }}
             >
-              {title}
+            {event.place}
             </Text>
             <EventCardField
               icon='location-sharp'
               iconType='ionicon'
-              text={location}
+              text={getAddress()}
             />
             <EventCardField
               icon='calendar-today'
               iconType='materialicons'
-              text={`${startDate} - ${endDate}`}
+              text={`${event.startDate.toString()} - ${event.endDate.toString()}`}
             />
             <EventCardField
               icon='clock'
               iconType='feather'
-              text={`${startTime} - ${endTime}`}
+              text={`${event.startTime} - ${event.endTime}`}
             />
           </View>
           { !hideButtons &&
             <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              alignItems: 'center',
-              borderWidth: 0,
-              width: '100%',
-              minHeight: 50,
-              maxHeight: 50
-            }}>
+            style={styles.buttonsContainer}>
               <EventButton
                 onPress={ () => null }
                 title= {'CÓMO\nLLEGAR'}
@@ -115,5 +94,30 @@ const EventCard = ({
       </View>
   )
 }
+
+const styles = StyleSheet.create({
+  cardContainer: {
+    flexBasis: '100%',
+    flex: 1,
+    maxWidth: '96%',
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    marginTop: 30,
+    shadowOffset: { width: 2, height: 4 },
+    shadowOpacity: 0.5,
+    shadowRadius: 3,
+    marginRight: 10
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    borderWidth: 0,
+    width: '100%',
+    minHeight: 50,
+    maxHeight: 50
+  }
+})
 
 export default EventCard

@@ -1,20 +1,16 @@
 import { View, ScrollView, Text } from 'react-native'
 import { useState } from 'react'
-import EventCard from '../EventCard'
 import { styles } from './styles'
-/*
+
 interface EventCarouselProps {
-  items: object[]
+  children: JSX.Element[]
   itemsPerInterval?: number
-
 }
-*/
 
-const EventCarousel = (props: any): JSX.Element => {
-  const { items } = props
-  const itemsPerInterval = props.itemsPerInterval === undefined
+const EventCarousel = ({ children, itemsPerInterval }: EventCarouselProps): JSX.Element => {
+  const items = itemsPerInterval === undefined
     ? 1
-    : props.itemsPerInterval
+    : itemsPerInterval
 
   const [interval, setInterval] = useState(1)
   const [intervals, setIntervals] = useState(1)
@@ -24,8 +20,8 @@ const EventCarousel = (props: any): JSX.Element => {
     // initialise width
     setWidth(initWidth)
     // initialise total intervals
-    const totalItems = items.length
-    setIntervals(Math.ceil(totalItems / itemsPerInterval))
+    const totalItems = children.length
+    setIntervals(Math.ceil(totalItems / items))
   }
 
   const getInterval = (offset: number): number => {
@@ -70,20 +66,7 @@ const EventCarousel = (props: any): JSX.Element => {
         pagingEnabled
         decelerationRate="fast"
       >
-        {items.map((item: any, index: number) => {
-          return (
-            <EventCard
-              key={index}
-              title={item.title}
-              location={item.location}
-              startDate={item.startDate}
-              endDate={item.endDate}
-              startTime={item.startTime}
-              endTime={item.endTime}
-              imageUrl={item.imageUrl}
-            />
-          )
-        })}
+        { children }
       </ScrollView>
       <View style={styles.bullets}>
         {bullets}
