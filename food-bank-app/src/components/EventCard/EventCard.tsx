@@ -4,7 +4,7 @@ import EventButton from './EventButton'
 import { useTheme } from '@rneui/themed'
 import DonationEvent from '../../models/DonationEventModel'
 
-const nopictureUrl = 'https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg'
+const NO_PICTURE_URL = 'https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg'
 
 interface EventCardProps {
   event: DonationEvent
@@ -33,34 +33,19 @@ const EventCard = ({
         style={[styles.cardContainer, {
           shadowColor: theme.colors.shadow,
           height: !hideButtons ? 180 : 120
-        }]}>
+        }]}
+      >
         <Image
-          source={{ uri: event.imageUrl !== '' ? event.imageUrl : nopictureUrl }}
-          style={{
-            width: '30%',
-            flex: 1
-          }}
+          source={{ uri: event.imageUrl !== '' ? event.imageUrl : NO_PICTURE_URL }}
+          style={{ width: '30%', flex: 1 }}
           borderRadius={10}
           borderBottomRightRadius={0}
           borderTopRightRadius={0}
         />
-        <View
-          style={{
-            width: '70%'
-          }}>
-          <View
-            style={{
-              maxHeight: 120,
-              marginBottom: 10
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 20,
-                margin: 10
-              }}
-            >
-            {event.place}
+        <View style={{ width: '70%' }}>
+          <View style={{ maxHeight: 120, marginBottom: 10 }}>
+            <Text style={{ fontSize: 20, margin: 10 }}>
+              {event.place}
             </Text>
             <EventCardField
               icon='location-sharp'
@@ -70,7 +55,7 @@ const EventCard = ({
             <EventCardField
               icon='calendar-today'
               iconType='materialicons'
-              text={`${event.startDate.toString()} - ${event.endDate.toString()}`}
+              text={`${event.startDate.toLocaleDateString('es')} - ${event.endDate.toLocaleDateString('es')}`}
             />
             <EventCardField
               icon='clock'
@@ -79,17 +64,16 @@ const EventCard = ({
             />
           </View>
           { !hideButtons &&
-            <View
-            style={styles.buttonsContainer}>
+            <View style={styles.buttonsContainer}>
               <EventButton
                 onPress={ () => null }
                 title= {'CÓMO\nLLEGAR'}
-                rightborder={ true }
-                />
+                rightBorder={ true }
+              />
               <EventButton
                 onPress={() => null}
                 title= {'DONAR'}
-                />
+              />
             </View>
           }
         </View>

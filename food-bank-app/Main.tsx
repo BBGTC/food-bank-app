@@ -34,11 +34,11 @@ const Main = (): JSX.Element => {
           }}>
           {!isAuthenticated
             ? <>
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="StartSignup" component={StartSignup} />
-            <Stack.Screen name="PersonalSignup" component={PersonalSignup} />
-            <Stack.Screen name="RFCSignup" component={RFCSignup} />
-          </>
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="StartSignup" component={StartSignup} />
+              <Stack.Screen name="PersonalSignup" component={PersonalSignup} />
+              <Stack.Screen name="RFCSignup" component={RFCSignup} />
+            </>
             : <Stack.Screen name="Home" component={HomeScreen} />}
         </Stack.Navigator>
       </NavigationContainer >

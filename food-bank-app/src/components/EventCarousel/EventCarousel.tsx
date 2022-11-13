@@ -60,7 +60,6 @@ const EventCarousel = ({ children }: EventCarouselProps): JSX.Element => {
 const styles = StyleSheet.create({
   container: {
     width: '98%',
-    marginTop: 10,
     maxHeight: 220
   },
   scrollView: {
@@ -76,8 +75,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'flex-start',
     flexDirection: 'row',
-    paddingHorizontal: 10,
-    paddingTop: 5
+    paddingHorizontal: 10
   },
   bullet: {
     paddingHorizontal: 5,

@@ -7,15 +7,16 @@ const PriorityQueue = (props: any): JSX.Element => {
     <ScrollView contentContainerStyle={{
       flexGrow: 1,
       justifyContent: 'center',
-      width: '95%'
+      width: '98%'
     }}>
       {items.map((item: any, index: number) => {
         return (
-          <View key = {index} style={{ width: '100%', marginBottom: 20 }}>
+          <View key = {index} style={{ width: '100%', marginBottom: items.length - 1 === index ? 10 : 20 }}>
             <PriorityQueueItem
               title={item.title}
               priorityLevel={item.priorityLevel}
               imageUrl= {item.imageUrl}
+              modal={item.modal}
             />
           </View>
         )
