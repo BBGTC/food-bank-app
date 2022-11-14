@@ -1,9 +1,9 @@
-import { NavigationContainer } from "@react-navigation/native"
-import { ThemeProvider, Button, createTheme } from '@rneui/themed';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useAuthContext } from "./src/contexts/AuthContext";
+import { NavigationContainer } from '@react-navigation/native'
+import { ThemeProvider, createTheme } from '@rneui/themed'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { useAuthContext } from './src/contexts/AuthContext'
 
-import { HomeScreen, Donation, Login, SignupStart, SignupPersonal, SignupRFC } from "./src/screens";
+import { HomeScreen, Donation, Login, SignupStart, SignupPersonal, SignupRFC } from './src/screens'
 
 const Stack = createNativeStackNavigator()
 
@@ -25,7 +25,7 @@ const theme = createTheme({
       }
     }
   }
-});
+})
 
 const Main = (): JSX.Element => {
   const { isAuthenticated } = useAuthContext()
@@ -36,13 +36,14 @@ const Main = (): JSX.Element => {
           screenOptions={{
             headerShown: false
           }}>
-          {!isAuthenticated ? <>
+          {!isAuthenticated
+            ? <>
             <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="StartSignup" component={SignupStart} />
-            <Stack.Screen name="PersonalSignup" component={SignupPersonal} />
-            <Stack.Screen name="RFCSignup" component={SignupRFC} />
-          </> :
-            <>
+            <Stack.Screen name="SignupStart" component={SignupStart} />
+            <Stack.Screen name="SignupPersonal" component={SignupPersonal} />
+            <Stack.Screen name="SignupRFC" component={SignupRFC} />
+          </>
+            : <>
               <Stack.Screen name="Home" component={HomeScreen} />
               <Stack.Screen name="Donation" component={Donation} />
             </>

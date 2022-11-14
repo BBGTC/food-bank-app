@@ -1,27 +1,26 @@
-import { Link } from "@react-navigation/native"
-import { useState } from "react";
+import { Link } from '@react-navigation/native'
+import { useState } from 'react'
 import {
   Text,
   View,
   KeyboardAvoidingView,
-  Platform,
-} from 'react-native';
-import { useAuthContext } from "../../contexts/AuthContext";
-import { styles } from "../../styles/styles";
-import { FooterButton, FormError, TextInputWithIcon } from "../../components";
+  Platform
+} from 'react-native'
+import { useAuthContext } from '../../contexts/AuthContext'
+import { styles } from '../../styles/styles'
+import { FooterButton, FormError, TextInputWithIcon } from '../../components'
 
-import { PetalsSvg } from "../../components/svg";
-import { SmallEclipseSvg } from "../../components/svg";
+import { PetalsSvg, SmallEclipseSvg } from '../../components/svg'
 
-const Login = (): JSX.Element => {
+export const Login = (): JSX.Element => {
   const [credentials, setCredentials] = useState({
     email: '',
     password: ''
   })
 
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string>('')
 
-  const { setIsAuthenticated } = useAuthContext();
+  const { setIsAuthenticated } = useAuthContext()
 
   const handleChange = (type: string, value: string): void => {
     setCredentials((prevCredentials) => ({
@@ -30,21 +29,20 @@ const Login = (): JSX.Element => {
     }))
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (): void => {
+    setError('')
 
-    setError('');
-
-    if (!credentials.email.trim() || !credentials.password.trim()) {
-      setError('Todos los campos son necesarios');
-      return;
+    if ((credentials.email.trim().length === 0) || (credentials.password.trim().length === 0)) {
+      setError('Todos los campos son necesarios')
+      return
     }
 
-    setIsAuthenticated(true);
+    setIsAuthenticated(true)
   }
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
       <View>
@@ -53,26 +51,26 @@ const Login = (): JSX.Element => {
         </View>
         <Text style={{ fontSize: 48 }}>Bienvenido</Text>
       </View>
-      <View style={{position: 'relative', top: 10}}>
+      <View style={{ position: 'relative', top: 10 }}>
         <TextInputWithIcon
           placeholder="Email"
           icon="email"
           value={credentials.email}
           type="email"
           handleChange={handleChange}
-          ></TextInputWithIcon>
+        ></TextInputWithIcon>
         <TextInputWithIcon
           placeholder="Contraseña"
           icon="lock"
           value={credentials.password}
           type="password"
           handleChange={handleChange}
-          />
-          {error && (
-            <View style={{position: 'relative', top: 10, margin: 0}}>
-              <FormError message={error}/>
-            </View>
-          )}
+        />
+        {error !== '' && (
+          <View style={{ position: 'relative', top: 10, margin: 0 }}>
+            <FormError message={error} />
+          </View>
+        )}
       </View>
       <View style={{ margin: 0, width: '100%' }}>
         <FooterButton
@@ -80,9 +78,9 @@ const Login = (): JSX.Element => {
           onPress={handleSubmit}
         />
         <Text
-          style={{ textAlign: "center", fontSize: 16, marginTop: 10 }}>
+          style={{ textAlign: 'center', fontSize: 16, marginTop: 10 }}>
           ¿Aun no tienes cuenta? <Link
-            to={{ screen: 'StartSignup' }}
+            to={{ screen: 'SignupStart' }}
             style={{ color: 'green' }}>Regístrate</Link>
         </Text>
       </View>
@@ -91,5 +89,5 @@ const Login = (): JSX.Element => {
       </View>
     </KeyboardAvoidingView>
 
-  );
-}  
+  )
+}
