@@ -26,6 +26,8 @@ module.exports = {
         namedComponents: 'arrow-function',
         unnamedComponents: 'arrow-function'
       }],
+      'react/self-closing-comp': 'error'
+
   },
   settings: {
     react: {

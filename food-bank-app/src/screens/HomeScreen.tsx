@@ -85,7 +85,7 @@ export const HomeScreen = (): JSX.Element => {
           />
         </View>
       </View>
-      <View style= {{
+      <View style={{
         width: '100%',
         marginTop: 20,
         marginLeft: 10,
@@ -98,8 +98,8 @@ export const HomeScreen = (): JSX.Element => {
         </Text>
       </View>
       <EventCarousel>
-        { EVENT_CARDS.map((event, index) => {
-          return <EventCard event={event} key={index}/>
+        {EVENT_CARDS.map((event, index) => {
+          return <EventCard event={event} key={index} />
         })}
       </EventCarousel>
       <View style={{
