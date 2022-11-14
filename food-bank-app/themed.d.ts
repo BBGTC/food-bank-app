@@ -1,4 +1,4 @@
-import '@rneui/themed';
+import '@rneui/themed'
 
 declare module '@rneui/themed' {
   export interface Colors {
@@ -6,5 +6,8 @@ declare module '@rneui/themed' {
       A: string,
       B: string,
     }
+    green: string
+    shadow: string
+    buttonBorder: string
   }
 }

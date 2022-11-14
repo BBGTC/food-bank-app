@@ -2,7 +2,7 @@ import { useContext, createContext } from 'react'
 import { useAuth, UseAuth } from '../hooks/useAuth'
 
 interface Props {
-  children: [JSX.Element]
+  children: JSX.Element | JSX.Element[]
 }
 
 const AuthContext = createContext<UseAuth>({})

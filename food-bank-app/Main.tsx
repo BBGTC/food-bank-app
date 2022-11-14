@@ -15,7 +15,10 @@ const theme = createTheme({
     gray: {
       A: '#616161',
       B: '#f3f3f3'
-    }
+    },
+    green: '#00953B',
+    shadow: '#2e2e2e',
+    buttonBorder: '#e0e0e0'
   },
   mode: 'light' // your light or dark mode value
 })
@@ -31,11 +34,11 @@ const Main = (): JSX.Element => {
           }}>
           {!isAuthenticated
             ? <>
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="StartSignup" component={StartSignup} />
-            <Stack.Screen name="PersonalSignup" component={PersonalSignup} />
-            <Stack.Screen name="RFCSignup" component={RFCSignup} />
-          </>
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="StartSignup" component={StartSignup} />
+              <Stack.Screen name="PersonalSignup" component={PersonalSignup} />
+              <Stack.Screen name="RFCSignup" component={RFCSignup} />
+            </>
             : <Stack.Screen name="Home" component={HomeScreen} />}
         </Stack.Navigator>
       </NavigationContainer >
