@@ -1,27 +1,67 @@
-import { View, KeyboardAvoidingView, Text, Platform } from 'react-native';
-import { useState } from "react";
-import { styles } from "../../styles/styles";
-import { FooterButton, TextInputWithIcon } from "../../components";
-import { LargeEclipseSvg } from "../../components/svg";
+import { View, KeyboardAvoidingView, Text, Platform } from 'react-native'
+import { useState } from 'react'
+import { styles } from '../../styles/styles'
+import { FooterButton, FormError, TextInputWithIcon } from '../../components'
+import { LargeEclipseSvg } from '../../components/svg'
 
-export const SignupPersonal = ({ navigation }) => {
-  const [personalInfo, setPersonalInfo] = useState({
-    name: '',
-    surnames: '',
-    phone: '',
-    address: ''
+const INITIAL_PERSONAL_INFO = {
+  name: '',
+  surnames: '',
+  phone: '',
+  address: ''
+}
+
+type PersonalInfo = typeof INITIAL_PERSONAL_INFO
+
+interface Errors {
+  [key: string]: string[]
+  name: string[]
+  surnames: string[]
+  phone: string[]
+  address: string[]
+  allFields: string[]
+}
+
+export const SignupPersonal = ({ navigation }: any): JSX.Element => {
+  const [personalInfo, setPersonalInfo] = useState<PersonalInfo>(INITIAL_PERSONAL_INFO)
+  const [errors, setErrors] = useState<Errors>({
+    name: [],
+    surnames: [],
+    phone: [],
+    address: [],
+    allFields: []
   })
 
   const handleChange = (type: string, value: string): void => {
+    setErrors({
+      ...errors,
+      allFields: [],
+      [type]: []
+    })
+
     setPersonalInfo((prevCredentials) => ({
       ...prevCredentials,
       [type]: value
     }))
   }
 
+  const handleSubmit = (): void => {
+    let isValid = true
+    const { name, surnames, phone, address } = personalInfo
+
+    if ((name.trim().length === 0) || (surnames.trim().length === 0) || (phone.trim().length === 0) || (address.trim().length === 0)) {
+      isValid = false
+      setErrors((prevErrors) => ({ ...prevErrors, allFields: ['Todos los campos son necesarios'] }))
+    }
+
+    if (!isValid) { return }
+
+    navigation.navigate('SignupRFC')
+  }
+
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
       <View style={{ position: 'absolute', right: 0 }}>
@@ -57,12 +97,13 @@ export const SignupPersonal = ({ navigation }) => {
           type="address"
           handleChange={handleChange}
         />
+        { Object.values(errors).map(err => err.map((message, index) => <FormError key={index} message={message}/>))}
       </View>
       <FooterButton
         title="Siguiente"
-        onPress={() => navigation.navigate('RFCSignup')}
+        onPress={handleSubmit}
       />
     </KeyboardAvoidingView>
 
-  );
+  )
 }

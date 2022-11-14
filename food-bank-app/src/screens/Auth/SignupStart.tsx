@@ -9,27 +9,47 @@ import {
 } from 'react-native'
 
 import { useClient } from '../../hooks'
+
 import { styles } from '../../styles/styles'
-import { FooterButton, TextInputWithIcon } from '../../components'
+import { FooterButton, TextInputWithIcon, FormError } from '../../components'
 
 import { SmallEclipseSvg, StarSvg } from '../../components/svg'
 import { isValidEmail } from '../../util/emailUtils'
 
-interface Errors {
-  [key: string]: string[]
+const INITIAL_CREDENTIALS = {
+  email: '',
+  password: '',
+  passwordConfirm: ''
 }
 
-export const SignupStart = ({ navigation }) => {
-  const [credentials, setCredentials] = useState({
-    email: '',
-    password: '',
-    passwordConfirm: ''
-  })
+type Credentials = typeof INITIAL_CREDENTIALS
+
+interface Errors {
+  [key: string]: string[]
+  email: string[]
+  password: string[]
+  passwordConfirm: string[]
+  allFields: string[]
+}
+
+export const SignupStart = ({ navigation }: any): JSX.Element => {
+  const [credentials, setCredentials] = useState<Credentials>(INITIAL_CREDENTIALS)
 
   const client = useClient()
-  const [errors, setErrors] = useState<Errors>({})
+  const [errors, setErrors] = useState<Errors>({
+    email: [],
+    password: [],
+    passwordConfirm: [],
+    allFields: []
+  })
 
-  const handleChange = (type: string, value: string) => {
+  const handleChange = (type: string, value: string): void => {
+    setErrors({
+      ...errors,
+      allFields: [],
+      [type]: []
+    })
+
     setCredentials((prevCredentials) => ({
       ...prevCredentials,
       [type]: value
@@ -39,9 +59,26 @@ export const SignupStart = ({ navigation }) => {
   const handleSubmit = async (): Promise<void> => {
     const { email, password, passwordConfirm } = credentials
 
-    if (!isValidEmail(credentials.email)) setErrors({ ...errors, email: ['Introduce un email correcto'] })
+    let isValid = true
 
-    if (password !== passwordConfirm) setErrors({ ...errors, password: [''] })
+    if ((email.trim().length === 0) || (password.trim().length === 0) || (passwordConfirm.trim().length === 0)) {
+      isValid = false
+      setErrors((prevErrors) => ({ ...prevErrors, allFields: ['Todos los campos son necesarios'] }))
+      // Early return to avoid filling screen with too many error warnings
+      return
+    }
+
+    if (!isValidEmail(credentials.email)) {
+      isValid = false
+      setErrors((prevErrors) => ({ ...prevErrors, email: ['Introduce un email adecuado'] }))
+    }
+
+    if (password !== passwordConfirm) {
+      isValid = false
+      setErrors((prevErrors) => ({ ...prevErrors, password: ['Las contraseñas no coinciden'] }))
+    }
+
+    if (!isValid) { return }
 
     const { email: username } = await client.signup(email, password, passwordConfirm)
 
@@ -68,8 +105,10 @@ export const SignupStart = ({ navigation }) => {
           value={credentials.email}
           type="email"
           handleChange={handleChange}
-        ></TextInputWithIcon>
-
+        />
+        {errors.email.length > 0 &&
+          errors.email.map((message, index) => <FormError key={index} message={message} />)
+        }
       </View>
       <View>
         <TextInputWithIcon
@@ -86,6 +125,14 @@ export const SignupStart = ({ navigation }) => {
           type="passwordConfirm"
           handleChange={handleChange}
         />
+        {errors.password.length > 0 &&
+          errors.password.map((message, index) => <FormError key={index} message={message} />)
+        }
+      </View>
+      <View style={{ width: '100%' }}>
+        {errors.allFields.length > 0 &&
+          <FormError message={errors.allFields.at(0) ?? ''} />
+        }
       </View>
       <View style={{ width: '100%' }}>
         <FooterButton

@@ -1,18 +1,17 @@
-import { useState } from "react";
+import { useState } from 'react'
 import {
   KeyboardAvoidingView,
   Platform,
   Text,
   View
-} from 'react-native';
-import { useAuthContext } from "../../contexts/AuthContext";
-import { styles } from "../../styles/styles";
-import { FooterButton, TextInputWithIcon } from "../../components";
+} from 'react-native'
+import { useAuthContext } from '../../contexts/AuthContext'
+import { styles } from '../../styles/styles'
+import { FooterButton, TextInputWithIcon } from '../../components'
 
-import { LargePetalsSvg } from "../../components/svg";
-import { Link } from "@react-navigation/native";
+import { LargePetalsSvg } from '../../components/svg'
 
-export const SignupRFC = () => {
+export const SignupRFC = (): JSX.Element => {
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
@@ -30,19 +29,19 @@ export const SignupRFC = () => {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
       <View style={{ width: '100%' }}>
 
         <View style={{ width: '100%' }}>
-          <View style={{marginBottom: 30}}>
+          <View style={{ marginBottom: 30 }}>
             <LargePetalsSvg />
           </View>
           <Text style={{ fontSize: 48, textAlign: 'left', width: '100%' }}>Por último,</Text>
           <Text style={{ fontSize: 48, textAlign: 'left', width: '100%' }}>tu <Text style={{ fontWeight: '700' }}>RFC</Text></Text>
         </View>
-        <View style={{marginTop: 60}}>
+        <View style={{ marginTop: 60 }}>
           <TextInputWithIcon
             placeholder="RFC"
             icon="article"
@@ -50,8 +49,8 @@ export const SignupRFC = () => {
             type="email"
             handleChange={handleChange}
           />
-          <Text style={{ textAlign: "left", fontSize: 16 }}>Es opcional, nos ayudará a generar tus recibos deducibles.</Text>
-          <Text style={{fontSize: 16, color: '#CE0E2D'}}>
+          <Text style={{ textAlign: 'left', fontSize: 16 }}>Es opcional, nos ayudará a generar tus recibos deducibles.</Text>
+          <Text style={{ fontSize: 16, color: '#CE0E2D' }}>
             Más información
           </Text>
         </View>
@@ -62,5 +61,5 @@ export const SignupRFC = () => {
         onPress={() => setIsAuthenticated(true)}
       />
     </KeyboardAvoidingView>
-  );
-}  
+  )
+}

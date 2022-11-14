@@ -56,7 +56,7 @@ const displayWelcomeMessage = (): string => {
   return 'Buenas noches'
 }
 
-const HomeScreen = (): JSX.Element => {
+export const HomeScreen = (): JSX.Element => {
   return (
     <View style={styles.container }>
       <View style={{
@@ -140,5 +140,3 @@ const styles = StyleSheet.create({
     padding: 10
   }
 })
-
-export default HomeScreen
