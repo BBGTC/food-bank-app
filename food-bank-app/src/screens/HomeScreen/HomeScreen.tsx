@@ -96,7 +96,7 @@ export const HomeScreen = (): JSX.Element => {
       </View>
       <EventCarousel>
         {donationEvents.map((event, index) => {
-          return <EventCard event={event} key={index}/>
+          return <EventCard event={event} key={index} />
         })}
       </EventCarousel>
       <PriorityQueue items={priorityQueueItems} />

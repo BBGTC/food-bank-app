@@ -1,12 +1,13 @@
 import { Link } from '@react-navigation/native'
 import { useState } from 'react'
+import { useTheme } from '@rneui/themed'
 import { Text, View } from 'react-native'
 import type { NativeStackScreenProps } from '@react-navigation/native-stack'
 
 import { styles } from '../../styles/styles'
 import { FooterButton, TextInputWithIcon } from '../../components'
 
-const StartSignup = ({ navigation }: NativeStackScreenProps<{}>): JSX.Element => {
+const Credentials = ({ navigation }: NativeStackScreenProps<{}>): JSX.Element => {
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
@@ -51,17 +52,17 @@ const StartSignup = ({ navigation }: NativeStackScreenProps<{}>): JSX.Element =>
       <View>
         <FooterButton
           title="Siguiente"
-          onPress={() => navigation.navigate('PersonalSignup')}
+          onPress={() => navigation.navigate('PersonalData')}
         />
         <Text
           style={{ textAlign: 'center', margin: 10 }}>
           ¿Ya tienes una cuenta? <Link
             to={{ screen: 'Login' }}
-            style={{ color: theme.colors.green}}>Inicia sesión</Link>
+            style={{ color: theme.colors.green }}>Inicia sesión</Link>
         </Text>
       </View>
     </View>
   )
 }
 
-export default StartSignup
+export default Credentials
