@@ -1,76 +1,131 @@
+import { useRef, useEffect } from 'react'
 import {
-  Button,
-  SafeAreaView,
   Text,
-  View
-} from 'react-native';
-import PriorityListItem from '../../components/PriorityListItem/PriorityListItem';
-import { FooterButton } from '../../components';
+  View,
+  Animated
+} from 'react-native'
 
-import { useTheme, Input, Icon } from '@rneui/themed';
+import { useTheme, Icon, Button } from '@rneui/themed'
+import NumericInput from 'react-native-numeric-input'
 
-
-type DonationCategoryItemProps = {
-  icon: string;
-  name: string;
-  quantity: number;
+interface DonationCategoryItemProps {
+  id: number
+  name: string
+  displayName: string
+  icon: string
+  quantity: number
+  type: 'quantity' | 'add'
+  onAdd?: null | ((id: number) => void)
+  onDelete?: null | ((id: number) => void)
+  onChange?: null | ((id: number, quantity: number) => void)
 }
 
-export default function DonationCategoryItem({ icon, name, quantity }: DonationCategoryItemProps) {
+const DonationCategoryItem = ({
+  id,
+  name,
+  displayName,
+  icon,
+  quantity,
+  type,
+  onAdd,
+  onDelete,
+  onChange
+}: DonationCategoryItemProps): JSX.Element => {
+  const { theme } = useTheme()
 
-  const { theme } = useTheme();
+  // Animation
+  const fadeAnim = useRef(new Animated.Value(0)).current
+
+  const fadeTo = (toValue: 0 | 1, duration: number, onCompletion?: () => void): void => {
+    console.log(quantity)
+
+    Animated.timing(
+      fadeAnim,
+      {
+        toValue,
+        duration,
+        useNativeDriver: true
+      }
+    ).start(() => onCompletion?.())
+  }
+
+  useEffect(() => {
+    fadeTo(1, 200)
+  }, [])
+
+  const displayRightSection = (): JSX.Element => {
+    switch (type) {
+      case 'add':
+        return <Button
+          buttonStyle={{ backgroundColor: theme.colors.green, borderRadius: 4 }}
+          onPress={() => { fadeTo(0, 200, () => onAdd?.(id)) }}
+        >
+          <Icon
+            name='add'
+            type="material"
+            color={theme.colors.white}
+          />
+        </Button>
+      case 'quantity':
+        return <NumericInput
+          rounded
+          totalWidth={90}
+          totalHeight={40}
+          value={quantity}
+          leftButtonBackgroundColor={theme.colors.red}
+          rightButtonBackgroundColor={theme.colors.green}
+          onChange={value => onChange?.(id, value)}
+          onLimitReached={() => fadeTo(0, 200, () => onDelete?.(id))}
+          minValue={0}
+        />
+      default:
+        return <></>
+    }
+  }
+
   return (
-    <View
-      style={{
-        height: 70,
-        width: 300,
-        padding: 12,
-        marginBottom: 20,
-        backgroundColor: "white",
-        borderRadius: 5,
-        elevation: 5,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between"
-      }}>
+    <Animated.View
+      style={{ opacity: fadeAnim }}>
       <View
         style={{
-          flexDirection: "row"
+          height: 70,
+          width: 300,
+          padding: 12,
+          marginBottom: 20,
+          shadowOffset: {
+            width: 0,
+            height: 2
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 1.5,
+          borderRadius: 4,
+          backgroundColor: 'white',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between'
         }}>
+
         <Icon
           name={icon}
           size={48}
           type="material"
           color={theme.colors.gray.A}
-        ></Icon>
+        />
         <View
           style={{
-            marginLeft: 12,
-            justifyContent: "center"
+            width: 100,
+            marginHorizontal: 12
           }}>
-          <Text>{name}</Text>
-          <Text style={{ color: theme.colors.gray.A }}>{quantity} kg</Text>
+          <Text style={{ flexWrap: 'wrap' }}>{displayName}</Text>
+        </View>
+        <View
+          style={{ flexDirection: 'row' }}>
+          {displayRightSection()}
         </View>
       </View>
-      <View
-        style=
-        {{ flexDirection: "row" }}>
-        <Icon
-          name="edit"
-          size={24}
-          type="material"
-          color={theme.colors.gray.A}>
-        </Icon>
-        <Icon
-          style={{ marginLeft: 5}}
-          name="cancel"
-          size={24}
-          type="material"
-          color={theme.colors.error}>
-        </Icon>
-      </View>
-    </View>
-  );
+    </Animated.View>
+
+  )
 }
 
-
+export default DonationCategoryItem

@@ -19,20 +19,12 @@ const Stack = createNativeStackNavigator()
 const theme = createTheme({
   lightColors: {
     gray: {
-<<<<<<< HEAD
       A: '#616161',
       B: '#f3f3f3',
       date: '#b5babf'
     },
-    green: '#00953B',
-    shadow: '#2e2e2e',
-    buttonBorder: '#e0e0e0'
-=======
-      A: "#616161",
-      B: "#f3f3f3"
-    },
-    green: "#00953b",
->>>>>>> 32ff5dcc (add category card for donation)
+    green: '#00953b',
+    red: '#dd566c'
   },
   mode: 'light', // your light or dark mode value
   components: {
@@ -51,7 +43,7 @@ const Main = (): JSX.Element => {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
-            headerShown: false
+            headerBackTitleVisible: false
           }}>
           {!isAuthenticated
             ? <>

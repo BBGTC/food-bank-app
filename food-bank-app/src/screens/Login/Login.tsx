@@ -1,5 +1,6 @@
 import { Link } from '@react-navigation/native'
 import { useState } from 'react'
+import { useTheme } from '@rneui/themed'
 import { Text, View } from 'react-native'
 
 import { useAuthContext } from '../../contexts/AuthContext'
