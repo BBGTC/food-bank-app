@@ -1,24 +1,38 @@
-import { useContext, createContext } from 'react'
-import { useAuth, UseAuth } from '../hooks/useAuth'
+import { createContext, useMemo, useContext, useState } from 'react'
+
+interface AuthContextValue {
+  isAuthenticated: boolean
+  setIsAuthenticated: (newIsAuthenticated: boolean) => void
+}
 
 interface Props {
   children: JSX.Element | JSX.Element[]
 }
 
-const AuthContext = createContext<UseAuth>({})
+const AuthContext = createContext<AuthContextValue | undefined>(undefined)
 
 const AuthProvider = ({ children }: Props): JSX.Element => {
-  const { isAuthenticated, setIsAuthenticated } = useAuth(false)
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
+
+  const contextValue: AuthContextValue = useMemo(() => ({
+    isAuthenticated, setIsAuthenticated
+  }), [isAuthenticated])
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    <AuthContext.Provider value={contextValue}>
       {children}
     </AuthContext.Provider>
   )
 }
 
-const useAuthContext = (): UseAuth => {
-  return useContext(AuthContext)
+const useAuthContext = (): AuthContextValue => {
+  const context = useContext(AuthContext)
+
+  if (context === undefined) {
+    throw new Error('useAuthContext must be used withing an AuthProvider')
+  }
+
+  return context
 }
 
 export { AuthProvider, useAuthContext }
