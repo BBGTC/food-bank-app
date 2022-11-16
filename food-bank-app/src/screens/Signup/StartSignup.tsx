@@ -1,10 +1,11 @@
 import { Link } from '@react-navigation/native'
 import { useState } from 'react'
-import { Text, View } from 'react-native'
+import { Alert, Text, View } from 'react-native'
 import type { NativeStackScreenProps } from '@react-navigation/native-stack'
 
 import { styles } from '../../styles/styles'
 import { FooterButton, TextInputWithIcon } from '../../components'
+import { useClient } from '../../hooks'
 
 const StartSignup = ({ navigation }: NativeStackScreenProps<{}>): JSX.Element => {
   const [credentials, setCredentials] = useState({
@@ -13,11 +14,23 @@ const StartSignup = ({ navigation }: NativeStackScreenProps<{}>): JSX.Element =>
     passwordConfirm: ''
   })
 
+  const client = useClient()
+
   const handleChange = (type: string, value: string): void => {
     setCredentials((prevCredentials) => ({
       ...prevCredentials,
       [type]: value
     }))
+  }
+
+  const handleSubmit = async (): Promise<void> => {
+    const { email, password, passwordConfirm } = credentials
+
+    const { email: username } = await client.signup(email, password, passwordConfirm)
+
+    Alert.alert('Successful signup', `Registered with username ${username}`)
+
+    navigation.navigate('PersonalSignup')
   }
 
   return (
@@ -49,7 +62,7 @@ const StartSignup = ({ navigation }: NativeStackScreenProps<{}>): JSX.Element =>
       <View>
         <FooterButton
           title="Siguiente"
-          onPress={() => navigation.navigate('PersonalSignup')}
+          onPress={handleSubmit}
         />
         <Text
           style={{ textAlign: 'center', margin: 10 }}>
