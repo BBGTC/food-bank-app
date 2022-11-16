@@ -14,7 +14,7 @@ import { styles } from '../../styles/styles'
 import { FooterButton, TextInputWithIcon, FormError } from '../../components'
 
 import { SmallEclipseSvg, StarSvg } from '../../components/svg'
-import { isValidEmail } from '../../util/emailUtils'
+import { isValidEmail, isEmptyString } from '../../util'
 
 const INITIAL_CREDENTIALS = {
   email: '',
@@ -59,13 +59,12 @@ export const SignupStart = ({ navigation }: any): JSX.Element => {
   const handleSubmit = async (): Promise<void> => {
     const { email, password, passwordConfirm } = credentials
 
-    let isValid = true
+    let isValid = true;
 
-    if ((email.trim().length === 0) || (password.trim().length === 0) || (passwordConfirm.trim().length === 0)) {
+    if ([email, password, passwordConfirm].some(isEmptyString)) {
       isValid = false
-      setErrors((prevErrors) => ({ ...prevErrors, allFields: ['Todos los campos son necesarios'] }))
       // Early return to avoid filling screen with too many error warnings
-      return
+      setErrors((prevErrors) => ({ ...prevErrors, allFields: ['Todos los campos son necesarios'] }))
     }
 
     if (!isValidEmail(credentials.email)) {

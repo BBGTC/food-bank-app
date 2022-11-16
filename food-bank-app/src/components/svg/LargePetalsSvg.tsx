@@ -1,7 +1,6 @@
-import React from 'react'
-import Svg, { SvgProps, Path } from "react-native-svg"
+import Svg, { SvgProps, Path } from 'react-native-svg'
 
-export const LargePetalsSvg = (props: SvgProps) => {
+export const LargePetalsSvg = (props: SvgProps): JSX.Element => {
   return (
     <Svg
     width={143}
@@ -20,4 +19,4 @@ export const LargePetalsSvg = (props: SvgProps) => {
     />
   </Svg>
   )
-};
+}

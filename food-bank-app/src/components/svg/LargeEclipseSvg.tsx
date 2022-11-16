@@ -1,7 +1,6 @@
-import React from 'react';
-import Svg, { SvgProps, Circle } from "react-native-svg"
+import Svg, { SvgProps, Circle } from 'react-native-svg'
 
-export const LargeEclipseSvg = (props: SvgProps) => {
+export const LargeEclipseSvg = (props: SvgProps): JSX.Element => {
   return (
     <Svg
     width={66}
@@ -20,8 +19,3 @@ export const LargeEclipseSvg = (props: SvgProps) => {
   </Svg>
   )
 }
-
-
-<svg width="66" height="101" viewBox="0 0 66 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="50.0123" cy="50.0123" r="45" transform="rotate(89.9859 50.0123 50.0123)" stroke="#131313" stroke-width="10"/>
-</svg>

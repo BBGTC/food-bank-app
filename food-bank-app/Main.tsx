@@ -3,7 +3,14 @@ import { ThemeProvider, createTheme } from '@rneui/themed'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { useAuthContext } from './src/contexts/AuthContext'
 
-import { HomeScreen, Donation, Login, SignupStart, SignupPersonal, SignupRFC } from './src/screens'
+import {
+  HomeScreen,
+  Donation,
+  Login,
+  SignupStart,
+  SignupPersonal,
+  SignupRFC
+} from './src/screens'
 
 const Stack = createNativeStackNavigator()
 
