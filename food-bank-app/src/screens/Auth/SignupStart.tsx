@@ -57,9 +57,8 @@ export const SignupStart = ({ navigation }: any): JSX.Element => {
   }
 
   const handleSubmit = async (): Promise<void> => {
+    let isValid = true
     const { email, password, passwordConfirm } = credentials
-
-    let isValid = true;
 
     if ([email, password, passwordConfirm].some(isEmptyString)) {
       isValid = false
