@@ -1,9 +1,8 @@
-import React from 'react'
-import Svg, { SvgProps, Path } from "react-native-svg"
+import Svg, { SvgProps, Path } from 'react-native-svg'
 
-export const StarSvg = (props: SvgProps) => {
+export const StarSvg = (props: SvgProps): JSX.Element => {
   return (
-   
+
     <Svg
     width={65}
     height={80}

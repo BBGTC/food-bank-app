@@ -1,7 +1,6 @@
-import React from 'react'
-import Svg, { SvgProps, Path } from "react-native-svg"
+import Svg, { SvgProps, Path } from 'react-native-svg'
 
-export const SmallerEclipseSvg = (props: SvgProps) => {
+export const SmallerEclipseSvg = (props: SvgProps): JSX.Element => {
   return (
     <Svg
     width={40}
@@ -17,8 +16,3 @@ export const SmallerEclipseSvg = (props: SvgProps) => {
   </Svg>
   )
 }
-
-
-<svg width="40" height="65" viewBox="0 0 40 65" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M32.5307 60.0001C17.3428 60.0038 5.02766 47.6947 5.02393 32.5069C5.02021 17.319 17.3294 5.00385 32.5172 5.00012C47.705 4.99639 60.0202 17.3055 60.0239 32.4934C60.0277 47.6812 47.7185 59.9964 32.5307 60.0001Z" stroke="#131313" stroke-width="10"/>
-</svg>

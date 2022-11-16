@@ -4,4 +4,3 @@ export { SmallerEclipseSvg } from './SmallerEclipseSvg'
 export { LargePetalsSvg } from './LargePetalsSvg'
 export { PetalsSvg } from './PetalsSvg'
 export { StarSvg } from './StarSvg'
-

@@ -6,11 +6,14 @@ import {
   KeyboardAvoidingView,
   Platform
 } from 'react-native'
+
 import { useAuthContext } from '../../contexts/AuthContext'
 import { styles } from '../../styles/styles'
 import { FooterButton, FormError, TextInputWithIcon } from '../../components'
 
 import { PetalsSvg, SmallEclipseSvg } from '../../components/svg'
+
+import { isEmptyString } from '../../util'
 
 export const Login = (): JSX.Element => {
   const [credentials, setCredentials] = useState({
@@ -30,13 +33,13 @@ export const Login = (): JSX.Element => {
   }
 
   const handleSubmit = (): void => {
-    setError('')
+    const { email, password } = credentials
 
-    if ((credentials.email.trim().length === 0) || (credentials.password.trim().length === 0)) {
+    if (![email, password].some(isEmptyString)) {
       setError('Todos los campos son necesarios')
       return
     }
-
+    setError('')
     setIsAuthenticated(true)
   }
 

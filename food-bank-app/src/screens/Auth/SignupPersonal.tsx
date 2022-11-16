@@ -4,6 +4,8 @@ import { styles } from '../../styles/styles'
 import { FooterButton, FormError, TextInputWithIcon } from '../../components'
 import { LargeEclipseSvg } from '../../components/svg'
 
+import { isEmptyString } from '../../util'
+
 const INITIAL_PERSONAL_INFO = {
   name: '',
   surnames: '',
@@ -49,7 +51,7 @@ export const SignupPersonal = ({ navigation }: any): JSX.Element => {
     let isValid = true
     const { name, surnames, phone, address } = personalInfo
 
-    if ((name.trim().length === 0) || (surnames.trim().length === 0) || (phone.trim().length === 0) || (address.trim().length === 0)) {
+    if ([name, surnames, phone, address].some(isEmptyString)) {
       isValid = false
       setErrors((prevErrors) => ({ ...prevErrors, allFields: ['Todos los campos son necesarios'] }))
     }
