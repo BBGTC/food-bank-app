@@ -1,7 +1,9 @@
+import { Login } from "./components/screens"
+
 export default function App() {
   return (
-    <h1 className="text-3xl font-bold underline">
-      Banco de alimentos de Guadalajara
-    </h1>
-  )
+    <div className="w-screen h-screen  bg-stone-50">
+      <Login />
+    </div> 
+    )
 }
