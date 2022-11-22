@@ -18,7 +18,7 @@ export const SignupRFC = (): JSX.Element => {
     passwordConfirm: ''
   })
 
-  const { setIsAuthenticated } = useAuthContext()
+  const { setAccessToken } = useAuthContext()
 
   const handleChange = (type: string, value: string): void => {
     setCredentials((prevCredentials) => ({
@@ -58,7 +58,7 @@ export const SignupRFC = (): JSX.Element => {
 
       <FooterButton
         title="Finalizar"
-        onPress={() => setIsAuthenticated(true)}
+        onPress={() => setAccessToken('some token')}
       />
     </KeyboardAvoidingView>
   )

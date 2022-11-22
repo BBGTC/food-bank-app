@@ -1,8 +1,11 @@
 import { ScrollView, View } from 'react-native'
-import PriorityQueueItem from './PriorityQueueItem'
+import PriorityQueueItem, { PriorityQueueItemProps } from './PriorityQueueItem'
 
-const PriorityQueue = (props: any): JSX.Element => {
-  const { items } = props
+interface PriorityQueueProps {
+  items: PriorityQueueItemProps[]
+}
+
+const PriorityQueue = ({ items }: PriorityQueueProps): JSX.Element => {
   return (
     <ScrollView contentContainerStyle={{
       flexGrow: 1,
@@ -14,9 +17,9 @@ const PriorityQueue = (props: any): JSX.Element => {
           <View key = {index} style={{ width: '100%', marginBottom: items.length - 1 === index ? 10 : 20 }}>
             <PriorityQueueItem
               title={item.title}
-              priorityLevel={item.priorityLevel}
+              priority={item.priority}
+              examples={item.examples}
               imageUrl= {item.imageUrl}
-              modal={item.modal}
             />
           </View>
         )

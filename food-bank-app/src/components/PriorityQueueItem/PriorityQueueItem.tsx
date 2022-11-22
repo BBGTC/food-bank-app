@@ -3,13 +3,13 @@ import { useTheme } from '@rneui/themed'
 import { useState } from 'react'
 import { Image, Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 import Modal from 'react-native-modal'
-const nopictureUrl = 'https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg'
+const noPictureUrl = 'https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg'
 
-interface PriorityQueueItemProps {
+export interface PriorityQueueItemProps {
   title: string
-  priorityLevel: number
+  priority: number
   imageUrl?: string
-  modal: string
+  examples: string // This is just an string that concatenates different items. e.g. `egg, rice, beans`
 }
 
 enum Colors {
@@ -18,17 +18,17 @@ enum Colors {
   '#dd596e'
 }
 
-enum Priorities {
-  'BAJA',
-  'MEDIANA',
-  'ALTA'
+const getPriorityLabel = (priority: number): string => {
+  if (priority >= 0 && priority <= 33) return 'ALTA'
+  if (priority >= 34 && priority <= 66) return 'MEDIANA'
+  return 'BAJA'
 }
 
 const PriorityQueueItem = ({
   title,
-  priorityLevel,
-  imageUrl = nopictureUrl,
-  modal
+  priority,
+  imageUrl = noPictureUrl,
+  examples
 }: PriorityQueueItemProps): JSX.Element => {
   const { theme } = useTheme()
   const [isModalVisible, setModalVisible] = useState(false)
@@ -62,7 +62,7 @@ const PriorityQueueItem = ({
               color= '#666666'
             />
           </TouchableOpacity>
-          <Modal isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)}>
+          <Modal isVisible={isModalVisible && examples != null} onBackdropPress={() => setModalVisible(false)}>
             <View style={styles.modalContainer}>
               <View style={{ height: '30%' }}>
                 <Text style={{
@@ -78,7 +78,7 @@ const PriorityQueueItem = ({
                 height: '70%',
                 justifyContent: 'space-between'
               }}>
-                <Text style={{ fontSize: 16 }}>{modal}</Text>
+                <Text style={{ fontSize: 16 }}>{examples}</Text>
                 <TouchableOpacity onPress={() => setModalVisible(false)}>
                   <View style={styles.modalButton}>
                     <Text style={{
@@ -101,9 +101,9 @@ const PriorityQueueItem = ({
           }}>
           <Text
             style={{
-              color: Colors[priorityLevel],
+              color: Colors[priority],
               fontSize: 17
-            }}>{Priorities[priorityLevel]}</Text>
+            }}>{getPriorityLabel(priority)}</Text>
         </View>
       </View>
     </View>

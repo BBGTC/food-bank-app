@@ -1,51 +1,45 @@
 import axios, {
   AxiosError,
   AxiosInstance,
-  AxiosRequestConfig,
   AxiosResponse
 } from 'axios'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+
+import InventoryModel from '../../models/InventoryModel'
 
 declare module 'axios' {
   interface AxiosResponse<T = any> extends Promise<T> {}
 }
 
+interface AxiosInstanceHeaders {
+  'Content-Type': string
+  Authorization?: string
+
+}
+
 class HttpClient {
   private readonly instance: AxiosInstance
+  private readonly token: string
 
-  public constructor (baseURL?: string) {
+  public constructor (baseURL?: string, token?: string) {
     if (baseURL === null || baseURL === undefined) {
       throw new Error('Invalid base URL')
     }
 
-    this.instance = axios.create({
-      baseURL,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+    const headers: AxiosInstanceHeaders = { 'Content-Type': 'application/json' }
+
+    this.token = token ?? ''
+
+    if (this.token !== '') {
+      headers.Authorization = `Bearer ${this.token}`
+    }
+
+    this.instance = axios.create({ baseURL, headers, withCredentials: true })
 
     this._initializeResponseInterceptor()
   }
 
   private readonly _initializeResponseInterceptor = (): void => {
-    this.instance.interceptors.request.use(this._handleRequestAuthorization)
     this.instance.interceptors.response.use(this._handleResponse, this._handleError)
-  }
-
-  private readonly _handleRequestAuthorization = async (initialConfig: AxiosRequestConfig): Promise<AxiosRequestConfig> => {
-    const requestConfig = initialConfig
-
-    const accessToken: string = await AsyncStorage.getItem('accessToken') ?? ''
-
-    if (requestConfig.headers?.Authorization == null && accessToken != null) {
-      requestConfig.headers = {
-        ...requestConfig.headers,
-        Authorization: `Bearer ${accessToken}`
-      }
-    }
-
-    return requestConfig
   }
 
   private readonly _handleResponse = ({ data }: AxiosResponse): any => data
@@ -72,6 +66,10 @@ class HttpClient {
     )
 
     return { accessToken: access, refreshToken: refresh }
+  }
+
+  public readonly getInventories = async (): Promise<InventoryModel[]> => {
+    return await this.instance.get<InventoryModel[]>('/inventory/')
   }
 }
 

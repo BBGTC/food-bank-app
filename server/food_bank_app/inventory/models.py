@@ -43,3 +43,4 @@ class Inventory(models.Model):
             default=datetime.now().month
     )
     year = models.IntegerField(null=False, default=datetime.now().year)
+    examples = models.CharField(null=True, blank=True, max_length=30)

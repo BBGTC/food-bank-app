@@ -1,8 +1,9 @@
 import { createContext, useMemo, useContext, useState } from 'react'
 
 interface AuthContextValue {
+  accessToken: string
   isAuthenticated: boolean
-  setIsAuthenticated: (newIsAuthenticated: boolean) => void
+  setAccessToken: (newAccessToken: string) => void
 }
 
 interface Props {
@@ -12,11 +13,13 @@ interface Props {
 const AuthContext = createContext<AuthContextValue | undefined>(undefined)
 
 const AuthProvider = ({ children }: Props): JSX.Element => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
+  const [accessToken, setAccessToken] = useState<string>('')
 
   const contextValue: AuthContextValue = useMemo(() => ({
-    isAuthenticated, setIsAuthenticated
-  }), [isAuthenticated])
+    accessToken,
+    isAuthenticated: accessToken !== '',
+    setAccessToken
+  }), [accessToken])
 
   return (
     <AuthContext.Provider value={contextValue}>
