@@ -9,6 +9,10 @@ import EventCarousel from '../components/EventCarousel/EventCarousel'
 import PriorityQueue from '../components/PriorityQueueItem/PriorityQueue'
 import EventCard from '../components/EventCard'
 
+interface HomeScreenProps {
+  navigation: any
+}
+
 const EVENT_CARDS = [
   {
     address: {
@@ -57,7 +61,7 @@ const displayWelcomeMessage = (): string => {
   return 'Buenas noches'
 }
 
-export const HomeScreen = (): JSX.Element => {
+const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={{
@@ -99,7 +103,7 @@ export const HomeScreen = (): JSX.Element => {
       </View>
       <EventCarousel>
         {EVENT_CARDS.map((event, index) => {
-          return <EventCard event={event} key={index} />
+          return <EventCard event={event} key={index} navigation={navigation} />
         })}
       </EventCarousel>
       <View style={{

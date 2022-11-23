@@ -1,7 +1,9 @@
-import { Modal, View, Button } from 'react-native'
+import { useEffect } from 'react'
+import { View } from 'react-native'
+import Modal from 'react-native-modal'
 
-import { Category } from '../../types'
-import DonationCategoryItem from './DonationCategoryItem/DonationCategoryItem'
+import { Category } from '../../../types'
+import DonationCategoryItem from '../DonationCategoryItem/DonationCategoryItem'
 
 interface DonationModalProps {
   isVisible: boolean
@@ -16,13 +18,22 @@ const DonationModal = ({
   onPress,
   handleAdd
 }: DonationModalProps): JSX.Element => {
+  useEffect(() => {
+    if (availableCategories.length === 0) {
+      onPress()
+    }
+  }, [availableCategories])
+
   return (
     <Modal
-      animationType="slide"
-      visible={isVisible}
-      presentationStyle="formSheet"
+      isVisible={isVisible}
+      onBackdropPress={onPress}
     >
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 20
+      }}>
         {availableCategories.map(category => <DonationCategoryItem
           id={category.id}
           key={category.name}
@@ -33,10 +44,6 @@ const DonationModal = ({
           type='add'
           onAdd={handleAdd}
         />)}
-        <Button
-          title="Cerrar"
-          onPress={onPress}
-        />
       </View>
     </Modal>
   )

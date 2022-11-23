@@ -19,7 +19,7 @@ const FooterButton = ({ title, onPress }: FooterButtonProps): JSX.Element => {
       containerStyle={{
         width: '100%'
       }}
-    ></Button>
+    />
   )
 }
 
