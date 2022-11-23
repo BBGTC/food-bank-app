@@ -1,9 +1,10 @@
 import { Login } from "./components/screens"
+import { useAuthContext } from "./contexts/AuthContext"
 
 export default function App() {
+  const authContext = useAuthContext()
+
   return (
-    <div className="w-screen h-screen  bg-stone-50">
       <Login />
-    </div> 
     )
 }
