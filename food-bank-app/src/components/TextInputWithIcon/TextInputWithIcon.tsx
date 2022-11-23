@@ -16,7 +16,7 @@ const TextInputWithIcon = ({ placeholder, icon, value, type, handleChange }: Tex
       placeholder={placeholder}
       onChangeText={newValue => handleChange(type, newValue)}
       rightIcon={
-        <Icon name={icon} type="material" color={theme.colors.gray.A}></Icon>
+        <Icon name={icon} type="material" color={theme.colors.gray.A} />
       }
       style={{
         padding: 0

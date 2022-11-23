@@ -4,9 +4,10 @@ import {
   View,
   Animated
 } from 'react-native'
-
 import { useTheme, Icon, Button } from '@rneui/themed'
 import NumericInput from 'react-native-numeric-input'
+
+import fadeTo from '../../animations/fadeTo'
 
 interface DonationCategoryItemProps {
   id: number
@@ -34,23 +35,10 @@ const DonationCategoryItem = ({
   const { theme } = useTheme()
 
   // Animation
-  const fadeAnim = useRef(new Animated.Value(0)).current
-
-  const fadeTo = (toValue: 0 | 1, duration: number, onCompletion?: () => void): void => {
-    console.log(quantity)
-
-    Animated.timing(
-      fadeAnim,
-      {
-        toValue,
-        duration,
-        useNativeDriver: true
-      }
-    ).start(() => onCompletion?.())
-  }
+  const animation = useRef(new Animated.Value(0)).current
 
   useEffect(() => {
-    fadeTo(1, 200)
+    fadeTo(1, 200, animation)
   }, [])
 
   const displayRightSection = (): JSX.Element => {
@@ -58,7 +46,7 @@ const DonationCategoryItem = ({
       case 'add':
         return <Button
           buttonStyle={{ backgroundColor: theme.colors.green, borderRadius: 4 }}
-          onPress={() => { fadeTo(0, 200, () => onAdd?.(id)) }}
+          onPress={() => { fadeTo(0, 200, animation, () => onAdd?.(id)) }}
         >
           <Icon
             name='add'
@@ -75,7 +63,7 @@ const DonationCategoryItem = ({
           leftButtonBackgroundColor={theme.colors.red}
           rightButtonBackgroundColor={theme.colors.green}
           onChange={value => onChange?.(id, value)}
-          onLimitReached={() => fadeTo(0, 200, () => onDelete?.(id))}
+          onLimitReached={() => fadeTo(0, 200, animation, () => onDelete?.(id))}
           minValue={0}
         />
       default:
@@ -85,17 +73,21 @@ const DonationCategoryItem = ({
 
   return (
     <Animated.View
-      style={{ opacity: fadeAnim }}>
+      style={{
+        opacity: animation,
+        width: '100%',
+        alignItems: 'center'
+      }}>
       <View
         style={{
           height: 70,
-          width: 300,
-          padding: 12,
+          width: '100%',
           marginBottom: 20,
           shadowOffset: {
             width: 0,
             height: 2
           },
+          padding: 12,
           shadowOpacity: 0.25,
           shadowRadius: 1.5,
           borderRadius: 4,
@@ -111,13 +103,12 @@ const DonationCategoryItem = ({
           type="material"
           color={theme.colors.gray.A}
         />
-        <View
+        <Text
           style={{
+            flexWrap: 'wrap',
             width: 100,
             marginHorizontal: 12
-          }}>
-          <Text style={{ flexWrap: 'wrap' }}>{displayName}</Text>
-        </View>
+          }}>{displayName}</Text>
         <View
           style={{ flexDirection: 'row' }}>
           {displayRightSection()}

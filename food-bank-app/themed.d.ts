@@ -7,6 +7,7 @@ declare module '@rneui/themed' {
       B: string
       date: string
     }
+    red: string
     green: string
     shadow: string
     buttonBorder: string

@@ -33,7 +33,7 @@ const Credentials = ({ navigation }: NativeStackScreenProps<{}>): JSX.Element =>
           value={credentials.email}
           type="email"
           handleChange={handleChange}
-        ></TextInputWithIcon>
+        />
         <TextInputWithIcon
           placeholder="Contraseña"
           icon="lock"

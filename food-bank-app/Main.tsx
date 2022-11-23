@@ -23,7 +23,9 @@ const theme = createTheme({
       B: '#f3f3f3',
       date: '#b5babf'
     },
-    green: '#00953b',
+    green: '#00953B',
+    shadow: '#2e2e2e',
+    buttonBorder: '#e0e0e0',
     red: '#dd566c'
   },
   mode: 'light', // your light or dark mode value
@@ -47,28 +49,16 @@ const Main = (): JSX.Element => {
           }}>
           {!isAuthenticated
             ? <>
-<<<<<<< HEAD
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="StartSignup" component={StartSignup} />
               <Stack.Screen name="PersonalSignup" component={PersonalSignup} />
               <Stack.Screen name="RFCSignup" component={RFCSignup} />
             </>
-            : <Stack.Screen name="Home" component={HomeScreen} />}
-=======
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="SignupStart" component={SignupStart} />
-            <Stack.Screen name="SignupPersonal" component={SignupPersonal} />
-            <Stack.Screen name="SignupRFC" component={SignupRFC} />
-          </>
-          )}
-          {(!isLoadingAuth && isAuthenticated) && (
-          <>
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Donation" component={Donation} />
-            <Stack.Screen name="News" component={NewsFeed}/>
-          </>
-          )}
-        </Stack.Navigator>
+            : <>
+              <Stack.Screen name="Home" component={HomeScreen} />
+              <Stack.Screen name="Donation" component={Donation} />
+            </>}
+        </Stack.Navigator >
       </NavigationContainer >
     </ThemeProvider >
   )
