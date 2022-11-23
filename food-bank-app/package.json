@@ -32,11 +32,14 @@
     "react": "18.0.0",
     "react-dom": "18.0.0",
     "react-native": "0.69.6",
-    "react-native-numeric-input": "^1.9.1",
     "react-native-modal": "^13.0.1",
     "react-native-numeric-input": "^1.9.1",
     "react-native-qrcode-svg": "^6.1.2",
+<<<<<<< HEAD
     "react-native-safe-area-context": "4.3.1",
+=======
+    "react-native-safe-area-context": "^4.3.1",
+>>>>>>> 067b32a5 (working donation with QR code)
     "react-native-screens": "~3.15.0",
     "react-native-svg": "12.3.0",
     "react-native-web": "~0.18.7"

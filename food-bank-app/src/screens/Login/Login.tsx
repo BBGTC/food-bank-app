@@ -33,7 +33,7 @@ const Login = (): JSX.Element => {
           value={credentials.email}
           type="email"
           handleChange={handleChange}
-        ></TextInputWithIcon>
+        />
         <TextInputWithIcon
           placeholder="Contraseña"
           icon="lock"
@@ -42,7 +42,7 @@ const Login = (): JSX.Element => {
           handleChange={handleChange}
         />
       </View>
-      <View>
+      <View style={{ width: 300 }}>
         <FooterButton
           title="Iniciar Sesión"
           onPress={() => setIsAuthenticated(true)}
@@ -50,7 +50,7 @@ const Login = (): JSX.Element => {
         <Text
           style={{ textAlign: 'center', margin: 10 }}>
           ¿Aun no tienes cuenta? <Link
-            to={{ screen: 'StartSignup' }}
+            to={{ screen: 'Credentials' }}
             style={{ color: theme.colors.green }}>Regístrate</Link>
         </Text>
       </View>
