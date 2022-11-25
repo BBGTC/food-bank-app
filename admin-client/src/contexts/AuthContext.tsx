@@ -37,7 +37,7 @@ export const AuthProvider = ({children}: Props): JSX.Element => {
         setIsLoading(true)
         const refreshTokenUrl = `${SERVER_URL}/auth/login/refresh`
         try {
-            const resposne: Response = await fetch(refreshTokenUrl, {
+            const response: Response = await fetch(refreshTokenUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -45,7 +45,7 @@ export const AuthProvider = ({children}: Props): JSX.Element => {
                 body: JSON.stringify({ refresh:  token})
             })
 
-            const { access } = await resposne.json()
+            const { access } = await response.json()
             setToken(access)
             setIsAuthenticated(true)
             setIsLoading(false)
