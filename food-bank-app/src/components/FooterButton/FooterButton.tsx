@@ -13,10 +13,11 @@ const FooterButton = ({ title, onPress }: FooterButtonProps): JSX.Element => {
       buttonStyle={{
         height: 60,
         backgroundColor: theme.colors.black,
-        borderRadius: 10
+        borderRadius: 10,
+        width: '100%',
       }}
       containerStyle={{
-        width: 300
+        width: '100%'
       }}
     ></Button>
   )

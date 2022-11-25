@@ -18,16 +18,20 @@ const TextInputWithIcon = ({ placeholder, icon, value, type, handleChange }: Tex
       rightIcon={
         <Icon name={icon} type="material" color={theme.colors.gray.A}></Icon>
       }
+      style={{
+        padding: 0
+      }}
       inputStyle={{
         paddingHorizontal: 12
       }}
       inputContainerStyle={{
         borderBottomWidth: 0,
         borderRadius: 10,
-        backgroundColor: theme.colors.gray.B
+        backgroundColor: theme.colors.gray.B,
+        width: '100%',
       }}
       containerStyle={{
-        width: 300
+        width: '100%',
       }}
     />
   )

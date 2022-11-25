@@ -2,11 +2,15 @@ import { NavigationContainer } from '@react-navigation/native'
 import { ThemeProvider, createTheme } from '@rneui/themed'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { useAuthContext } from './src/contexts/AuthContext'
-import HomeScreen from './src/screens/HomeScreen'
-import Login from './src/screens/Login/Login'
-import StartSignup from './src/screens/Signup/StartSignup'
-import PersonalSignup from './src/screens/Signup/PersonalSignup'
-import RFCSignup from './src/screens/Signup/RFCSignup'
+
+import {
+  HomeScreen,
+  Donation,
+  Login,
+  SignupStart,
+  SignupPersonal,
+  SignupRFC
+} from './src/screens'
 
 const Stack = createNativeStackNavigator()
 
@@ -20,7 +24,14 @@ const theme = createTheme({
     shadow: '#2e2e2e',
     buttonBorder: '#e0e0e0'
   },
-  mode: 'light' // your light or dark mode value
+  mode: 'light', // your light or dark mode value
+  components: {
+    Input: {
+      containerStyle: {
+        paddingHorizontal: 0
+      }
+    }
+  }
 })
 
 const Main = (): JSX.Element => {
@@ -34,12 +45,16 @@ const Main = (): JSX.Element => {
           }}>
           {!isAuthenticated
             ? <>
-              <Stack.Screen name="Login" component={Login} />
-              <Stack.Screen name="StartSignup" component={StartSignup} />
-              <Stack.Screen name="PersonalSignup" component={PersonalSignup} />
-              <Stack.Screen name="RFCSignup" component={RFCSignup} />
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="SignupStart" component={SignupStart} />
+            <Stack.Screen name="SignupPersonal" component={SignupPersonal} />
+            <Stack.Screen name="SignupRFC" component={SignupRFC} />
+          </>
+            : <>
+              <Stack.Screen name="Home" component={HomeScreen} />
+              <Stack.Screen name="Donation" component={Donation} />
             </>
-            : <Stack.Screen name="Home" component={HomeScreen} />}
+          }
         </Stack.Navigator>
       </NavigationContainer >
     </ThemeProvider>
