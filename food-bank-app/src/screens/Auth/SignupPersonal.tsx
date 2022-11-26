@@ -77,7 +77,7 @@ export const SignupPersonal = ({ navigation }: any): JSX.Element => {
           value={personalInfo.name}
           type="name"
           handleChange={handleChange}
-        ></TextInputWithIcon>
+        />
         <TextInputWithIcon
           placeholder="Apellidos"
           icon="person"
@@ -99,7 +99,7 @@ export const SignupPersonal = ({ navigation }: any): JSX.Element => {
           type="address"
           handleChange={handleChange}
         />
-        { Object.values(errors).map(err => err.map((message, index) => <FormError key={index} message={message}/>))}
+        {Object.values(errors).map(err => err.map((message, index) => <FormError key={index} message={message} />))}
       </View>
       <FooterButton
         title="Siguiente"

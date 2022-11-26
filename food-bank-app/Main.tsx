@@ -1,5 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native'
 import { ThemeProvider, createTheme } from '@rneui/themed'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { useAuthContext } from './src/contexts/AuthContext'
 import { PrivateNavigator, PublicNavigator } from './src/Navigators'
 

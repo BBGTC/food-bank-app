@@ -5,9 +5,9 @@ import {
   View,
   Text
 } from 'react-native'
-import EventCarousel from '../components/EventCarousel/EventCarousel'
-import PriorityQueue from '../components/PriorityQueueItem/PriorityQueue'
-import EventCard from '../components/EventCard'
+import EventCarousel from '../../components/EventCarousel'
+import PriorityQueue from '../../components/PriorityQueueItem/PriorityQueue'
+import EventCard from '../../components/EventCard'
 
 interface HomeScreenProps {
   navigation: any
@@ -84,7 +84,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
         </View>
         <View style={{ width: '25%', justifyContent: 'center' }}>
           <Image
-            source={require('../../assets/logo.png')}
+            source={require('../../../assets/logo.png')}
             style={{ height: 80, width: 80, marginRight: 10 }}
           />
         </View>
@@ -136,6 +136,8 @@ const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
     </SafeAreaView>
   )
 }
+
+export default HomeScreen
 
 const styles = StyleSheet.create({
   container: {

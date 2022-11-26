@@ -14,7 +14,7 @@ const FooterButton = ({ title, onPress }: FooterButtonProps): JSX.Element => {
         height: 60,
         backgroundColor: theme.colors.black,
         borderRadius: 10,
-        width: '100%',
+        width: '100%'
       }}
       containerStyle={{
         width: '100%'
