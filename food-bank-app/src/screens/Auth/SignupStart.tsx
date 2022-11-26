@@ -36,7 +36,7 @@ export const SignupStart = ({ navigation }: any): JSX.Element => {
   const { saveAuthTokens } = useAuthContext()
   const [credentials, setCredentials] = useState<Credentials>(INITIAL_CREDENTIALS)
 
-  const client = useClient()
+  // const client = useClient()
   const [errors, setErrors] = useState<Errors>({
     email: [],
     password: [],
