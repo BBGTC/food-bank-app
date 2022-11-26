@@ -9,7 +9,8 @@ import {
   Login,
   SignupStart,
   SignupPersonal,
-  SignupRFC
+  SignupRFC,
+  NewsFeed
 } from './src/screens'
 
 const Stack = createNativeStackNavigator()
@@ -18,11 +19,13 @@ const theme = createTheme({
   lightColors: {
     gray: {
       A: '#616161',
-      B: '#f3f3f3'
+      B: '#f3f3f3',
+      date: '#b5babf'
     },
     green: '#00953B',
     shadow: '#2e2e2e',
-    buttonBorder: '#e0e0e0'
+    buttonBorder: '#e0e0e0',
+    red: '#dd576c'
   },
   mode: 'light', // your light or dark mode value
   components: {
@@ -53,6 +56,7 @@ const Main = (): JSX.Element => {
             : <>
               <Stack.Screen name="Home" component={HomeScreen} />
               <Stack.Screen name="Donation" component={Donation} />
+              <Stack.Screen name="News" component={NewsFeed}/>
             </>
           }
         </Stack.Navigator>

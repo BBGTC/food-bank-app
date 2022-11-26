@@ -2,7 +2,7 @@ import { Image, Text, View, StyleSheet } from 'react-native'
 import EventCardField from './EventCardField'
 import EventButton from './EventButton'
 import { useTheme } from '@rneui/themed'
-import DonationEvent from '../../models/DonationEventModel'
+import { DonationEvent } from '../../models'
 
 const NO_PICTURE_URL = 'https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg'
 
