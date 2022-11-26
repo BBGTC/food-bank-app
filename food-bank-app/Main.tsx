@@ -10,7 +10,8 @@ import {
   SignupStart,
   SignupPersonal,
   SignupRFC,
-  NewsFeed
+  NewsFeed,
+  LoadingScreen
 } from './src/screens'
 
 const Stack = createNativeStackNavigator()
@@ -38,27 +39,27 @@ const theme = createTheme({
 })
 
 const Main = (): JSX.Element => {
-  const { isAuthenticated } = useAuthContext()
+  const { isAuthenticated, isLoadingAuth } = useAuthContext()
   return (
     <ThemeProvider theme={theme}>
       <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false
-          }}>
-          {!isAuthenticated
-            ? <>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          {isLoadingAuth && <Stack.Screen name="Loading" component={LoadingScreen} />}
+          {(!isLoadingAuth && !isAuthenticated) && (
+          <>
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="SignupStart" component={SignupStart} />
             <Stack.Screen name="SignupPersonal" component={SignupPersonal} />
             <Stack.Screen name="SignupRFC" component={SignupRFC} />
           </>
-            : <>
-              <Stack.Screen name="Home" component={HomeScreen} />
-              <Stack.Screen name="Donation" component={Donation} />
-              <Stack.Screen name="News" component={NewsFeed}/>
-            </>
-          }
+          )}
+          {(!isLoadingAuth && isAuthenticated) && (
+          <>
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Donation" component={Donation} />
+            <Stack.Screen name="News" component={NewsFeed}/>
+          </>
+          )}
         </Stack.Navigator>
       </NavigationContainer >
     </ThemeProvider>

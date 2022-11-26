@@ -6,7 +6,6 @@ import {
   KeyboardAvoidingView,
   Platform
 } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { useAuthContext } from '../../contexts/AuthContext'
 import { styles } from '../../styles/styles'
@@ -25,7 +24,7 @@ export const Login = (): JSX.Element => {
 
   const [error, setError] = useState<string>('')
 
-  const { setIsAuthenticated } = useAuthContext()
+  const { saveAuthTokens } = useAuthContext()
   const client = useClient()
 
   const handleChange = (type: string, value: string): void => {
@@ -46,10 +45,7 @@ export const Login = (): JSX.Element => {
 
     const { accessToken, refreshToken } = await client.login(email, password)
 
-    await AsyncStorage.setItem('accessToken', accessToken)
-    await AsyncStorage.setItem('refreshToken', refreshToken)
-
-    setIsAuthenticated(true)
+    await saveAuthTokens(accessToken, refreshToken)
   }
 
   return (
