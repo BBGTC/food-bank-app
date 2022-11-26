@@ -7,8 +7,6 @@ import {
 import { useState } from 'react'
 import { Icon } from '@rneui/base'
 import { Button, useTheme } from '@rneui/themed'
-import PriorityListItem from '../../components/PriorityListItem/PriorityListItem'
-import { FooterButton } from '../../components'
 import DonationCategoryItem from '../../components/DonationCategoryItem/DonationCategoryItem'
 import DonationModal from '../../components/DonationModal/DonationModal'
 import { Category } from '../../../types'
@@ -68,22 +66,11 @@ const ALL_CATEGORIES = [
     isSelected: true
   },
   {
-    name: 'fruitsAndVegetables',
-    displayName: 'Frutas y verduras',
-    icon: 'brunch-dining',
-    quantity: 100,
-    isSelected: true
-  }, {
+    id: 2,
     name: 'sausagesAndDairy',
     displayName: 'Embutidos y lácteos',
     icon: 'brunch-dining',
     quantity: 50,
-    isSelected: true
-  }, {
-    name: 'groceries',
-    displayName: 'Abarrotes',
-    icon: 'shopping-cart',
-    quantity: 12,
     isSelected: true
   },
   {
