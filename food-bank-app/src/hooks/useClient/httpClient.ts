@@ -3,6 +3,7 @@ import axios, {
   AxiosInstance,
   AxiosResponse
 } from 'axios'
+import InventoryModel from '../../models/InventoryModel'
 
 declare module 'axios' {
   interface AxiosResponse<T = any> extends Promise<T> {}
@@ -72,6 +73,10 @@ class HttpClient {
     )
 
     return { accessToken: access }
+  }
+
+  public readonly getInventories = async (): Promise<InventoryModel[]> => {
+    return await this.instance.get<InventoryModel[]>('/inventory/')
   }
 }
 

@@ -35,6 +35,7 @@ const EventCarousel = ({ children }: EventCarouselProps): JSX.Element => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>¡Ven a apoyarnos!</Text>
       <ScrollView
         horizontal={true}
         contentContainerStyle={{ ...styles.scrollView, width: `${100 * totalItems}%` }}
@@ -48,7 +49,7 @@ const EventCarousel = ({ children }: EventCarouselProps): JSX.Element => {
         pagingEnabled
         decelerationRate="fast"
       >
-        { children }
+        {children}
       </ScrollView>
       <View style={styles.bullets}>
         {bullets}
@@ -60,7 +61,11 @@ const EventCarousel = ({ children }: EventCarouselProps): JSX.Element => {
 const styles = StyleSheet.create({
   container: {
     width: '98%',
-    maxHeight: 220
+    maxHeight: 250
+  },
+  title: {
+    fontSize: 25,
+    marginBottom: 16
   },
   scrollView: {
     flexDirection: 'row',
