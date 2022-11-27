@@ -3,6 +3,7 @@ import axios, {
   AxiosInstance,
   AxiosResponse
 } from 'axios'
+import InventoryModel from '../../models/InventoryModel'
 
 import ContributorModel from '../../models/ContributorModel'
 import { contributorAdapter } from '../../adapters'
@@ -104,6 +105,10 @@ class HttpClient {
       }
       throw error
     }
+  }
+
+  public readonly getInventories = async (): Promise<InventoryModel[]> => {
+    return await this.instance.get<InventoryModel[]>('/inventory/')
   }
 }
 
