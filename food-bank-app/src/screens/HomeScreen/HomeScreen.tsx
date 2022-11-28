@@ -4,9 +4,13 @@ import {
   View,
   Text
 } from 'react-native'
-import EventCarousel from '../components/EventCarousel/EventCarousel'
-import PriorityQueue from '../components/PriorityQueueItem/PriorityQueue'
-import EventCard from '../components/EventCard'
+import EventCarousel from '../../components/EventCarousel'
+import PriorityQueue from '../../components/PriorityQueueItem/PriorityQueue'
+import EventCard from '../../components/EventCard'
+
+interface HomeScreenProps {
+  navigation: any
+}
 
 const EVENT_CARDS = [
   {
@@ -56,9 +60,9 @@ const displayWelcomeMessage = (): string => {
   return 'Buenas noches'
 }
 
-export const HomeScreen = (): JSX.Element => {
+const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
   return (
-    <View style={styles.container }>
+    <View style={styles.container}>
       <View style={{
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -79,12 +83,12 @@ export const HomeScreen = (): JSX.Element => {
         </View>
         <View style={{ width: '25%', justifyContent: 'center' }}>
           <Image
-            source={require('../../assets/logo.png')}
+            source={require('../../../assets/logo.png')}
             style={{ height: 80, width: 80, marginRight: 10 }}
           />
         </View>
       </View>
-      <View style= {{
+      <View style={{
         width: '100%',
         marginTop: 20,
         marginLeft: 10,
@@ -97,8 +101,8 @@ export const HomeScreen = (): JSX.Element => {
         </Text>
       </View>
       <EventCarousel>
-        { EVENT_CARDS.map((event, index) => {
-          return <EventCard event={event} key={index}/>
+        {EVENT_CARDS.map((event, index) => {
+          return <EventCard event={event} key={index} navigation={navigation} />
         })}
       </EventCarousel>
       <View style={{
@@ -131,6 +135,8 @@ export const HomeScreen = (): JSX.Element => {
     </View>
   )
 }
+
+export default HomeScreen
 
 const styles = StyleSheet.create({
   container: {
