@@ -2,8 +2,8 @@
   "name": "food-bank-app",
   "version": "1.0.0",
   "scripts": {
-    "start": "API_URL=$API_URL expo start --clear",
-    "start:tunnel": "API_URL=$API_URL expo start --clear --tunnel",
+    "start:local": "API_URL=http://192.168.0.129:8000 expo start --clear",
+    "start:local:tunnel": "API_URL=http://localhost:8000 expo start --clear --tunnel",
     "test": "jest",
     "android": "expo start --android",
     "ios": "expo start --ios",
