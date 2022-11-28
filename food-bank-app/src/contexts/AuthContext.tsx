@@ -65,7 +65,7 @@ const AuthProvider = ({ children }: Props): JSX.Element => {
       }
     }
 
-    verifyAuthentication()
+    void verifyAuthentication()
   }, [])
 
   return (

@@ -13,7 +13,7 @@ const theme = createTheme({
     green: '#00953B',
     shadow: '#2e2e2e',
     buttonBorder: '#e0e0e0',
-    red: '#E41C3D'
+    red: '#e41c3d'
   },
   mode: 'light', // your light or dark mode value
   components: {

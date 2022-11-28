@@ -10,7 +10,6 @@ const NO_PICTURE_URL = 'https://upload.wikimedia.org/wikipedia/en/6/60/No_Pictur
 interface EventCardProps {
   event: DonationEvent
   hideButtons?: boolean
-  navigation?: any
 }
 
 const EventCard = ({
@@ -77,7 +76,7 @@ const EventCard = ({
               rightBorder={ true }
             />
             <EventButton
-              onPress={() => navigation.navigate('Perfil')}
+              onPress={() => navigation.navigate('Donation', { itemId: 0 })}
               title= {'DONAR'}
             />
           </View>
