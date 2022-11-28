@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   container: {
     alignSelf: 'center',
     width: '90%',
-    height: '90%'
+    height: '100%'
   }
 })
 

@@ -1,11 +1,11 @@
 import { NavigationContainer } from '@react-navigation/native'
 import { ThemeProvider, createTheme } from '@rneui/themed'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useAuthContext } from './src/contexts/AuthContext'
-
 import {
   HomeScreen,
-  Donation,
+  Profile,
   Login,
   SignupStart,
   SignupPersonal,
@@ -15,6 +15,7 @@ import {
 } from './src/screens'
 
 const Stack = createNativeStackNavigator()
+const Tab = createBottomTabNavigator()
 
 const theme = createTheme({
   lightColors: {
@@ -43,25 +44,23 @@ const Main = (): JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
       <NavigationContainer>
+        {(!isLoadingAuth && !isAuthenticated) && (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           {isLoadingAuth && <Stack.Screen name="Loading" component={LoadingScreen} />}
-          {(!isLoadingAuth && !isAuthenticated) && (
-          <>
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="SignupStart" component={SignupStart} />
             <Stack.Screen name="SignupPersonal" component={SignupPersonal} />
             <Stack.Screen name="SignupRFC" component={SignupRFC} />
-          </>
-          )}
-          {(!isLoadingAuth && isAuthenticated) && (
-          <>
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Donation" component={Donation} />
-            <Stack.Screen name="News" component={NewsFeed}/>
-          </>
-          )}
         </Stack.Navigator>
-      </NavigationContainer >
+        )}
+        {(!isLoadingAuth && isAuthenticated) && (
+          <Tab.Navigator screenOptions={{ headerShown: false }} initialRouteName="Inicio">
+              <Tab.Screen name="Comunidad" component={NewsFeed}/>
+              <Tab.Screen name="Inicio" component={HomeScreen} />
+              <Tab.Screen name="Perfil" component={Profile} />
+          </Tab.Navigator>
+        )}
+      </NavigationContainer>
     </ThemeProvider>
   )
 }

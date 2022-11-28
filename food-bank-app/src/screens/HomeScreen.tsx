@@ -1,6 +1,7 @@
 import {
   Image,
   StyleSheet,
+  SafeAreaView,
   View,
   Text
 } from 'react-native'
@@ -58,7 +59,7 @@ const displayWelcomeMessage = (): string => {
 
 export const HomeScreen = (): JSX.Element => {
   return (
-    <View style={styles.container }>
+    <SafeAreaView style={styles.container}>
       <View style={{
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -128,15 +129,16 @@ export const HomeScreen = (): JSX.Element => {
           }]}
         />
       </View>
-    </View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 10
+    alignSelf: 'center',
+    height: '105%',
+    width: '95%'
   }
 })
