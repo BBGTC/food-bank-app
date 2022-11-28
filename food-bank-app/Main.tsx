@@ -1,21 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native'
 import { ThemeProvider, createTheme } from '@rneui/themed'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useAuthContext } from './src/contexts/AuthContext'
-import {
-  HomeScreen,
-  Profile,
-  Login,
-  SignupStart,
-  SignupPersonal,
-  SignupRFC,
-  NewsFeed,
-  LoadingScreen
-} from './src/screens'
-
-const Stack = createNativeStackNavigator()
-const Tab = createBottomTabNavigator()
+import { PrivateNavigator, PublicNavigator } from './src/Navigators'
 
 const theme = createTheme({
   lightColors: {
@@ -27,7 +13,7 @@ const theme = createTheme({
     green: '#00953B',
     shadow: '#2e2e2e',
     buttonBorder: '#e0e0e0',
-    red: '#dd576c'
+    red: '#E41C3D'
   },
   mode: 'light', // your light or dark mode value
   components: {
@@ -45,20 +31,10 @@ const Main = (): JSX.Element => {
     <ThemeProvider theme={theme}>
       <NavigationContainer>
         {(!isLoadingAuth && !isAuthenticated) && (
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          {isLoadingAuth && <Stack.Screen name="Loading" component={LoadingScreen} />}
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="SignupStart" component={SignupStart} />
-            <Stack.Screen name="SignupPersonal" component={SignupPersonal} />
-            <Stack.Screen name="SignupRFC" component={SignupRFC} />
-        </Stack.Navigator>
+          <PublicNavigator/>
         )}
         {(!isLoadingAuth && isAuthenticated) && (
-          <Tab.Navigator screenOptions={{ headerShown: false }} initialRouteName="Inicio">
-              <Tab.Screen name="Comunidad" component={NewsFeed}/>
-              <Tab.Screen name="Inicio" component={HomeScreen} />
-              <Tab.Screen name="Perfil" component={Profile} />
-          </Tab.Navigator>
+          <PrivateNavigator/>
         )}
       </NavigationContainer>
     </ThemeProvider>
