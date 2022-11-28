@@ -1,16 +1,13 @@
 import {
   Image,
   StyleSheet,
+  SafeAreaView,
   View,
   Text
 } from 'react-native'
 import EventCarousel from '../../components/EventCarousel'
 import PriorityQueue from '../../components/PriorityQueueItem/PriorityQueue'
 import EventCard from '../../components/EventCard'
-
-interface HomeScreenProps {
-  navigation: any
-}
 
 const EVENT_CARDS = [
   {
@@ -60,9 +57,9 @@ const displayWelcomeMessage = (): string => {
   return 'Buenas noches'
 }
 
-const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
+const HomeScreen = (): JSX.Element => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={{
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -102,7 +99,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
       </View>
       <EventCarousel>
         {EVENT_CARDS.map((event, index) => {
-          return <EventCard event={event} key={index} navigation={navigation} />
+          return <EventCard event={event} key={index}/>
         })}
       </EventCarousel>
       <View style={{
@@ -132,7 +129,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
           }]}
         />
       </View>
-    </View>
+    </SafeAreaView>
   )
 }
 
@@ -140,9 +137,10 @@ export default HomeScreen
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 10
+    alignSelf: 'center',
+    height: '105%',
+    width: '95%'
   }
 })

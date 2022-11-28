@@ -15,7 +15,7 @@ interface PriorityQueueItemProps {
 enum Colors {
   '#00953b',
   '#ddc857',
-  '#dd596e'
+  '#E41C3D'
 }
 
 enum Priorities {
@@ -59,7 +59,7 @@ const PriorityQueueItem = ({
               name='info'
               type='foundation'
               size={30}
-              color= '#666666'
+              color= { theme.colors.gray.A }
             />
           </TouchableOpacity>
           <Modal isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)}>

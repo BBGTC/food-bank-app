@@ -3,21 +3,21 @@ import EventCardField from './EventCardField'
 import EventButton from './EventButton'
 import { useTheme } from '@rneui/themed'
 import { DonationEvent } from '../../models'
+import { useNavigation } from '@react-navigation/native'
 
 const NO_PICTURE_URL = 'https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg'
 
 interface EventCardProps {
   event: DonationEvent
   hideButtons?: boolean
-  navigation?: any
 }
 
 const EventCard = ({
   event,
-  hideButtons = false,
-  navigation
+  hideButtons = false
 }: EventCardProps): JSX.Element => {
   const { theme } = useTheme()
+  const navigation = useNavigation()
 
   const getAddress = (): string => {
     const addressData = [
@@ -68,24 +68,21 @@ const EventCard = ({
             text={`${event.startTime} - ${event.endTime}`}
           />
         </View>
-        {!hideButtons &&
+        { !hideButtons &&
           <View style={styles.buttonsContainer}>
             <EventButton
               onPress={() => null}
-              title={'CÓMO\nLLEGAR'}
-              rightBorder={true}
+              title= {'CÓMO\nLLEGAR'}
+              rightBorder={ true }
             />
             <EventButton
-              onPress={() => navigation?.navigate('Donation', {
-                itemId: 0 // aquí irá el id
-              })}
-              title={'DONAR'}
+              onPress={() => navigation.navigate('Donation', { itemId: 0 })}
+              title= {'DONAR'}
             />
           </View>
-        }
+          }
       </View>
-    </View>
-  )
+    </View>)
 }
 
 const styles = StyleSheet.create({
