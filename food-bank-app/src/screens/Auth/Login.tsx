@@ -16,7 +16,7 @@ import { useClient } from '../../hooks'
 
 import { isEmptyString } from '../../util'
 
-export const Login = (): JSX.Element => {
+export const Login = ({ navigation }: any): JSX.Element => {
   const [credentials, setCredentials] = useState({
     email: '',
     password: ''

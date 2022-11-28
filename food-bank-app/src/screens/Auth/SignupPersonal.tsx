@@ -66,6 +66,7 @@ export const SignupPersonal = ({ navigation }: any): JSX.Element => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
+
       <View style={{ position: 'absolute', right: 0 }}>
         <LargeEclipseSvg />
       </View>
@@ -105,6 +106,7 @@ export const SignupPersonal = ({ navigation }: any): JSX.Element => {
         title="Siguiente"
         onPress={handleSubmit}
       />
+
     </KeyboardAvoidingView>
 
   )

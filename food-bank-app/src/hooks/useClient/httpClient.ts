@@ -7,7 +7,7 @@ import axios, {
 import ContributorModel from '../../models/ContributorModel'
 
 declare module 'axios' {
-  interface AxiosResponse<T = any> extends Promise<T> {}
+  interface AxiosResponse<T = any> extends Promise<T> { }
 }
 
 interface AxiosInstanceHeaders {
@@ -24,7 +24,7 @@ class HttpClient {
   private readonly instance: AxiosInstance
   private readonly token: string
 
-  public constructor (baseURL?: string, token?: string) {
+  public constructor(baseURL?: string, token?: string) {
     if (baseURL === null || baseURL === undefined) {
       throw new Error('Invalid base URL')
     }
@@ -81,12 +81,11 @@ class HttpClient {
     return { accessToken: access }
   }
 
-  public getProfile = async (): Promise<ContributorModel | null> => {
+  public getProfile = async (accessToken?: string): Promise<ContributorModel | null> => {
     try {
-      const data = await this.instance.get<ContributorModel>('contributors/me')
-      return data
+      return await this.instance.get<ContributorModel>('contributors/me')
     } catch (error) {
-      if ((error as AxiosError).code === '409') {
+      if ((error as AxiosError).response?.status === 409) {
         return null
       }
       throw error

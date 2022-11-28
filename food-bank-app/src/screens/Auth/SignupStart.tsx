@@ -1,7 +1,6 @@
 import { Link } from '@react-navigation/native'
 import { useState } from 'react'
 import {
-  Alert,
   Text,
   View,
   KeyboardAvoidingView,
@@ -80,19 +79,9 @@ export const SignupStart = ({ navigation }: any): JSX.Element => {
 
     if (!isValid) { return }
 
-    const { email: username } = await client.signup(email, password, passwordConfirm)
-
-    Alert.alert('Successful signup', `Registered with username ${username}`)
-
-<<<<<<< HEAD
-    navigation.navigate('SignupPersonal')
-=======
     const { auth } = await client.signup(email, password, passwordConfirm)
 
     await saveAuthTokens(auth.access, auth.refresh)
-
-    navigation.navigate('PersonalSignup')
->>>>>>> fde96574 (feat(signup): add tokens to signup)
   }
 
   return (
