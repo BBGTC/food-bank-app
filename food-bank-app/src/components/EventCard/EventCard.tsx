@@ -15,8 +15,7 @@ interface EventCardProps {
 
 const EventCard = ({
   event,
-  hideButtons = false,
-  navigation
+  hideButtons = false
 }: EventCardProps): JSX.Element => {
   const { theme } = useTheme()
   const navigation = useNavigation()
@@ -82,10 +81,9 @@ const EventCard = ({
               title= {'DONAR'}
             />
           </View>
-        }
+          }
       </View>
-    </View>
-  )
+    </View>)
 }
 
 const styles = StyleSheet.create({
