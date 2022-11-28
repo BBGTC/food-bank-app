@@ -15,6 +15,7 @@ import { FooterButton, TextInputWithIcon, FormError } from '../../components'
 
 import { SmallEclipseSvg, StarSvg } from '../../components/svg'
 import { isValidEmail, isEmptyString } from '../../util'
+import { useAuthContext } from '../../contexts/AuthContext'
 
 const INITIAL_CREDENTIALS = {
   email: '',
@@ -33,6 +34,7 @@ interface Errors {
 }
 
 export const SignupStart = ({ navigation }: any): JSX.Element => {
+  const { saveAuthTokens } = useAuthContext()
   const [credentials, setCredentials] = useState<Credentials>(INITIAL_CREDENTIALS)
 
   const client = useClient()
@@ -82,7 +84,15 @@ export const SignupStart = ({ navigation }: any): JSX.Element => {
 
     Alert.alert('Successful signup', `Registered with username ${username}`)
 
+<<<<<<< HEAD
     navigation.navigate('SignupPersonal')
+=======
+    const { auth } = await client.signup(email, password, passwordConfirm)
+
+    await saveAuthTokens(auth.access, auth.refresh)
+
+    navigation.navigate('PersonalSignup')
+>>>>>>> fde96574 (feat(signup): add tokens to signup)
   }
 
   return (

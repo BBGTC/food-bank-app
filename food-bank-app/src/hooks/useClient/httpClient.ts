@@ -4,6 +4,8 @@ import axios, {
   AxiosResponse
 } from 'axios'
 
+import ContributorModel from '../../models/ContributorModel'
+
 declare module 'axios' {
   interface AxiosResponse<T = any> extends Promise<T> {}
 }
@@ -11,6 +13,11 @@ declare module 'axios' {
 interface AxiosInstanceHeaders {
   'Content-Type': string
   Authorization?: string
+}
+
+interface Tokens {
+  refresh: string
+  access: string
 }
 
 class HttpClient {
@@ -50,7 +57,7 @@ class HttpClient {
     return await Promise.reject(error)
   }
 
-  public signup = async (email: string, password: string, passwordConfirm: string): Promise<{ email: string }> => {
+  public signup = async (email: string, password: string, passwordConfirm: string): Promise<{ email: string, auth: Tokens }> => {
     return await this.instance.post('auth/signup', {
       email, password, confirm_password: passwordConfirm
     })
@@ -72,6 +79,18 @@ class HttpClient {
     )
 
     return { accessToken: access }
+  }
+
+  public getProfile = async (): Promise<ContributorModel | null> => {
+    try {
+      const data = await this.instance.get<ContributorModel>('contributors/me')
+      return data
+    } catch (error) {
+      if ((error as AxiosError).code === '409') {
+        return null
+      }
+      throw error
+    }
   }
 }
 
