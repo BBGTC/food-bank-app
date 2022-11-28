@@ -270,7 +270,7 @@ const DonationScreen = (): JSX.Element => {
           buttonStyle={{
             shadowOffset: {
               width: 0,
-              height: 8
+              height: 2
             },
             shadowOpacity: 0.25,
             shadowRadius: 8,
