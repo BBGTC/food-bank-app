@@ -1,3 +1,3 @@
-import Donations from './Donations'
+import DonationHistory from './DonationHistory'
 
-export default Donations
+export default DonationHistory

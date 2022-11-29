@@ -7,20 +7,22 @@ import DonationCategoryItem from '../DonationCategoryItem/DonationCategoryItem'
 
 interface DonationModalProps {
   isVisible: boolean
+  type: 'add' | 'show'
   availableCategories: Category[]
-  handleAdd: (id: number) => void
-  onPress: () => void
+  handleAdd?: (id: number) => void
+  onPress?: () => void
 }
 
 const DonationModal = ({
   isVisible,
+  type,
   availableCategories,
   onPress,
   handleAdd
 }: DonationModalProps): JSX.Element => {
   useEffect(() => {
     if (availableCategories.length === 0) {
-      onPress()
+      onPress?.()
     }
   }, [availableCategories])
 
@@ -41,7 +43,7 @@ const DonationModal = ({
           displayName={category.displayName}
           icon={category.icon}
           quantity={category.quantity}
-          type='add'
+          type={type}
           onAdd={handleAdd}
         />)}
       </View>
