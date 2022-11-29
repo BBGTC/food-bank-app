@@ -30,7 +30,7 @@ export const Login = ({ navigation }: any): JSX.Element => {
   const handleChange = (type: string, value: string): void => {
     setCredentials((prevCredentials) => ({
       ...prevCredentials,
-      [type]: value
+      [type]: value.trim()
     }))
   }
 
@@ -83,7 +83,7 @@ export const Login = ({ navigation }: any): JSX.Element => {
       <View style={{ margin: 0, width: '100%' }}>
         <FooterButton
           title="Iniciar Sesión"
-          onPress={handleSubmit}
+          onPress={(handleSubmit as () => void)}
         />
         <Text
           style={{ textAlign: 'center', fontSize: 16, marginTop: 10 }}>

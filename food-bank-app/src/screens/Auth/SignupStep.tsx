@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-evenly'
   },
   children: {
     flex: 1,

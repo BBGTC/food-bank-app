@@ -53,7 +53,7 @@ export const SignupStart = ({ navigation }: any): JSX.Element => {
 
     setCredentials((prevCredentials) => ({
       ...prevCredentials,
-      [type]: value
+      [type]: value.trim()
     }))
   }
 
@@ -134,7 +134,7 @@ export const SignupStart = ({ navigation }: any): JSX.Element => {
       <View style={{ width: '100%' }}>
         <FooterButton
           title="Siguiente"
-          onPress={handleSubmit}
+          onPress={(handleSubmit as () => void)}
         />
         <Text
           style={{ textAlign: 'center', margin: 10, fontSize: 16 }}>

@@ -47,7 +47,6 @@ export const SignupDataProvider = ({ children }: Props): JSX.Element => {
       name,
       surname,
       phone,
-      rfc,
       address
     } = data
 
@@ -64,7 +63,6 @@ export const SignupDataProvider = ({ children }: Props): JSX.Element => {
       name,
       surname,
       phone,
-      rfc,
       street,
       neighborhood,
       municipality,
@@ -73,7 +71,7 @@ export const SignupDataProvider = ({ children }: Props): JSX.Element => {
       exteriorNumber
     ]
 
-    return requiredFields.every((field = '') => field !== null && !isEmptyString(field))
+    return requiredFields.every((field = '') => !isEmptyString(field))
   }, [])
 
   const contextValue = useMemo(() => ({

@@ -50,7 +50,7 @@ export const SignupPersonal = ({ navigation }: any): JSX.Element => {
 
     setPersonalInfo((prevCredentials) => ({
       ...prevCredentials,
-      [type]: value
+      [type]: value.trim()
     }))
   }
 
@@ -63,9 +63,14 @@ export const SignupPersonal = ({ navigation }: any): JSX.Element => {
       setErrors((prevErrors) => ({ ...prevErrors, allFields: ['Hay campos requeridos sin completar.'] }))
     }
 
+    if (phone.length !== 10 || isNaN(parseInt(phone))) {
+      isValid = false
+      setErrors((prevErrors) => ({ ...prevErrors, phone: ['Teléfono no válido'] }))
+    }
+
     if (!isValid) { return }
 
-    setSignupData(prevSignupData => ({ ...prevSignupData, ...personalInfo }))
+    setSignupData(prevSignupData => ({ ...prevSignupData, ...personalInfo, phone: `+52${personalInfo.phone}` }))
     navigation.navigate('SignupAddress')
   }
 
@@ -76,7 +81,7 @@ export const SignupPersonal = ({ navigation }: any): JSX.Element => {
       </View>
       <View style={styles.container}>
         <Text style={{ fontSize: 48 }}>Agrega tu información personal</Text>
-        <View style={{ height: 32 }}/>
+        <View style={{ height: 32 }} />
         <TextInputWithIcon
           type="name"
           icon="person"
@@ -105,7 +110,7 @@ export const SignupPersonal = ({ navigation }: any): JSX.Element => {
           value={personalInfo.secondSurname}
           handleChange={handleChange}
         />
-        <View style={{ height: 32 }}/>
+        <View style={{ height: 32 }} />
         <TextInputWithIcon
           type="phone"
           icon="phone"

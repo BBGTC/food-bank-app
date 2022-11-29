@@ -28,7 +28,7 @@ export const SignupAddress = ({ navigation }: any): JSX.Element => {
   const handleChange = (type: string, value: string): void => {
     setAddress((prevAddress) => ({
       ...prevAddress,
-      [type]: value
+      [type]: value.trim()
     }))
   }
 
@@ -126,6 +126,6 @@ export const SignupAddress = ({ navigation }: any): JSX.Element => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 20
   }
 })

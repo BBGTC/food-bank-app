@@ -6,6 +6,7 @@ import axios, {
 
 import ContributorModel from '../../models/ContributorModel'
 import { contributorAdapter } from '../../adapters'
+import { ContributorPayload, inwardsContributorAdapter } from '../../adapters/contributorAdapter'
 
 declare module 'axios' {
   interface AxiosResponse<T = any> extends Promise<T> { }
@@ -84,7 +85,7 @@ class HttpClient {
 
   public getProfile = async (): Promise<ContributorModel | null> => {
     try {
-      return await this.instance.get<ContributorModel>('contributors/me')
+      return inwardsContributorAdapter(await this.instance.get<ContributorPayload>('contributors/me'))
     } catch (error) {
       if ((error as AxiosError).response?.status === 409) {
         return null
@@ -96,8 +97,7 @@ class HttpClient {
   public createProfile = async (data: ContributorModel): Promise<ContributorModel | null> => {
     try {
       const payload = contributorAdapter(data)
-
-      return await this.instance.post<ContributorModel>('contributors/me', { ...payload })
+      return inwardsContributorAdapter(await this.instance.post<ContributorPayload>('contributors/me', { ...payload }))
     } catch (error) {
       if ((error as AxiosError).response?.status === 409) {
         return null
