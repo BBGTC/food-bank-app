@@ -1,6 +1,7 @@
 import { Link } from '@react-navigation/native'
 import { useState } from 'react'
 import {
+  StyleSheet,
   Text,
   View,
   KeyboardAvoidingView,
@@ -9,7 +10,6 @@ import {
 
 import { useClient } from '../../hooks'
 
-import { styles } from '../../styles/styles'
 import { FooterButton, TextInputWithIcon, FormError } from '../../components'
 
 import { SmallEclipseSvg, StarSvg } from '../../components/svg'
@@ -149,3 +149,14 @@ export const SignupStart = ({ navigation }: any): JSX.Element => {
     </KeyboardAvoidingView>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    display: 'flex',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    paddingHorizontal: 20
+  }
+})

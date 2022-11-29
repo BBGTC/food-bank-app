@@ -1,6 +1,7 @@
 import { Link } from '@react-navigation/native'
 import { useState } from 'react'
 import {
+  StyleSheet,
   Text,
   View,
   KeyboardAvoidingView,
@@ -8,7 +9,6 @@ import {
 } from 'react-native'
 
 import { useAuthContext } from '../../contexts/AuthContext'
-import { styles } from '../../styles/styles'
 import { FooterButton, FormError, TextInputWithIcon } from '../../components'
 
 import { PetalsSvg, SmallEclipseSvg } from '../../components/svg'
@@ -99,3 +99,14 @@ export const Login = ({ navigation }: any): JSX.Element => {
 
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    display: 'flex',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    paddingHorizontal: 20
+  }
+})

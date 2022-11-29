@@ -1,0 +1,1 @@
+export { contributorAdapter } from './contributorAdapter'

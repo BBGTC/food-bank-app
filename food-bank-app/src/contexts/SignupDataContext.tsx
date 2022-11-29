@@ -1,18 +1,30 @@
-import { createContext, useState } from 'react'
-import { Contributor } from '../models'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+  Dispatch,
+  SetStateAction
+} from 'react'
 
-interface SignupDataContextType {
-  contributor: Contributor
+import { isEmptyString } from '../util'
+import { Contributor as ContributorModel } from '../models'
+
+interface SignupDataContextValue {
+  isComplete: boolean
+  signupData: ContributorModel
+  setSignupData: Dispatch<SetStateAction<ContributorModel>>
 }
 
-const SignupDataContext = createContext<SignupDataContextType | null>(null)
+const SignupDataContext = createContext<SignupDataContextValue | null>(null)
 
 interface Props {
   children: JSX.Element | JSX.Element[]
 }
 
 export const SignupDataProvider = ({ children }: Props): JSX.Element => {
-  const [contributor, setContributor] = useState<Contributor>({
+  const [signupData, setSignupData] = useState<ContributorModel>({
     name: '',
     middleName: '',
     surname: '',
@@ -30,13 +42,59 @@ export const SignupDataProvider = ({ children }: Props): JSX.Element => {
     }
   })
 
-  const contextValue = {
-    contributor
-  }
+  const isComplete = useCallback((data: Partial<ContributorModel>): boolean => {
+    const {
+      name,
+      surname,
+      phone,
+      rfc,
+      address
+    } = data
+
+    const {
+      street,
+      neighborhood,
+      municipality,
+      state,
+      zipCode,
+      exteriorNumber
+    } = address ?? {}
+
+    const requiredFields = [
+      name,
+      surname,
+      phone,
+      rfc,
+      street,
+      neighborhood,
+      municipality,
+      state,
+      zipCode,
+      exteriorNumber
+    ]
+
+    return requiredFields.every((field = '') => field !== null && !isEmptyString(field))
+  }, [])
+
+  const contextValue = useMemo(() => ({
+    isComplete: isComplete(signupData),
+    signupData,
+    setSignupData
+  }), [signupData])
 
   return (
     <SignupDataContext.Provider value={contextValue}>
       {children}
     </SignupDataContext.Provider>
   )
+}
+
+export const useSignupDataContext = (): SignupDataContextValue => {
+  const context = useContext(SignupDataContext)
+
+  if (context === null) {
+    throw new Error('useSignupDataContext must be used withing an SignupDataProvider')
+  }
+
+  return context
 }

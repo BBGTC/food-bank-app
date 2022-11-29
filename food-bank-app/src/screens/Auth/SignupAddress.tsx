@@ -1,10 +1,13 @@
-import { KeyboardAvoidingView, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
+
 import TextInputWithIcon from '../../components/TextInputWithIcon'
-import { styles } from '../../styles/styles'
 import { Address } from '../../models'
 import { useState } from 'react'
-import { FooterButton, FormError } from '../../components'
+import { FormError } from '../../components'
 import { isEmptyString } from '../../util'
+import { useSignupDataContext } from '../../contexts/SignupDataContext'
+
+import { SignupStep } from './SignupStep'
 
 const INITIAL_ADDRESS: Address = {
   street: '',
@@ -16,12 +19,13 @@ const INITIAL_ADDRESS: Address = {
   neighborhood: ''
 }
 
-export const SignupAddress = (): JSX.Element => {
+export const SignupAddress = ({ navigation }: any): JSX.Element => {
   const [errors, setErrors] = useState<string[]>([])
   const [address, setAddress] = useState<Address>(INITIAL_ADDRESS)
 
+  const { setSignupData } = useSignupDataContext()
+
   const handleChange = (type: string, value: string): void => {
-    setErrors((prevErrors) => [])
     setAddress((prevAddress) => ({
       ...prevAddress,
       [type]: value
@@ -29,98 +33,99 @@ export const SignupAddress = (): JSX.Element => {
   }
 
   const handleSubmit = (): void => {
-    const { street, exteriorNumber, interiorNumber, zipCode, municipality, state, neighborhood } = address
+    const { interiorNumber, ...requiredFields } = address
+
     setErrors(() => [])
-    if ([
-      street,
-      exteriorNumber,
-      interiorNumber,
-      zipCode,
-      municipality,
-      state,
-      neighborhood
-    ].some(isEmptyString)) {
-      setErrors((prevErrors) => [...prevErrors, 'Todos los campos son necesarios'])
+
+    if (Object.values(requiredFields).some(isEmptyString)) {
+      setErrors((prevErrors) => [...prevErrors, 'Hay campos requeridos sin completar'])
+      return
     }
+
+    setSignupData(prevSignupData => ({ ...prevSignupData, address }))
+    navigation.navigate('SignupRFC')
   }
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
-      <Text style={{ fontSize: 48 }}>Ingresa tu dirección</Text>
-      <View style={{ maxHeight: '75%', padding: 0 }}>
-        <TextInputWithIcon
-          placeholder="Calle"
-          type='street'
-          icon='home'
-          value={address.street}
-          handleChange={handleChange}
-        />
-        <TextInputWithIcon
-          placeholder="Colonia"
-          type='neighborhood'
-          icon='streetview'
-          value={address.neighborhood}
-          handleChange={handleChange}
-        />
-        <View style={{ flexDirection: 'row', maxWidth: '100%', justifyContent: 'space-between' }}>
-          <View style={{ width: '45%', justifyContent: 'center' }}>
-            <TextInputWithIcon
-              placeholder="Num. Ext."
-              type='exteriorNumber'
-              icon='tag'
-              value={address.exteriorNumber}
-              handleChange={handleChange}
-            />
+    <SignupStep footerButtonConfig={{ title: 'Siguiente', onPress: handleSubmit }}>
+      <View style={styles.container}>
+        <Text style={{ fontSize: 48 }}>Ingresa tu dirección</Text>
+        <View style={{ maxHeight: '75%', padding: 0, marginTop: 32 }}>
+          <TextInputWithIcon
+            placeholder="Calle"
+            type='street'
+            icon='home'
+            value={address.street}
+            handleChange={handleChange}
+          />
+          <TextInputWithIcon
+            placeholder="Colonia"
+            type='neighborhood'
+            icon='streetview'
+            value={address.neighborhood}
+            handleChange={handleChange}
+          />
+          <View style={{ flexDirection: 'row', maxWidth: '100%', justifyContent: 'space-between' }}>
+            <View style={{ width: '45%', justifyContent: 'center' }}>
+              <TextInputWithIcon
+                placeholder="Num. Ext."
+                type='exteriorNumber'
+                icon='tag'
+                value={address.exteriorNumber}
+                handleChange={handleChange}
+              />
+            </View>
+            <View style={{ width: '45%', justifyContent: 'center' }}>
+              <TextInputWithIcon
+                placeholder="Num. Int."
+                type='interiorNumber'
+                icon='tag'
+                value={address.interiorNumber}
+                handleChange={handleChange}
+              />
+            </View>
           </View>
-          <View style={{ width: '45%', justifyContent: 'center' }}>
-            <TextInputWithIcon
-              placeholder="Num. Int."
-              type='interiorNumber'
-              icon='tag'
-              value={address.interiorNumber}
-              handleChange={handleChange}
-            />
+          <TextInputWithIcon
+            placeholder="Código Postal"
+            type='zipCode'
+            icon='mail'
+            value={address.zipCode}
+            handleChange={handleChange}
+          />
+          <View style={{ flexDirection: 'row', maxWidth: '100%', justifyContent: 'space-between' }}>
+            <View style={{ width: '45%', justifyContent: 'center' }}>
+              <TextInputWithIcon
+                placeholder="Municipio"
+                type='municipality'
+                icon='map'
+                value={address.municipality}
+                handleChange={handleChange}
+              />
+            </View>
+            <View style={{ width: '45%', justifyContent: 'center' }}>
+              <TextInputWithIcon
+                placeholder="Estado"
+                type='state'
+                icon='map'
+                value={address.state}
+                handleChange={handleChange}
+              />
+            </View>
           </View>
         </View>
-        <TextInputWithIcon
-          placeholder="CP"
-          type='zipCode'
-          icon='mail'
-          value={address.zipCode}
-          handleChange={handleChange}
-        />
-        <View style={{ flexDirection: 'row', maxWidth: '100%', justifyContent: 'space-between' }}>
-          <View style={{ width: '45%', justifyContent: 'center' }}>
-            <TextInputWithIcon
-              placeholder="Municipio"
-              type='municipality'
-              icon='map'
-              value={address.municipality}
-              handleChange={handleChange}
-            />
-          </View>
-          <View style={{ width: '45%', justifyContent: 'center' }}>
-            <TextInputWithIcon
-              placeholder="Estado"
-              type='state'
-              icon='map'
-              value={address.state}
-              handleChange={handleChange}
-            />
-          </View>
+
+          <View style={{ width: '100%' }}>
+          {errors.map((error, index) => (
+            <FormError message={error} key={index} />
+          ))}
         </View>
       </View>
-
-      <View style={{ width: '100%' }}>
-        {errors.map((error, index) => (
-          <FormError message={error} key={index} />
-        ))}
-      </View>
-
-      <FooterButton
-        title="Siguiente"
-        onPress={handleSubmit}
-      />
-    </KeyboardAvoidingView>
+    </SignupStep>
   )
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+  }
+})

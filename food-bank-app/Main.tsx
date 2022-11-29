@@ -1,5 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native'
 import { ThemeProvider, createTheme } from '@rneui/themed'
+
 import { useAuthContext } from './src/contexts/AuthContext'
 import { EnrollmentNavigator, PrivateNavigator, PublicNavigator } from './src/Navigators'
 import { LoadingScreen } from './src/screens'
@@ -28,23 +29,16 @@ const theme = createTheme({
 
 const Main = (): JSX.Element => {
   const { isAuthenticated, isLoadingAuth, profile } = useAuthContext()
-  console.log(profile)
 
   return (
     <ThemeProvider theme={theme}>
       <NavigationContainer>
         { isLoadingAuth && <LoadingScreen /> }
-        { !isLoadingAuth && !isAuthenticated && profile === null && (
-          <PublicNavigator />
-        )}
-        { !isLoadingAuth && isAuthenticated && profile === null && (
-          <EnrollmentNavigator />
-        )}
-        { !isLoadingAuth && isAuthenticated && profile !== null && (
-          <PrivateNavigator />
-        )}
+        { !isLoadingAuth && isAuthenticated && profile === null && <EnrollmentNavigator />}
+        { !isLoadingAuth && isAuthenticated && profile !== null && <PrivateNavigator />}
+        { !isLoadingAuth && !isAuthenticated && profile === null && <PublicNavigator />}
       </NavigationContainer>
-    </ThemeProvider >
+    </ThemeProvider>
   )
 }
 

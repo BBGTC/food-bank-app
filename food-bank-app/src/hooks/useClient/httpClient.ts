@@ -5,6 +5,7 @@ import axios, {
 } from 'axios'
 
 import ContributorModel from '../../models/ContributorModel'
+import { contributorAdapter } from '../../adapters'
 
 declare module 'axios' {
   interface AxiosResponse<T = any> extends Promise<T> { }
@@ -24,7 +25,7 @@ class HttpClient {
   private readonly instance: AxiosInstance
   private readonly token: string
 
-  public constructor(baseURL?: string, token?: string) {
+  public constructor (baseURL?: string, token?: string) {
     if (baseURL === null || baseURL === undefined) {
       throw new Error('Invalid base URL')
     }
@@ -81,9 +82,22 @@ class HttpClient {
     return { accessToken: access }
   }
 
-  public getProfile = async (accessToken?: string): Promise<ContributorModel | null> => {
+  public getProfile = async (): Promise<ContributorModel | null> => {
     try {
       return await this.instance.get<ContributorModel>('contributors/me')
+    } catch (error) {
+      if ((error as AxiosError).response?.status === 409) {
+        return null
+      }
+      throw error
+    }
+  }
+
+  public createProfile = async (data: ContributorModel): Promise<ContributorModel | null> => {
+    try {
+      const payload = contributorAdapter(data)
+
+      return await this.instance.post<ContributorModel>('contributors/me', { ...payload })
     } catch (error) {
       if ((error as AxiosError).response?.status === 409) {
         return null

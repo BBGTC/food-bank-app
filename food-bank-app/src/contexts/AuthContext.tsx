@@ -9,14 +9,16 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import HttpClient from '../hooks/useClient/httpClient'
-import { Contributor } from '../models'
+import { Contributor as ContributorModel } from '../models'
 
 interface AuthContextValue {
   accessToken: string
   isAuthenticated: boolean
   isLoadingAuth: boolean
-  profile: Contributor | null
+  profile: ContributorModel | null
+  clearAuth: () => void
   saveAuthTokens: (access: string, refresh: string) => Promise<void>
+  saveProfile: (profile: ContributorModel) => void
 }
 
 interface Props {
@@ -33,28 +35,46 @@ const AuthContext = createContext<AuthContextValue | undefined>(undefined)
 const AuthProvider = ({ children }: Props): JSX.Element => {
   const [accessToken, setAccessToken] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [profile, setProfile] = useState<Contributor | null>(null)
+  const [profile, setProfile] = useState<ContributorModel | null>(null)
+
+  const loadProfile = useCallback(async (token: string): Promise<void> => {
+    // TODO: handle this with a try catch
+    setIsLoading(true)
+
+    client = new HttpClient(API_URL, token)
+
+    const fetchedProfile = await client.getProfile()
+
+    if (fetchedProfile !== null) {
+      setProfile(fetchedProfile)
+    }
+
+    setIsLoading(false)
+  }, [accessToken])
 
   const saveAuthTokens = useCallback(async (access: string, refresh: string): Promise<void> => {
-    const fetchedProfile = await fetchProfile(access)
-    console.log(fetchedProfile)
-    setProfile(fetchedProfile)
-    await AsyncStorage.setItem(REFRESH_TOKEN_KEY, refresh)
     setAccessToken(access)
+
+    await AsyncStorage.setItem(REFRESH_TOKEN_KEY, refresh)
+    await loadProfile(access)
   }, [])
 
-  const fetchProfile = useCallback(async (token: string): Promise<Contributor | null> => {
-    client = new HttpClient(API_URL, token)
-    return await client.getProfile()
-  }, [accessToken])
+  const clearAuth = useCallback(async () => {
+    setAccessToken('')
+    setProfile(null)
+
+    await AsyncStorage.clear()
+  }, [])
 
   const contextValue: AuthContextValue = useMemo(() => ({
     accessToken,
     isAuthenticated: accessToken !== '',
     isLoadingAuth: isLoading,
     saveAuthTokens,
+    saveProfile: setProfile,
+    clearAuth,
     profile
-  }), [accessToken, isLoading])
+  }), [accessToken, profile, isLoading])
 
   useEffect(() => {
     const verifyAuthentication = async (): Promise<void> => {
@@ -65,16 +85,9 @@ const AuthProvider = ({ children }: Props): JSX.Element => {
 
         if (refreshToken !== '' && refreshToken !== undefined && refreshToken !== null) {
           const { accessToken: newAccessToken } = await client.refreshAuth(refreshToken)
-          console.log(newAccessToken)
-          const fetchedProfile = await client.getProfile(newAccessToken)
-          console.log('useeffect profile', fetchedProfile)
-          if (fetchedProfile === null) {
-            await AsyncStorage.removeItem(REFRESH_TOKEN_KEY)
-            setIsLoading(false)
-            return
-          }
-          setProfile(fetchedProfile)
+
           setAccessToken(newAccessToken)
+          await loadProfile(newAccessToken)
         }
       } catch (error) {
         console.log(error)
