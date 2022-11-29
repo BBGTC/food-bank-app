@@ -1,43 +1,43 @@
 import { useState } from 'react'
-import {
-  KeyboardAvoidingView,
-  Platform,
-  Text,
-  View
-} from 'react-native'
-import { useAuthContext } from '../../contexts/AuthContext'
-import { styles } from '../../styles/styles'
-import { FooterButton, TextInputWithIcon } from '../../components'
+import { Text, View } from 'react-native'
 
+import { TextInputWithIcon } from '../../components'
 import { LargePetalsSvg } from '../../components/svg'
+import { useAuthContext } from '../../contexts/AuthContext'
+import { useSignupDataContext } from '../../contexts/SignupDataContext'
+import { useClient } from '../../hooks'
+
+import { SignupStep } from './SignupStep'
 
 export const SignupRFC = (): JSX.Element => {
-  const [credentials, setCredentials] = useState({
-    email: '',
-    password: '',
-    passwordConfirm: ''
-  })
+  const [rfc, setRFC] = useState<string>('')
 
-  const { setIsAuthenticated } = useAuthContext()
+  const client = useClient()
 
-  const handleChange = (type: string, value: string): void => {
-    setCredentials((prevCredentials) => ({
-      ...prevCredentials,
-      [type]: value
-    }))
+  const { saveProfile } = useAuthContext()
+  const { isComplete, signupData, setSignupData } = useSignupDataContext()
+
+  const handleSubmit = (): void => {
+    setSignupData(prevSignupData => ({ ...prevSignupData, rfc }))
+    const createProfileFromSignupData = async (): Promise<void> => {
+      const profile = await client.createProfile({ ...signupData, rfc: rfc.trim() !== '' ? rfc : null })
+      if (profile !== null) {
+        saveProfile(profile)
+      }
+    }
+    if (isComplete) {
+      void createProfileFromSignupData()
+    }
   }
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}
-    >
-      <View style={{ width: '100%' }}>
-
+    <SignupStep footerButtonConfig={{ title: 'Finalizar', onPress: handleSubmit }}>
+      <View style={{ padding: 20 }}>
         <View style={{ width: '100%' }}>
           <View style={{ marginBottom: 30 }}>
             <LargePetalsSvg />
           </View>
+
           <Text style={{ fontSize: 48, textAlign: 'left', width: '100%' }}>Por último,</Text>
           <Text style={{ fontSize: 48, textAlign: 'left', width: '100%' }}>tu <Text style={{ fontWeight: '700' }}>RFC</Text></Text>
         </View>
@@ -45,9 +45,9 @@ export const SignupRFC = (): JSX.Element => {
           <TextInputWithIcon
             placeholder="RFC"
             icon="article"
-            value={credentials.email}
+            value={rfc}
             type="email"
-            handleChange={handleChange}
+            handleChange={(_, newRFC) => setRFC(newRFC.trim())}
           />
           <Text style={{ textAlign: 'left', fontSize: 16 }}>Es opcional, nos ayudará a generar tus recibos deducibles.</Text>
           <Text style={{ fontSize: 16, color: '#CE0E2D' }}>
@@ -55,11 +55,6 @@ export const SignupRFC = (): JSX.Element => {
           </Text>
         </View>
       </View>
-
-      <FooterButton
-        title="Finalizar"
-        onPress={() => setIsAuthenticated(true)}
-      />
-    </KeyboardAvoidingView>
+    </SignupStep>
   )
 }

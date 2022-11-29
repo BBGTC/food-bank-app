@@ -11,7 +11,8 @@ class AddressSerializer(serializers.ModelSerializer):
             'interior_number',
             'zip_code',
             'municipality',
-            'neighborhood'
+            'neighborhood',
+            'state'
     )
 
 class ContributorSerializer(serializers.ModelSerializer):

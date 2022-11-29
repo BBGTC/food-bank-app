@@ -1,3 +1,4 @@
 import { PrivateNavigator } from './PrivateNavigator'
 import { PublicNavigator } from './PublicNavigator'
-export { PrivateNavigator, PublicNavigator }
+import { EnrollmentNavigator } from './EnrollmentNavigator'
+export { PrivateNavigator, PublicNavigator, EnrollmentNavigator }

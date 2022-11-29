@@ -1,7 +1,7 @@
 import { Link } from '@react-navigation/native'
 import { useState } from 'react'
 import {
-  Alert,
+  StyleSheet,
   Text,
   View,
   KeyboardAvoidingView,
@@ -10,11 +10,11 @@ import {
 
 import { useClient } from '../../hooks'
 
-import { styles } from '../../styles/styles'
 import { FooterButton, TextInputWithIcon, FormError } from '../../components'
 
 import { SmallEclipseSvg, StarSvg } from '../../components/svg'
 import { isValidEmail, isEmptyString } from '../../util'
+import { useAuthContext } from '../../contexts/AuthContext'
 
 const INITIAL_CREDENTIALS = {
   email: '',
@@ -33,6 +33,7 @@ interface Errors {
 }
 
 export const SignupStart = ({ navigation }: any): JSX.Element => {
+  const { saveAuthTokens } = useAuthContext()
   const [credentials, setCredentials] = useState<Credentials>(INITIAL_CREDENTIALS)
 
   const client = useClient()
@@ -52,7 +53,7 @@ export const SignupStart = ({ navigation }: any): JSX.Element => {
 
     setCredentials((prevCredentials) => ({
       ...prevCredentials,
-      [type]: value
+      [type]: value.trim()
     }))
   }
 
@@ -78,11 +79,9 @@ export const SignupStart = ({ navigation }: any): JSX.Element => {
 
     if (!isValid) { return }
 
-    const { email: username } = await client.signup(email, password, passwordConfirm)
+    const { auth } = await client.signup(email, password, passwordConfirm)
 
-    Alert.alert('Successful signup', `Registered with username ${username}`)
-
-    navigation.navigate('SignupPersonal')
+    await saveAuthTokens(auth.access, auth.refresh)
   }
 
   return (
@@ -135,7 +134,7 @@ export const SignupStart = ({ navigation }: any): JSX.Element => {
       <View style={{ width: '100%' }}>
         <FooterButton
           title="Siguiente"
-          onPress={handleSubmit}
+          onPress={(handleSubmit as () => void)}
         />
         <Text
           style={{ textAlign: 'center', margin: 10, fontSize: 16 }}>
@@ -150,3 +149,14 @@ export const SignupStart = ({ navigation }: any): JSX.Element => {
     </KeyboardAvoidingView>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    display: 'flex',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    paddingHorizontal: 20
+  }
+})

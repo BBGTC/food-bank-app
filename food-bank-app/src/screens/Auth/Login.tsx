@@ -1,6 +1,7 @@
 import { Link } from '@react-navigation/native'
 import { useState } from 'react'
 import {
+  StyleSheet,
   Text,
   View,
   KeyboardAvoidingView,
@@ -8,7 +9,6 @@ import {
 } from 'react-native'
 
 import { useAuthContext } from '../../contexts/AuthContext'
-import { styles } from '../../styles/styles'
 import { FooterButton, FormError, TextInputWithIcon } from '../../components'
 
 import { PetalsSvg, SmallEclipseSvg } from '../../components/svg'
@@ -16,7 +16,7 @@ import { useClient } from '../../hooks'
 
 import { isEmptyString } from '../../util'
 
-export const Login = (): JSX.Element => {
+export const Login = ({ navigation }: any): JSX.Element => {
   const [credentials, setCredentials] = useState({
     email: '',
     password: ''
@@ -30,7 +30,7 @@ export const Login = (): JSX.Element => {
   const handleChange = (type: string, value: string): void => {
     setCredentials((prevCredentials) => ({
       ...prevCredentials,
-      [type]: value
+      [type]: value.trim()
     }))
   }
 
@@ -83,7 +83,7 @@ export const Login = (): JSX.Element => {
       <View style={{ margin: 0, width: '100%' }}>
         <FooterButton
           title="Iniciar Sesión"
-          onPress={handleSubmit}
+          onPress={(handleSubmit as () => void)}
         />
         <Text
           style={{ textAlign: 'center', fontSize: 16, marginTop: 10 }}>
@@ -99,3 +99,14 @@ export const Login = (): JSX.Element => {
 
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    display: 'flex',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    paddingHorizontal: 20
+  }
+})

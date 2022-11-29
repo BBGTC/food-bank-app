@@ -4,13 +4,22 @@ import axios, {
   AxiosResponse
 } from 'axios'
 
+import ContributorModel from '../../models/ContributorModel'
+import { contributorAdapter } from '../../adapters'
+import { ContributorPayload, inwardsContributorAdapter } from '../../adapters/contributorAdapter'
+
 declare module 'axios' {
-  interface AxiosResponse<T = any> extends Promise<T> {}
+  interface AxiosResponse<T = any> extends Promise<T> { }
 }
 
 interface AxiosInstanceHeaders {
   'Content-Type': string
   Authorization?: string
+}
+
+interface Tokens {
+  refresh: string
+  access: string
 }
 
 class HttpClient {
@@ -50,7 +59,7 @@ class HttpClient {
     return await Promise.reject(error)
   }
 
-  public signup = async (email: string, password: string, passwordConfirm: string): Promise<{ email: string }> => {
+  public signup = async (email: string, password: string, passwordConfirm: string): Promise<{ email: string, auth: Tokens }> => {
     return await this.instance.post('auth/signup', {
       email, password, confirm_password: passwordConfirm
     })
@@ -72,6 +81,29 @@ class HttpClient {
     )
 
     return { accessToken: access }
+  }
+
+  public getProfile = async (): Promise<ContributorModel | null> => {
+    try {
+      return inwardsContributorAdapter(await this.instance.get<ContributorPayload>('contributors/me'))
+    } catch (error) {
+      if ((error as AxiosError).response?.status === 409) {
+        return null
+      }
+      throw error
+    }
+  }
+
+  public createProfile = async (data: ContributorModel): Promise<ContributorModel | null> => {
+    try {
+      const payload = contributorAdapter(data)
+      return inwardsContributorAdapter(await this.instance.post<ContributorPayload>('contributors/me', { ...payload }))
+    } catch (error) {
+      if ((error as AxiosError).response?.status === 409) {
+        return null
+      }
+      throw error
+    }
   }
 }
 

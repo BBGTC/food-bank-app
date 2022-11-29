@@ -1,4 +1,5 @@
 interface Address {
+  [key: string]: string
   street: string
   exteriorNumber: string
   interiorNumber: string
