@@ -3,10 +3,9 @@ import { useState } from "react"
 import { Container } from "../../Container"
 import { useAuthContext } from "../../../contexts/AuthContext"
 
-const SERVER_URL = `${import.meta.env.SERVER_URL || 'http://localhost'}:${import.meta.env.SERVER_PORT || '8000'}`
+const SERVER_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
 export const Login = () => {
-  
     const [ credentials, setCredentials ] = useState({ username: "", password: "" })
     const { setAuth } = useAuthContext()
 

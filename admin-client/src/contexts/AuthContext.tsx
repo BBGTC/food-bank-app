@@ -1,6 +1,6 @@
 import { useContext, createContext, useState, useEffect } from 'react'
 
-const SERVER_URL = `${import.meta.env.SERVER_URL || 'http://localhost'}:${import.meta.env.SERVER_PORT || '8000'}`
+const SERVER_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 const REFRESH_TOKEN_STORAGE_KEY = 'refresh_token'
 
 interface Props {

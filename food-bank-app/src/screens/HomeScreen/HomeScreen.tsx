@@ -11,7 +11,6 @@ import { DonationEvent, InventoryModel } from '../../models'
 import { useClient } from '../../hooks'
 import { PriorityQueueItemProps } from '../../components/PriorityQueueItem'
 
-
 const inventoryAdapter = (inventory: InventoryModel): PriorityQueueItemProps => {
   const CATEGORY_LABELS: { [key: string]: string } = {
     BB: 'Canasta básica',
@@ -49,7 +48,6 @@ const displayWelcomeMessage = (): string => {
 export const HomeScreen = (): JSX.Element => {
   const [priorityQueueItems, setPriorityQueueItems] = useState<PriorityQueueItemProps[]>([])
   const [donationEvents, setDonationEvents] = useState<DonationEvent[]>([])
-
 
   const client = useClient()
 
