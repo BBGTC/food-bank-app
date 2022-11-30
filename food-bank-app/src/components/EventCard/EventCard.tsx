@@ -6,7 +6,6 @@ import { DonationEvent } from '../../models'
 import { useNavigation } from '@react-navigation/native'
 
 const NO_PICTURE_URL = 'https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg'
-const EVENT_ID = 'd4f14c6a-3def-4b45-a100-4893556e66f0'
 
 export interface EventCardProps {
   event: DonationEvent
@@ -77,7 +76,7 @@ const EventCard = ({
               rightBorder={ true }
             />
             <EventButton
-              onPress={() => navigation.navigate('Donation', { eventId: EVENT_ID })}
+              onPress={() => navigation.navigate('Donation', { eventId: event.id })}
               title= {'DONAR'}
             />
           </View>

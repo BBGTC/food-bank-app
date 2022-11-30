@@ -7,6 +7,7 @@ import {
 import { useEffect, useState } from 'react'
 import { Icon } from '@rneui/base'
 import { Button, useTheme } from '@rneui/themed'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import DonationCategoryItem from '../../components/DonationCategoryItem/DonationCategoryItem'
 import DonationModal from '../../components/DonationModal/DonationModal'
 import { Category } from '../../../types'
@@ -15,11 +16,7 @@ import FooterButton from '../../components/FooterButton'
 import QRModal from '../../components/QRModal/QRModal'
 import { Donation, DonationEvent } from '../../models'
 import useClient from '../../hooks/useClient'
-
-interface DonationProps {
-  route: any
-  navigation: any
-}
+import { AxiosError, AxiosResponse } from 'axios'
 
 const CATEGORIES: Category[] = [
   {
@@ -53,16 +50,27 @@ const CATEGORIES: Category[] = [
     icon: 'home',
     quantity: 0,
     isSelected: false
+  },
+  {
+    id: 4,
+    name: 'groceries',
+    displayName: 'Abarrotes',
+    icon: 'home',
+    quantity: 0,
+    isSelected: false
   }
 ]
 
-const DonationScreen = ({ route, navigation }: DonationProps): JSX.Element => {
+const DonationScreen = (): JSX.Element => {
+  const { theme } = useTheme()
+  const client = useClient()
+  const route = useRoute()
+  const { eventId } = route.params as any
+  const navigation = useNavigation()
+
   const [categories, setCategories] = useState<Category[]>(CATEGORIES)
   const [donationModalIsVisible, setDonationModalIsVisible] = useState(false)
   const [qrModalIsVisible, setQrModalIsVisible] = useState(false)
-  const { theme } = useTheme()
-  const client = useClient()
-  const { eventId } = route.params
   const [donation, setDonation] = useState<Donation>({
     id: '',
     event: eventId,
@@ -70,11 +78,12 @@ const DonationScreen = ({ route, navigation }: DonationProps): JSX.Element => {
     basicBasket: '',
     fruitsAndVegies: '',
     dairy: '',
-    inedibles: ''
+    inedibles: '',
+    groceries: ''
   })
   const [event, setEvent] = useState<DonationEvent>({
     id: '',
-    title: 'Bosque Colomos',
+    title: '',
     startDate: new Date(Date.now()),
     endDate: new Date(Date.now()),
     startTime: '',
@@ -151,6 +160,7 @@ const DonationScreen = ({ route, navigation }: DonationProps): JSX.Element => {
 
     const createDonation = async (): Promise<void> => {
       const createdDonation = await client.createDonation({ ...donation, id: undefined })
+      console.log(createdDonation.id)
       setDonation((prevDonation) => ({
         ...prevDonation,
         ...createdDonation
@@ -159,12 +169,20 @@ const DonationScreen = ({ route, navigation }: DonationProps): JSX.Element => {
     }
 
     const updateDonation = async (): Promise<void> => {
-      const updatedDonation = await client.updateDonation(donation)
-      setDonation((prevDonation) => ({
-        ...prevDonation,
-        ...updatedDonation
-      }))
-      setQrModalIsVisible(true)
+      try {
+        const updatedDonation = await client.updateDonation(donation)
+        setDonation((prevDonation) => ({
+          ...prevDonation,
+          ...updatedDonation
+        }))
+        setQrModalIsVisible(true)
+      } catch (error) {
+        if ((error as any).response.status === 403) {
+          navigation.navigate('Home')
+        } else {
+          throw error
+        }
+      }
     }
 
     if (donation.id?.trim() === '') {

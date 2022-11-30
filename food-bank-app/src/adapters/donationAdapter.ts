@@ -8,6 +8,7 @@ export interface DonationPayload {
   fruits_and_vegies: number
   dairy: number
   inedibles: number
+  groceries: number
 }
 
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
@@ -20,7 +21,8 @@ class DonationAdapter {
       basic_basket: data.basicBasket.trim() === '' ? 0 : parseInt(data.basicBasket),
       fruits_and_vegies: data.fruitsAndVegies.trim() === '' ? 0 : parseInt(data.basicBasket),
       dairy: data.dairy.trim() === '' ? 0 : parseInt(data.dairy),
-      inedibles: data.inedibles.trim() === '' ? 0 : parseInt(data.inedibles)
+      inedibles: data.inedibles.trim() === '' ? 0 : parseInt(data.inedibles),
+      groceries: data.groceries.trim() === '' ? 0 : parseInt(data.groceries)
     }
   }
 
@@ -32,7 +34,8 @@ class DonationAdapter {
       basicBasket: data.basic_basket.toString(),
       fruitsAndVegies: data.fruits_and_vegies.toString(),
       dairy: data.dairy.toString(),
-      inedibles: data.inedibles.toString()
+      inedibles: data.inedibles.toString(),
+      groceries: data.groceries.toString()
     }
   }
 }
