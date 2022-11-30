@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react'
 import {
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -18,13 +20,31 @@ interface SignupStepProps {
 }
 
 export const SignupStep = ({ children, footerButtonConfig }: SignupStepProps): JSX.Element => {
+  const [isKeyboardVisible, setKeyboardVisible] = useState<boolean>(false)
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => setKeyboardVisible(true)
+    )
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => setKeyboardVisible(false)
+    )
+
+    return () => {
+      keyboardDidHideListener.remove()
+      keyboardDidShowListener.remove()
+    }
+  }, [])
+
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
         style={styles.keyboardAvoiding}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
-        <ScrollView style={styles.children} scrollEnabled={false}>
+        <ScrollView style={styles.children} scrollEnabled={isKeyboardVisible}>
           {children}
         </ScrollView>
         <View style={styles.footerButton}>
