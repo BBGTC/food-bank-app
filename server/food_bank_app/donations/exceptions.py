@@ -14,3 +14,8 @@ class DonationNotFound(APIException):
   status_code = 404
   default_code = 'donation_not_found'
   default_detail = 'Donation not found.'
+
+class DonationAlreadyVerified(APIException):
+    status_code = 403
+    default_code = "donation_already_verified"
+    default_detail = "Donation already verified"
