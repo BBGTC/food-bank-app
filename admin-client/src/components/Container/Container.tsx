@@ -1,6 +1,6 @@
 
 interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
-    children: React.ReactNode
+    children: JSX.Element | JSX.Element[]
 }
 
 export const Container = (props: ContainerProps) => {

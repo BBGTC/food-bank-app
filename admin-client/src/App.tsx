@@ -23,7 +23,7 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="/" element={ <div> placeholder </div> } />
-        <Route path="/verify" element={ <Verify/> } />
+        <Route path="/verify/:donationId" element={ <Verify/> } />
       </Routes>
     </Router>
   )
