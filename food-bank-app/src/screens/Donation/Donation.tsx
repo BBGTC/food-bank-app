@@ -10,7 +10,7 @@ import { Button, useTheme } from '@rneui/themed'
 import DonationCategoryItem from '../../components/DonationCategoryItem/DonationCategoryItem'
 import DonationModal from '../../components/DonationModal/DonationModal'
 import { Category } from '../../../types'
-import EventCard from '../../components/EventCard'
+import { EventCard } from '../../components/EventCard'
 import FooterButton from '../../components/FooterButton'
 import QRModal from '../../components/QRModal/QRModal'
 import { Donation, DonationEvent } from '../../models'
@@ -21,8 +21,43 @@ interface DonationProps {
   navigation: any
 }
 
+const CATEGORIES: Category[] = [
+  {
+    id: 0,
+    name: 'basicBasket',
+    displayName: 'Canasta básica',
+    icon: 'home',
+    quantity: 0,
+    isSelected: false
+  },
+  {
+    id: 1,
+    name: 'fruitsAndVegies',
+    displayName: 'Frutas y vegetales',
+    icon: 'home',
+    quantity: 0,
+    isSelected: false
+  },
+  {
+    id: 2,
+    name: 'dairy',
+    displayName: 'Lácteos',
+    icon: 'home',
+    quantity: 0,
+    isSelected: false
+  },
+  {
+    id: 3,
+    name: 'inedibles',
+    displayName: 'No comestibles',
+    icon: 'home',
+    quantity: 0,
+    isSelected: false
+  }
+]
+
 const DonationScreen = ({ route, navigation }: DonationProps): JSX.Element => {
-  const [categories, setCategories] = useState<Category[]>([])
+  const [categories, setCategories] = useState<Category[]>(CATEGORIES)
   const [donationModalIsVisible, setDonationModalIsVisible] = useState(false)
   const [qrModalIsVisible, setQrModalIsVisible] = useState(false)
   const { theme } = useTheme()
@@ -31,14 +66,15 @@ const DonationScreen = ({ route, navigation }: DonationProps): JSX.Element => {
   const [donation, setDonation] = useState<Donation>({
     id: '',
     event: eventId,
-    date: '',
+    date: new Date(),
     basicBasket: '',
     fruitsAndVegies: '',
     dairy: '',
     inedibles: ''
   })
   const [event, setEvent] = useState<DonationEvent>({
-    place: 'Bosque Colomos',
+    id: '',
+    title: 'Bosque Colomos',
     startDate: new Date(Date.now()),
     endDate: new Date(Date.now()),
     startTime: '',
@@ -57,13 +93,32 @@ const DonationScreen = ({ route, navigation }: DonationProps): JSX.Element => {
 
   useEffect(() => {
     const fetchEventData = async (): Promise<void> => {
-      console.log(route)
       const fetchedEvent = await client.getEvent(eventId)
-      console.log(fetchedEvent)
-      setEvent(fetchedEvent)
+      setEvent((prevEvent) => ({
+        ...prevEvent,
+        ...fetchedEvent
+      }))
+      setDonation((prevDonation) => ({
+        ...prevDonation,
+        event: fetchedEvent.id,
+        date: new Date(Date.now())
+      }))
     }
     void fetchEventData()
   }, [])
+
+  useEffect(() => {
+    const quantities: any = {}
+
+    categories.forEach(category => {
+      quantities[category.name] = category.quantity.toString()
+    })
+
+    setDonation(prevDonation => ({
+      ...prevDonation,
+      ...quantities
+    }))
+  }, [categories])
 
   const toggleSelectedCategory = (id: number): void => {
     setCategories(prevCategories => prevCategories.map(category => {
@@ -91,6 +146,34 @@ const DonationScreen = ({ route, navigation }: DonationProps): JSX.Element => {
     return categories.filter(category => category.isSelected)
   }
 
+  const handleGenerateQR = (): void => {
+    if (categories.every((category) => category.quantity === 0)) return
+
+    const createDonation = async (): Promise<void> => {
+      const createdDonation = await client.createDonation({ ...donation, id: undefined })
+      setDonation((prevDonation) => ({
+        ...prevDonation,
+        ...createdDonation
+      }))
+      setQrModalIsVisible(true)
+    }
+
+    const updateDonation = async (): Promise<void> => {
+      const updatedDonation = await client.updateDonation(donation)
+      setDonation((prevDonation) => ({
+        ...prevDonation,
+        ...updatedDonation
+      }))
+      setQrModalIsVisible(true)
+    }
+
+    if (donation.id?.trim() === '') {
+      void createDonation()
+      return
+    }
+    void updateDonation()
+  }
+
   return (
     <View style={{
       flex: 1,
@@ -104,11 +187,13 @@ const DonationScreen = ({ route, navigation }: DonationProps): JSX.Element => {
         availableCategories={filterAvailableCategories()}
         onPress={() => setDonationModalIsVisible(false)}
       />
-      <QRModal
-        isVisible={qrModalIsVisible}
-        value={donation.id ?? ''}
-        onPress={() => setQrModalIsVisible(false)}
-      />
+      {donation.id !== '' && (
+        <QRModal
+          isVisible={qrModalIsVisible}
+          value={donation.id as string}
+          onPress={() => setQrModalIsVisible(false)}
+        />
+      )}
       <View style={{
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -187,7 +272,7 @@ const DonationScreen = ({ route, navigation }: DonationProps): JSX.Element => {
             type="material"
             color={theme.colors.white} />
         </Button>}
-      <FooterButton title='Genera tu QR' onPress={() => setQrModalIsVisible(true)} />
+      <FooterButton title='Genera tu QR' onPress={handleGenerateQR} />
 
     </View >
   )

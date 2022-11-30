@@ -1,6 +1,6 @@
 interface Category {
   id: number
-  name: string
+  name: 'basicBasket' | 'fruitsAndVegies' | 'dairy' | 'inedibles'
   displayName: string
   icon: string
   quantity: number

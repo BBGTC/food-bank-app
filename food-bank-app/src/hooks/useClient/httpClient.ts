@@ -8,8 +8,9 @@ import InventoryModel from '../../models/InventoryModel'
 import ContributorModel from '../../models/ContributorModel'
 import { contributorAdapter } from '../../adapters'
 import { ContributorPayload, inwardsContributorAdapter } from '../../adapters/contributorAdapter'
-import { DonationEvent } from '../../models'
+import { Donation, DonationEvent } from '../../models'
 import EventAdapter, { EventPayload } from '../../adapters/donationEventAdapter'
+import DonationAdapter, { DonationPayload } from '../../adapters/donationAdapter'
 
 declare module 'axios' {
   interface AxiosResponse<T = any> extends Promise<T> { }
@@ -112,7 +113,6 @@ class HttpClient {
   public getEvent = async (id: string): Promise<DonationEvent> => {
     return EventAdapter.inwards(await this.instance.get<EventPayload>(`events/${id}`))
   }
-<<<<<<< HEAD
 
   public readonly getInventories = async (): Promise<InventoryModel[]> => {
     return await this.instance.get<InventoryModel[]>('/inventory/')
@@ -123,8 +123,17 @@ class HttpClient {
     return rawEvents.map(EventAdapter.inwards)
   }
 
-=======
->>>>>>> 558a9067 (feat(donation): add event model adapter)
+  public createDonation = async (data: Donation): Promise<Donation> => {
+    const payload = DonationAdapter.outwards(data)
+    const createdDonation = await this.instance.post<DonationPayload>('donations/', payload)
+    return DonationAdapter.inwards(createdDonation)
+  }
+
+  public updateDonation = async (data: Donation): Promise<Donation> => {
+    const payload = DonationAdapter.outwards(data)
+    const updatedDonation = await this.instance.patch<DonationPayload>('donations/', payload)
+    return DonationAdapter.inwards(updatedDonation)
+  }
 }
 
 export default HttpClient

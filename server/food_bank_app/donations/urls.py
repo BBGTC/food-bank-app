@@ -4,7 +4,7 @@ from .views import DonationViewSet, VerifyDonation
 urlpatterns = [
     path('', DonationViewSet.as_view({
         'post': 'create',
-        'put': 'update',
+        'patch': 'update',
         'get': 'list',
     })),
     path('verify/<uuid:donation_id>', VerifyDonation.as_view())

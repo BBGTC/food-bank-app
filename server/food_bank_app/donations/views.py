@@ -54,9 +54,8 @@ class DonationViewSet(viewsets.ModelViewSet):
         if donation.contributor != contributor:
             raise Unauthorized()
 
-        serializer = DonationSerializer(data=request.data, partial=True)
+        serializer = DonationSerializer(instance=donation, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
-
         serializer.save()
 
         return Response(serializer.data)

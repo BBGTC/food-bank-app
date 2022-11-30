@@ -2,7 +2,7 @@ interface Donation {
   id?: string
   contributor?: string
   event: string
-  date: string
+  date: Date
   basicBasket: string
   fruitsAndVegies: string
   dairy: string
