@@ -8,8 +8,10 @@ from .exceptions import DonationNotFound
 from .serializers import DonationSerializer
 from .selectors import select_donation, select_donations_by_contributor
 from .models import Donation
-
-from .exceptions import MustBeContributorException, Unauthorized
+from .services import verify_donation
+from inventory.selectors import select_current_month_category
+from inventory.services import update_category_supply
+from .exceptions import MustBeContributorException, Unauthorized, DonationAlreadyVerified
 
 class VerifyDonation(views.APIView):
     permission_classes = IsAuthenticated,
@@ -18,9 +20,23 @@ class VerifyDonation(views.APIView):
             raise Unauthorized()
         
         donation: Donation = select_donation(donation_id)
-        donation.is_verified = True
-        donation.save()
+        
+        if  donation.is_verified:
+            return Response('Donation verified successfully')
+        
+        basic_basket= select_current_month_category('BB')
+        fruits_and_vegies = select_current_month_category('FV')
+        dairy = select_current_month_category('DA')
+        inedibles = select_current_month_category('IE')
+        groceries = select_current_month_category('GR')
 
+        update_category_supply(basic_basket, donation.basic_basket)
+        update_category_supply(fruits_and_vegies, donation.fruits_and_vegies)
+        update_category_supply(dairy, donation.dairy)
+        update_category_supply(inedibles, donation.inedibles)
+        update_category_supply(groceries, donation.groceries)
+
+        verify_donation(donation=donation)
         return Response('Donation verified successfully')
 
 class DonationViewSet(viewsets.ModelViewSet):
@@ -54,6 +70,9 @@ class DonationViewSet(viewsets.ModelViewSet):
         if donation.contributor != contributor:
             raise Unauthorized()
 
+        if donation.is_verified:
+            raise DonationAlreadyVerified()
+            
         serializer = DonationSerializer(instance=donation, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()

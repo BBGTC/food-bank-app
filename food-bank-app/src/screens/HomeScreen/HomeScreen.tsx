@@ -10,6 +10,7 @@ import { EventCarousel, EventCard, PriorityQueue } from '../../components'
 import { DonationEvent, InventoryModel } from '../../models'
 import { useClient } from '../../hooks'
 import { PriorityQueueItemProps } from '../../components/PriorityQueueItem'
+import { useIsFocused } from '@react-navigation/native'
 
 const inventoryAdapter = (inventory: InventoryModel): PriorityQueueItemProps => {
   const CATEGORY_LABELS: { [key: string]: string } = {
@@ -48,10 +49,11 @@ const displayWelcomeMessage = (): string => {
 export const HomeScreen = (): JSX.Element => {
   const [priorityQueueItems, setPriorityQueueItems] = useState<PriorityQueueItemProps[]>([])
   const [donationEvents, setDonationEvents] = useState<DonationEvent[]>([])
-
+  const isFocused = useIsFocused()
   const client = useClient()
 
   useEffect(() => {
+    console.log(isFocused)
     const loadPriorityQueueItems = async (): Promise<void> => {
       const inventories = await client.getInventories()
       setPriorityQueueItems(inventories.map(inventoryAdapter))
@@ -64,7 +66,7 @@ export const HomeScreen = (): JSX.Element => {
     void loadDonationEvents()
 
     void loadPriorityQueueItems()
-  }, [])
+  }, [isFocused])
 
   return (
     <SafeAreaView style={styles.container}>

@@ -16,3 +16,4 @@ class Donation(models.Model):
     fruits_and_vegies = models.FloatField()
     dairy = models.FloatField()
     inedibles = models.FloatField()
+    groceries = models.FloatField()

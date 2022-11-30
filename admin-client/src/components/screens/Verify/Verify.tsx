@@ -55,6 +55,7 @@ export const Verify = () => {
             { donation.fruitsAndVegies && <CategoryItem category="fruitsAndVegies" amount={parseInt(donation.fruitsAndVegies)}/> }
             { donation.dairy && <CategoryItem category="dairy" amount={parseInt(donation.dairy)}/> }
             { donation.inedibles && <CategoryItem category="inedibles" amount={parseInt(donation.inedibles)}/> }
+            { donation.groceries && <CategoryItem category="groceries" amount={parseInt(donation.dairy)}/> }
           </div>
           <div className="w-full flex flex-col my-4">
             <button type="button" onClick={handleVerify} className=" bg-green-500 p-4 my-1 mt-2 rounded-md text-white">

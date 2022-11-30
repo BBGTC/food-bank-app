@@ -7,6 +7,7 @@ interface Donation {
     fruitsAndVegies: string
     dairy: string
     inedibles: string
+    groceries: string
   }
   
   export interface DonationPayload {
@@ -18,6 +19,7 @@ interface Donation {
     fruits_and_vegies: string
     dairy: string
     inedibles: string
+    groceries: string
   }
   
   export default Donation

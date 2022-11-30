@@ -14,5 +14,6 @@ class DonationSerializer(serializers.ModelSerializer):
             'basic_basket',
             'fruits_and_vegies',
             'dairy',
-            'inedibles'
+            'inedibles',
+            'groceries'
         )

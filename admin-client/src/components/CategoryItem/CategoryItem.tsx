@@ -3,12 +3,14 @@ import Fruit from '../../assets/fruit-pear.svg'
 import MedicalBag from '../../assets/medical-bag.svg'
 import Basket from '../../assets/basket.svg'
 import Cow from '../../assets/cow.svg'
+import Groceries from '../../assets/groceries.svg'
 
 enum Category {
     basicBasket = 'basicBasket',
     fruitsAndVegies = 'fruitsAndVegies',
     dairy = 'dairy',
     inedibles = 'inedibles',
+    groceries = 'groceries'
 }
 
 interface CategoryItemProps {
@@ -21,6 +23,7 @@ const CATEGORY_TO_SVG_MAP = {
     inedibles: MedicalBag,
     fruitsAndVegies: Fruit,
     dairy: Cow,
+    groceries: Groceries
 }
 
 const CATEGORY_TO_NAME_MAP ={
@@ -28,6 +31,7 @@ const CATEGORY_TO_NAME_MAP ={
     inedibles: 'No consumibles',
     fruitsAndVegies: 'Frutas y verduras',
     dairy: 'Lácteos',
+    groceries: 'Abarrotes'
 }
 
 export const CategoryItem = ({category, amount}: CategoryItemProps) => {
