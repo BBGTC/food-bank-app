@@ -1,4 +1,4 @@
-interface Category {
+interface CategoryModel {
   id: number
   name: 'basicBasket' | 'fruitsAndVegies' | 'dairy' | 'inedibles' | 'groceries'
   displayName: string
@@ -7,4 +7,4 @@ interface Category {
   isSelected: boolean
 }
 
-export { Category }
+export default CategoryModel

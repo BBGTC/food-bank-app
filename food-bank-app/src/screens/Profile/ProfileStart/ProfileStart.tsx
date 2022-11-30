@@ -5,8 +5,8 @@ import {
   ProfileCard,
   Header
 } from '../../../components/'
-import { useState, useEffect } from 'react'
 import { useAuthContext } from '../../../contexts/AuthContext'
+import { Contributor } from '../../../models'
 
 const BUTTONS = [
   {
@@ -29,7 +29,7 @@ const BUTTONS = [
 const ProfileStart = ({ navigation }: any): JSX.Element => {
   const { theme } = useTheme()
 
-  const { profile } = useAuthContext()
+  const { profile } = useAuthContext() as { profile: Contributor }
 
   return (
     <View style={{

@@ -8,10 +8,14 @@ import { useState } from 'react'
 import { useTheme, Input } from '@rneui/themed'
 import { FooterButton, Header } from '../../../components/'
 import { useAuthContext } from '../../../contexts/AuthContext'
+import useClient from '../../../hooks/useClient'
+import { Contributor } from '../../../models'
 
 const PersonalInfo = (): JSX.Element => {
-  const { profile } = useAuthContext()
-  const [personalInfo, setPersonalInfo] = useState(profile)
+  const client = useClient()
+  const { profile, saveProfile } = useAuthContext()
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const [personalInfo, setPersonalInfo] = useState<Contributor>({ ...profile! })
 
   const handleChangeContributor = (type: string, value: string): void => {
     setPersonalInfo((prevPersonalInfo) => ({
@@ -20,14 +24,14 @@ const PersonalInfo = (): JSX.Element => {
     }))
   }
 
-  const handleChangeAddress = (type: string, value: string): void => {
-    setPersonalInfo((prevPersonalInfo) => ({
-      ...prevPersonalInfo,
-      address: {
-        ...prevPersonalInfo?.address,
-        [type]: value
-      }
-    }))
+  const handleSubmit = (): void => {
+    const updateContributor = async (): Promise<void> => {
+      const newInfo = await client.updateProfile(personalInfo)
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      saveProfile(newInfo!)
+    }
+
+    void updateContributor()
   }
 
   const { theme } = useTheme()
@@ -53,7 +57,7 @@ const PersonalInfo = (): JSX.Element => {
         <Input
           style={{ width: '100%' }}
           value={personalInfo?.name}
-          onChangeText={newValue => handleChangeContributor('first_name', newValue)} />
+          onChangeText={newValue => handleChangeContributor('name', newValue)} />
         <Text style={{
           fontSize: 16,
           width: '100%',
@@ -64,7 +68,7 @@ const PersonalInfo = (): JSX.Element => {
         <Input
           style={{ width: '100%' }}
           value={personalInfo?.middleName}
-          onChangeText={newValue => handleChangeContributor('middle_name', newValue)} />
+          onChangeText={newValue => handleChangeContributor('middleName', newValue)} />
         <Text style={{
           fontSize: 16,
           width: '100%',
@@ -86,7 +90,7 @@ const PersonalInfo = (): JSX.Element => {
         <Input
           style={{ width: '100%' }}
           value={personalInfo?.secondSurname}
-          onChangeText={newValue => handleChangeContributor('second_surname', newValue)} />
+          onChangeText={newValue => handleChangeContributor('secondSurname', newValue)} />
         <Text style={{
           fontSize: 16,
           width: '100%',
@@ -121,84 +125,7 @@ const PersonalInfo = (): JSX.Element => {
           value={personalInfo?.email}
           keyboardType='email-address'
           onChangeText={newValue => handleChangeContributor('email', newValue)} />
-        <Text style={{
-          fontSize: 16,
-          width: '100%',
-          marginTop: 20,
-          marginBottom: 12,
-          color: theme.colors.gray.A
-        }}>Calle</Text>
-        <Input
-          style={{ width: '100%' }}
-          value={personalInfo?.address.street}
-          onChangeText={newValue => handleChangeAddress('street', newValue)} />
-        <Text style={{
-          fontSize: 16,
-          width: '100%',
-          marginTop: 20,
-          marginBottom: 12,
-          color: theme.colors.gray.A
-        }}>Número exterior</Text>
-        <Input
-          style={{ width: '100%' }}
-          value={personalInfo?.address.exteriorNumber}
-          onChangeText={newValue => handleChangeAddress('exterior_number', newValue)} />
-        <Text style={{
-          fontSize: 16,
-          width: '100%',
-          marginTop: 20,
-          marginBottom: 12,
-          color: theme.colors.gray.A
-        }}>Número interior</Text>
-        <Input
-          style={{ width: '100%' }}
-          value={personalInfo?.address.interiorNumber}
-          onChangeText={newValue => handleChangeAddress('interior_number', newValue)} />
-        <Text style={{
-          fontSize: 16,
-          width: '100%',
-          marginTop: 20,
-          marginBottom: 12,
-          color: theme.colors.gray.A
-        }}>Código postal</Text>
-        <Input
-          style={{ width: '100%' }}
-          value={personalInfo?.address.zipCode}
-          onChangeText={newValue => handleChangeAddress('zip_code', newValue)} />
-        <Text style={{
-          fontSize: 16,
-          width: '100%',
-          marginTop: 20,
-          marginBottom: 12,
-          color: theme.colors.gray.A
-        }}>Municipio</Text>
-        <Input
-          style={{ width: '100%' }}
-          value={personalInfo?.address.municipality}
-          onChangeText={newValue => handleChangeAddress('municipality', newValue)} />
-        <Text style={{
-          fontSize: 16,
-          width: '100%',
-          marginTop: 20,
-          marginBottom: 12,
-          color: theme.colors.gray.A
-        }}>Colonia</Text>
-        <Input
-          style={{ width: '100%' }}
-          value={personalInfo?.address.neighborhood}
-          onChangeText={newValue => handleChangeAddress('neighborhood', newValue)} />
-        <Text style={{
-          fontSize: 16,
-          width: '100%',
-          marginTop: 20,
-          marginBottom: 12,
-          color: theme.colors.gray.A
-        }}>Estado</Text>
-        <Input
-          style={{ width: '100%' }}
-          value={personalInfo?.address.state}
-          onChangeText={newValue => handleChangeAddress('state', newValue)} />
-        <FooterButton title='Guardar cambios' onPress={() => { }} />
+        <FooterButton title='Guardar cambios' onPress={() => handleSubmit()} />
       </ScrollView>
     </KeyboardAvoidingView>
   )

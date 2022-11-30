@@ -2,8 +2,15 @@ import { useState } from 'react'
 import { View, Text } from 'react-native'
 import { Button, useTheme } from '@rneui/themed'
 import DonationModal from '../DonationModal'
+import { CategoryModel } from '../../models'
 
-const DonationHistoryItem = (): JSX.Element => {
+interface DonationHistoryItemProps {
+  event: string
+  date: Date
+  categories: CategoryModel[]
+}
+
+const DonationHistoryItem = ({ event, date, categories }: DonationHistoryItemProps): JSX.Element => {
   const [modalIsVisible, setModalIsVisible] = useState(false)
 
   const { theme } = useTheme()
@@ -13,7 +20,7 @@ const DonationHistoryItem = (): JSX.Element => {
       <DonationModal
         isVisible={modalIsVisible}
         type='show'
-        availableCategories={[ALL_CATEGORIES[1]]}
+        availableCategories={[categories[1]]}
         onPress={() => setModalIsVisible(false)}
       />
       <View
@@ -39,19 +46,19 @@ const DonationHistoryItem = (): JSX.Element => {
             style={{
               fontSize: 16,
               marginBottom: 4
-            }}>Basílica de Zapopan</Text>
+            }}>{event}</Text>
           <Text
             style={{
               fontSize: 12,
               marginBottom: 4,
               color: theme.colors.gray.A,
               fontWeight: 'bold'
-            }}>10 de Octubre de 2021</Text>
+            }}>{`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`}</Text>
           <Text style={{
             fontSize: 12,
             color: theme.colors.red,
             fontWeight: 'bold'
-          }}>180 kg • Canasta básica</Text>
+          }}>${categories[0].quantity}• ${categories[0].displayName}</Text>
         </View>
         <Button
           title={'DETALLES'}
@@ -70,38 +77,3 @@ const DonationHistoryItem = (): JSX.Element => {
 }
 
 export default DonationHistoryItem
-
-const ALL_CATEGORIES = [
-  {
-    id: 1,
-    name: 'fruitsAndVegetables',
-    displayName: 'Frutas y verduras',
-    icon: 'brunch-dining',
-    quantity: 3,
-    isSelected: true
-  },
-  {
-    id: 2,
-    name: 'sausagesAndDairy',
-    displayName: 'Embutidos y lácteos',
-    icon: 'brunch-dining',
-    quantity: 50,
-    isSelected: true
-  },
-  {
-    id: 3,
-    name: 'groceries',
-    displayName: 'Abarrotes',
-    icon: 'shopping-cart',
-    quantity: 3,
-    isSelected: false
-  },
-  {
-    id: 4,
-    name: 'nonEatables',
-    displayName: 'No comestibles',
-    icon: 'soap',
-    quantity: 3,
-    isSelected: false
-  }
-]

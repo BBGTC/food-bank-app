@@ -1,14 +1,14 @@
 import { useEffect } from 'react'
 import { View } from 'react-native'
 import Modal from 'react-native-modal'
+import { CategoryModel } from '../../models'
 
-import { Category } from '../../../types'
 import DonationCategoryItem from '../DonationCategoryItem/DonationCategoryItem'
 
 interface DonationModalProps {
   isVisible: boolean
   type: 'add' | 'show'
-  availableCategories: Category[]
+  availableCategories: CategoryModel[]
   handleAdd?: (id: number) => void
   onPress?: () => void
 }

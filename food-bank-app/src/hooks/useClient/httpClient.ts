@@ -30,7 +30,7 @@ class HttpClient {
   private readonly instance: AxiosInstance
   private readonly token: string
 
-  public constructor (baseURL?: string, token?: string) {
+  public constructor(baseURL?: string, token?: string) {
     if (baseURL === null || baseURL === undefined) {
       throw new Error('Invalid base URL')
     }
@@ -146,6 +146,11 @@ class HttpClient {
     const payload = DonationAdapter.outwards(data)
     const updatedDonation = await this.instance.patch<DonationPayload>('donations/', payload)
     return DonationAdapter.inwards(updatedDonation)
+  }
+
+  public getDonations = async (): Promise<Donation[]> => {
+    const donations = await this.instance.get<DonationPayload[]>('donations/')
+    return donations.map(DonationAdapter.inwards)
   }
 }
 
