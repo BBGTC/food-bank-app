@@ -11,6 +11,8 @@ djangorestframework-simplejwt = "*"
 django-phonenumber-field = "*"
 django-phonenumbers = "*"
 django-extensions= "*"
+django-heroku = "*"
+gunicorn = "*"
 
 [dev-packages]
 

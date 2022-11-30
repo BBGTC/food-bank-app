@@ -1,0 +1,1 @@
+web: cd ./food_bank_app && python manage.py runserver
