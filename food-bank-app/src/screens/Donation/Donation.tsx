@@ -1,7 +1,8 @@
 import {
   Text,
   View,
-  ScrollView
+  ScrollView,
+  Image
 } from 'react-native'
 import { useEffect, useState } from 'react'
 import { Icon } from '@rneui/base'
@@ -15,7 +16,7 @@ import FooterButton from '../../components/FooterButton'
 import QRModal from '../../components/QRModal/QRModal'
 import { Donation, DonationEvent } from '../../models'
 import useClient from '../../hooks/useClient'
-import { AxiosError, AxiosResponse } from 'axios'
+import Header from '../../components/Header'
 
 const CATEGORIES: Category[] = [
   {
@@ -198,6 +199,7 @@ const DonationScreen = (): JSX.Element => {
       alignItems: 'center',
       padding: 32
     }}>
+      <Header title='Tu donacion' />
       <DonationModal
         type='add'
         isVisible={donationModalIsVisible}
@@ -212,35 +214,6 @@ const DonationScreen = (): JSX.Element => {
           onPress={() => setQrModalIsVisible(false)}
         />
       )}
-      <View style={{
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '100%',
-        height: 100,
-        marginBottom: 36
-      }}>
-        <View style={{
-          marginLeft: 10,
-          width: '75%',
-          justifyContent: 'center'
-        }}>
-          <Text style={{
-            fontSize: 30
-          }}>
-            {'Registra una \ndonación'}
-          </Text>
-        </View>
-        <View style={{ width: '25%', justifyContent: 'center' }}>
-          <Image
-            source={require('../../../assets/logo.png')}
-            style={{
-              height: 80,
-              width: 80,
-              marginRight: 10
-            }}
-          />
-        </View>
-      </View>
       <Text style={{ fontSize: 20, width: '100%' }}>En donde vas a donar</Text>
       <View style={{
         flexDirection: 'row',

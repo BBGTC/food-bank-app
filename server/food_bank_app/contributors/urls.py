@@ -4,6 +4,6 @@ from .views import ContributorViewSet
 
 urlpatterns = [
     path('me', ContributorViewSet.as_view(
-        { 'get': 'retrieve', 'post': 'create' }
+        { 'get': 'retrieve', 'post': 'create', 'patch': 'update' }
     )),
 ]

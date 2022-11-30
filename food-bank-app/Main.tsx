@@ -1,5 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native'
 import { ThemeProvider, createTheme } from '@rneui/themed'
+import { StatusBar } from 'react-native'
 import { useAuthContext } from './src/contexts/AuthContext'
 import { EnrollmentNavigator, PrivateNavigator, PublicNavigator } from './src/Navigators'
 import { LoadingScreen } from './src/screens'
@@ -32,6 +33,7 @@ const Main = (): JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
       <NavigationContainer>
+        <StatusBar barStyle='dark-content' />
         {isLoadingAuth && <LoadingScreen />}
         {!isLoadingAuth && isAuthenticated && profile === null && <EnrollmentNavigator />}
         {!isLoadingAuth && isAuthenticated && profile !== null && <PrivateNavigator />}

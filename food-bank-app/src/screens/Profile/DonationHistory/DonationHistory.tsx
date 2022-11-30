@@ -1,5 +1,5 @@
 import { View } from 'react-native'
-import { DonationHistoryItem } from '../../../components'
+import { DonationHistoryItem, Header } from '../../../components'
 
 const DonationHistory = (): JSX.Element => {
   return (
@@ -9,6 +9,7 @@ const DonationHistory = (): JSX.Element => {
       padding: 32,
       marginTop: 16
     }}>
+      <Header title='Mis donaciones' />
       <DonationHistoryItem />
     </View>
   )

@@ -68,37 +68,19 @@ const EventCard = ({
             text={`${event.startTime} - ${event.endTime}`}
           />
         </View>
-<<<<<<< HEAD
-  {
-    !hideButtons &&
-    <View style={styles.buttonsContainer}>
-      <EventButton
-        onPress={() => null}
-        title={'CÓMO\nLLEGAR'}
-        rightBorder={true}
-      />
-      <EventButton
-        onPress={() => navigation.navigate('Donation', { eventId: event.id })}
-        title={'DONAR'}
-      />
-    </View>
-  }
-      </View >
-    </View >)
-=======
-        {!hideButtons &&
+        { !hideButtons &&
           <View style={styles.buttonsContainer}>
             <EventButton
               onPress={() => null}
-              title={'CÓMO\nLLEGAR'}
-              rightBorder={true}
+              title= {'CÓMO\nLLEGAR'}
+              rightBorder={ true }
             />
             <EventButton
-              onPress={() => navigation.navigate('Donation', { itemId: 0 })}
-              title={'DONAR'}
+              onPress={() => navigation.navigate('Donation', { eventId: event.id })}
+              title= {'DONAR'}
             />
           </View>
-        }
+          }
       </View>
     </View>)
 }

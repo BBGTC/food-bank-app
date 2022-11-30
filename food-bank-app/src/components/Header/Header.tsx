@@ -9,8 +9,9 @@ const Header = ({ title }: HeaderProps): JSX.Element => {
     <View style={{
       flexDirection: 'row',
       justifyContent: 'space-between',
+      alignItems: 'center',
       width: '100%',
-      paddingHorizontal: 16
+      height: 100
     }}>
       <Text style={{
         fontSize: 30

@@ -7,17 +7,18 @@ from .selectors import select_contributor
 from .serializers import ContributorSerializer
 from .services import create_contributor
 
+
 class ContributorViewSet(ViewSet):
     permission_classes = IsAuthenticated,
 
     def retrieve(self, request):
         contributor = select_contributor(request.user)
-      
-        if contributor is None:  
+
+        if contributor is None:
             raise ContributorNotSetException()
-      
+
         serializer = ContributorSerializer(contributor)
-        
+
         return Response(serializer.data)
 
     def create(self, request):
@@ -28,5 +29,18 @@ class ContributorViewSet(ViewSet):
         serializer.is_valid(raise_exception=True)
 
         create_contributor(request.user, request.data)
+
+        return Response(serializer.data)
+
+    def update(self, request):
+        contributor = select_contributor(request.user)
+
+        if contributor is None:
+            raise ContributorNotSetException()
+        
+        serializer = ContributorSerializer(instance=contributor, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+
+        serializer.save()
 
         return Response(serializer.data)

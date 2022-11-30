@@ -8,6 +8,7 @@ import { isEmptyString } from '../../util'
 import { useSignupDataContext } from '../../contexts/SignupDataContext'
 
 import { SignupStep } from './SignupStep'
+import { useNavigation } from '@react-navigation/native'
 
 const INITIAL_ADDRESS: Address = {
   street: '',
@@ -19,11 +20,13 @@ const INITIAL_ADDRESS: Address = {
   neighborhood: ''
 }
 
-export const SignupAddress = ({ navigation }: any): JSX.Element => {
+export const SignupAddress = (): JSX.Element => {
   const [errors, setErrors] = useState<string[]>([])
   const [address, setAddress] = useState<Address>(INITIAL_ADDRESS)
 
   const { setSignupData } = useSignupDataContext()
+
+  const navigation = useNavigation()
 
   const handleChange = (type: string, value: string): void => {
     setAddress((prevAddress) => ({
@@ -114,7 +117,7 @@ export const SignupAddress = ({ navigation }: any): JSX.Element => {
           </View>
         </View>
 
-          <View style={{ width: '100%' }}>
+        <View style={{ width: '100%' }}>
           {errors.map((error, index) => (
             <FormError message={error} key={index} />
           ))}

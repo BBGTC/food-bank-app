@@ -1,28 +1,35 @@
 import { View, Text } from 'react-native'
 import { ButtonGroup, Icon, useTheme } from '@rneui/themed'
 
-import ProfileCard from '../../../components/ProfileCard'
+import {
+  ProfileCard,
+  Header
+} from '../../../components/'
+import { useState, useEffect } from 'react'
+import { useAuthContext } from '../../../contexts/AuthContext'
 
 const BUTTONS = [
   {
     name: 'Información Personal',
     icon: 'person',
-    screen: 'Información Personal'
+    screen: 'Mi informacion'
   },
   {
     name: 'Mis donaciones',
     icon: 'wallet-giftcard',
-    screen: 'Donaciones'
+    screen: 'Mis donaciones'
   },
   {
     name: 'Mis facturas',
     icon: 'description',
-    screen: 'Facturas'
+    screen: 'Mis facturas'
   }
 ]
 
 const ProfileStart = ({ navigation }: any): JSX.Element => {
   const { theme } = useTheme()
+
+  const { profile } = useAuthContext()
 
   return (
     <View style={{
@@ -31,7 +38,10 @@ const ProfileStart = ({ navigation }: any): JSX.Element => {
       padding: 32,
       marginTop: 16
     }}>
-      <ProfileCard />
+      <Header title='Mi perfil' />
+      <ProfileCard
+        name={`${profile?.name} ${profile?.middleName}\n${profile?.surname} ${profile?.secondSurname}`}
+        email={profile?.email} />
       <ButtonGroup
         buttons={BUTTONS.map((button, index) => ({
           element: () =>

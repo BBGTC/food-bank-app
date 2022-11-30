@@ -9,6 +9,7 @@ interface Contributor {
   secondSurname: string
   phone: string
   rfc: string | null
+  email: string
 }
 
 export default Contributor

@@ -1,7 +1,12 @@
 import { View } from 'react-native'
 import { Avatar, Text, useTheme } from '@rneui/themed'
 
-const ProfileCard = (): JSX.Element => {
+interface ProfileCardProps {
+  name: string
+  email: string
+}
+
+const ProfileCard = ({ name, email }: ProfileCardProps): JSX.Element => {
   const { theme } = useTheme()
 
   return (
@@ -9,12 +14,12 @@ const ProfileCard = (): JSX.Element => {
       <Avatar
         size={72}
         rounded
-        title="JD"
+        title=""
         containerStyle={{ backgroundColor: theme.colors.disabled }}
       />
-      <View style={{ marginLeft: 12 }}>
-        <Text style={{ fontSize: 24 }}>Jon Doe</Text>
-        <Text style={{ fontSize: 16 }}>jon_doe@gmail.com</Text>
+      <View style={{ marginLeft: 12, justifyContent: 'center' }}>
+        <Text style={{ fontSize: 24 }}>{name}</Text>
+        <Text style={{ fontSize: 16 }}>{email}</Text>
       </View>
       <Text />
     </View>

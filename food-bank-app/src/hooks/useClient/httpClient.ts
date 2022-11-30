@@ -110,6 +110,19 @@ class HttpClient {
     }
   }
 
+  public updateProfile = async (data: ContributorModel): Promise<ContributorModel | null> => {
+    try {
+      const payload = contributorAdapter(data)
+      const adaptedProfile = await this.instance.patch<ContributorPayload>('contributors/me', payload)
+      return inwardsContributorAdapter(adaptedProfile)
+    } catch (error) {
+      if ((error as AxiosError).response?.status === 409) {
+        return null
+      }
+      throw error
+    }
+  }
+
   public getEvent = async (id: string): Promise<DonationEvent> => {
     return EventAdapter.inwards(await this.instance.get<EventPayload>(`events/${id}`))
   }
