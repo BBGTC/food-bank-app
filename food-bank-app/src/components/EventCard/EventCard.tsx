@@ -37,7 +37,7 @@ const EventCard = ({
         height: !hideButtons ? 180 : 130,
         width: !hideButtons ? '96%' : '100%',
         maxWidth: !hideButtons ? '96%' : '100%',
-        marginRight: !hideButtons ? 10 : 0
+        marginHorizontal: !hideButtons ? 4 : 0
       }]}
     >
       <Image
@@ -87,16 +87,14 @@ const EventCard = ({
 
 const styles = StyleSheet.create({
   cardContainer: {
-    // flexBasis: '100%',
-    // flex: 1,
-    maxWidth: '96%',
+    maxWidth: '95%',
     flexDirection: 'row',
     backgroundColor: 'white',
     borderRadius: 10,
-    marginTop: 30,
     shadowOffset: { width: 2, height: 4 },
     shadowOpacity: 0.5,
-    shadowRadius: 3
+    shadowRadius: 3,
+    flex: 1
   },
   buttonsContainer: {
     flexDirection: 'row',
