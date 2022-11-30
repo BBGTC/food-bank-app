@@ -16,8 +16,8 @@ class AddressSerializer(serializers.ModelSerializer):
     )
 
 class ContributorSerializer(serializers.ModelSerializer):
-  address = AddressSerializer()
-
+  address = AddressSerializer(read_only=True)
+  email = serializers.SerializerMethodField('get_field')
   class Meta:
     model = Contributor
     fields = (
@@ -28,5 +28,9 @@ class ContributorSerializer(serializers.ModelSerializer):
             "phone",
             "rfc",
             "address",
-            "get_full_name"
+            "get_full_name",
+            "email"
     )
+
+  def get_field(self, obj):
+    return self.instance.user.email

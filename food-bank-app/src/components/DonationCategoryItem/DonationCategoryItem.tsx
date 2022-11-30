@@ -15,7 +15,7 @@ interface DonationCategoryItemProps {
   displayName: string
   icon: string
   quantity: number
-  type: 'quantity' | 'add'
+  type: 'quantity' | 'add' | 'show'
   onAdd?: null | ((id: number) => void)
   onDelete?: null | ((id: number) => void)
   onChange?: null | ((id: number, quantity: number) => void)
@@ -66,6 +66,8 @@ const DonationCategoryItem = ({
           onLimitReached={() => fadeTo(0, 200, animation, () => onDelete?.(id))}
           minValue={0}
         />
+      case 'show':
+        return <Text>{quantity}</Text>
       default:
         return <></>
     }

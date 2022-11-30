@@ -7,10 +7,11 @@ import {
   Text
 } from 'react-native'
 import { EventCarousel, EventCard, PriorityQueue } from '../../components'
-import { DonationEvent, InventoryModel } from '../../models'
+import { Contributor, DonationEvent, InventoryModel } from '../../models'
 import { useClient } from '../../hooks'
 import { PriorityQueueItemProps } from '../../components/PriorityQueueItem'
 import { useIsFocused } from '@react-navigation/native'
+import { useAuthContext } from '../../contexts/AuthContext'
 
 const inventoryAdapter = (inventory: InventoryModel): PriorityQueueItemProps => {
   const CATEGORY_LABELS: { [key: string]: string } = {
@@ -51,6 +52,7 @@ export const HomeScreen = (): JSX.Element => {
   const [donationEvents, setDonationEvents] = useState<DonationEvent[]>([])
   const isFocused = useIsFocused()
   const client = useClient()
+  const { profile } = useAuthContext() as { profile: Contributor }
 
   useEffect(() => {
     console.log(isFocused)
@@ -84,7 +86,7 @@ export const HomeScreen = (): JSX.Element => {
           <Text style={{
             fontSize: 30
           }}>
-            {`${displayWelcomeMessage()},\nJohn Doe`}
+            {`${displayWelcomeMessage()},\n${profile.name}`}
           </Text>
         </View>
         <View style={{ width: '25%', justifyContent: 'center' }}>
@@ -96,7 +98,7 @@ export const HomeScreen = (): JSX.Element => {
       </View>
       <EventCarousel>
         {donationEvents.map((event, index) => {
-          return <EventCard event={event} key={index}/>
+          return <EventCard event={event} key={index} />
         })}
       </EventCarousel>
       <PriorityQueue items={priorityQueueItems} />

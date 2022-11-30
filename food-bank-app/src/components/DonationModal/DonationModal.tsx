@@ -1,26 +1,28 @@
 import { useEffect } from 'react'
 import { View } from 'react-native'
 import Modal from 'react-native-modal'
+import { CategoryModel } from '../../models'
 
-import { Category } from '../../../types'
 import DonationCategoryItem from '../DonationCategoryItem/DonationCategoryItem'
 
 interface DonationModalProps {
   isVisible: boolean
-  availableCategories: Category[]
-  handleAdd: (id: number) => void
-  onPress: () => void
+  type: 'add' | 'show'
+  availableCategories: CategoryModel[]
+  handleAdd?: (id: number) => void
+  onPress?: () => void
 }
 
 const DonationModal = ({
   isVisible,
+  type,
   availableCategories,
   onPress,
   handleAdd
 }: DonationModalProps): JSX.Element => {
   useEffect(() => {
     if (availableCategories.length === 0) {
-      onPress()
+      onPress?.()
     }
   }, [availableCategories])
 
@@ -41,7 +43,7 @@ const DonationModal = ({
           displayName={category.displayName}
           icon={category.icon}
           quantity={category.quantity}
-          type='add'
+          type={type}
           onAdd={handleAdd}
         />)}
       </View>
