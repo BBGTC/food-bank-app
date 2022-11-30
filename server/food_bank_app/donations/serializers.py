@@ -4,9 +4,6 @@ from contributors.serializers import ContributorSerializer
 from events.serializers import EventSerializer
 
 class DonationSerializer(serializers.ModelSerializer):
-    contributor = ContributorSerializer()
-    event = EventSerializer()
-
     class Meta:
         model = Donation
         fields = (
