@@ -11,7 +11,6 @@ interface PriorityQueueProps {
 }
 
 const PriorityQueue = ({ items }: PriorityQueueProps): JSX.Element => {
-  console.log(`Items: ${items}`)
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Prioridades</Text>

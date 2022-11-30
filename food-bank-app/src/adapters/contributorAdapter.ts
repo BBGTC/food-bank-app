@@ -1,4 +1,5 @@
 import { Contributor as ContributorModel } from '../models'
+import { AddressPayload } from './addressAdapter'
 
 export interface ContributorPayload {
   first_name: string
@@ -7,15 +8,7 @@ export interface ContributorPayload {
   second_surname: string
   phone: string
   rfc: string | null
-  address: {
-    street: string
-    exterior_number: string
-    zip_code: string
-    state: string
-    municipality: string
-    neighborhood: string
-    interior_number: string
-  }
+  address: AddressPayload
 }
 
 export const contributorAdapter = (contributor: ContributorModel): ContributorPayload => {

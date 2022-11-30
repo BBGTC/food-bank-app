@@ -1,8 +1,9 @@
 import Address from './AddressModel'
 
 interface DonationEvent {
+  id: string
   address: Address
-  place: string
+  title: string
   startDate: Date
   endDate: Date
   startTime: string

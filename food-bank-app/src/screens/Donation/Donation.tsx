@@ -4,7 +4,7 @@ import {
   Image,
   ScrollView
 } from 'react-native'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Icon } from '@rneui/base'
 import { Button, useTheme } from '@rneui/themed'
 import DonationCategoryItem from '../../components/DonationCategoryItem/DonationCategoryItem'
@@ -13,91 +13,57 @@ import { Category } from '../../../types'
 import EventCard from '../../components/EventCard'
 import FooterButton from '../../components/FooterButton'
 import QRModal from '../../components/QRModal/QRModal'
+import { Donation, DonationEvent } from '../../models'
+import useClient from '../../hooks/useClient'
 
 interface DonationProps {
   route: any
   navigation: any
 }
 
-const EVENT_CARDS = [
-  {
-    address: {
-      street: 'Calle El Chaco',
-      exteriorNumber: '3200',
-      interiorNumber: '',
-      zipCode: '43219',
-      state: 'Jalisco',
-      municipality: 'Guadalajara',
-      neighborhood: 'Providencia'
-    },
-    place: 'Bosque Colomos',
-    startDate: new Date(2022, 12, 12),
-    endDate: new Date(2022, 12, 15),
-    startTime: '10:00AM',
-    endTime: '5:00PM',
-    imageUrl: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/2f/1c/7b/jardin-japones.jpg?w=1200&h=-1&s=1'
-  },
-  {
-    address: {
-      street: 'asdasa',
-      exteriorNumber: '12',
-      interiorNumber: '123',
-      zipCode: '43219',
-      state: 'Jalisco',
-      municipality: 'Guadalajara',
-      neighborhood: 'centro'
-    },
-    place: 'Bosque Colomos',
-    startDate: new Date(2022, 12, 12),
-    endDate: new Date(2022, 12, 15),
-    startTime: '10:00AM',
-    endTime: '5:00PM',
-    imageUrl: ''
-  }
-]
-
-const ALL_CATEGORIES = [
-  {
-    id: 1,
-    name: 'fruitsAndVegetables',
-    displayName: 'Frutas y verduras',
-    icon: 'brunch-dining',
-    quantity: 3,
-    isSelected: true
-  },
-  {
-    id: 2,
-    name: 'sausagesAndDairy',
-    displayName: 'Embutidos y lácteos',
-    icon: 'brunch-dining',
-    quantity: 50,
-    isSelected: true
-  },
-  {
-    id: 3,
-    name: 'groceries',
-    displayName: 'Abarrotes',
-    icon: 'shopping-cart',
-    quantity: 3,
-    isSelected: false
-  },
-  {
-    id: 4,
-    name: 'nonEatables',
-    displayName: 'No comestibles',
-    icon: 'soap',
-    quantity: 3,
-    isSelected: false
-  }
-]
-
-const Donation = ({ route, navigation }: DonationProps): JSX.Element => {
-  const [categories, setCategories] = useState<Category[]>(ALL_CATEGORIES)
+const DonationScreen = ({ route, navigation }: DonationProps): JSX.Element => {
+  const [categories, setCategories] = useState<Category[]>([])
   const [donationModalIsVisible, setDonationModalIsVisible] = useState(false)
   const [qrModalIsVisible, setQrModalIsVisible] = useState(false)
-
   const { theme } = useTheme()
-  const { itemId } = route.params
+  const client = useClient()
+  const { eventId } = route.params
+  const [donation, setDonation] = useState<Donation>({
+    id: '',
+    event: eventId,
+    date: '',
+    basicBasket: '',
+    fruitsAndVegies: '',
+    dairy: '',
+    inedibles: ''
+  })
+  const [event, setEvent] = useState<DonationEvent>({
+    place: 'Bosque Colomos',
+    startDate: new Date(Date.now()),
+    endDate: new Date(Date.now()),
+    startTime: '',
+    endTime: '',
+    imageUrl: '',
+    address: {
+      street: '',
+      interiorNumber: '',
+      exteriorNumber: '',
+      state: '',
+      municipality: '',
+      zipCode: '',
+      neighborhood: ''
+    }
+  })
+
+  useEffect(() => {
+    const fetchEventData = async (): Promise<void> => {
+      console.log(route)
+      const fetchedEvent = await client.getEvent(eventId)
+      console.log(fetchedEvent)
+      setEvent(fetchedEvent)
+    }
+    void fetchEventData()
+  }, [])
 
   const toggleSelectedCategory = (id: number): void => {
     setCategories(prevCategories => prevCategories.map(category => {
@@ -140,7 +106,7 @@ const Donation = ({ route, navigation }: DonationProps): JSX.Element => {
       />
       <QRModal
         isVisible={qrModalIsVisible}
-        value={encodeURIComponent(JSON.stringify(categories))}
+        value={donation.id ?? ''}
         onPress={() => setQrModalIsVisible(false)}
       />
       <View style={{
@@ -178,7 +144,7 @@ const Donation = ({ route, navigation }: DonationProps): JSX.Element => {
         maxHeight: 235,
         marginBottom: 36
       }}>
-        <EventCard event={EVENT_CARDS[itemId]} hideButtons />
+        <EventCard event={event} hideButtons />
       </View>
       <Text style={{ fontSize: 20, width: '100%' }}>Tu donación</Text>
       <ScrollView style={{ flex: 1, margin: 12, width: '100%', padding: 4 }}>
@@ -196,7 +162,7 @@ const Donation = ({ route, navigation }: DonationProps): JSX.Element => {
           />
         ))}
       </ScrollView>
-      {filterSelectedCategories().length < categories.length &&
+      {filterSelectedCategories().length < 4 &&
         <Button
           buttonStyle={{
             shadowOffset: {
@@ -227,4 +193,4 @@ const Donation = ({ route, navigation }: DonationProps): JSX.Element => {
   )
 }
 
-export default Donation
+export default DonationScreen

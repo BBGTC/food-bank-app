@@ -6,8 +6,9 @@ import { DonationEvent } from '../../models'
 import { useNavigation } from '@react-navigation/native'
 
 const NO_PICTURE_URL = 'https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg'
+const EVENT_ID = 'd4f14c6a-3def-4b45-a100-4893556e66f0'
 
-interface EventCardProps {
+export interface EventCardProps {
   event: DonationEvent
   hideButtons?: boolean
 }
@@ -50,7 +51,7 @@ const EventCard = ({
       <View style={{ width: '70%' }}>
         <View style={{ maxHeight: 120, marginBottom: 10 }}>
           <Text style={{ fontSize: 20, margin: 10 }}>
-            {event.place}
+            {event.title}
           </Text>
           <EventCardField
             icon='location-sharp'
@@ -76,7 +77,7 @@ const EventCard = ({
               rightBorder={ true }
             />
             <EventButton
-              onPress={() => navigation.navigate('Donation', { itemId: 0 })}
+              onPress={() => navigation.navigate('Donation', { eventId: EVENT_ID })}
               title= {'DONAR'}
             />
           </View>

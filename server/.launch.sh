@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/zsh
 MY_IP=$(sh ../.my_ip.sh)
 
 cd ./food_bank_app

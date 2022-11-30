@@ -7,9 +7,10 @@ import {
   Text
 } from 'react-native'
 import { EventCarousel, EventCard, PriorityQueue } from '../../components'
-import { InventoryModel } from '../../models'
+import { DonationEvent, InventoryModel } from '../../models'
 import { useClient } from '../../hooks'
 import { PriorityQueueItemProps } from '../../components/PriorityQueueItem'
+
 
 const inventoryAdapter = (inventory: InventoryModel): PriorityQueueItemProps => {
   const CATEGORY_LABELS: { [key: string]: string } = {
@@ -34,42 +35,6 @@ const inventoryAdapter = (inventory: InventoryModel): PriorityQueueItemProps => 
   }
 }
 
-const EVENT_CARDS = [
-  {
-    address: {
-      street: 'Calle El Chaco',
-      exteriorNumber: '3200',
-      interiorNumber: '',
-      zipCode: '43219',
-      state: 'Jalisco',
-      municipality: 'Guadalajara',
-      neighborhood: 'Providencia'
-    },
-    place: 'Bosque Colomos',
-    startDate: new Date(2022, 12, 12),
-    endDate: new Date(2022, 12, 15),
-    startTime: '10:00AM',
-    endTime: '5:00PM',
-    imageUrl: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/2f/1c/7b/jardin-japones.jpg?w=1200&h=-1&s=1'
-  },
-  {
-    address: {
-      street: 'asdasa',
-      exteriorNumber: '12',
-      interiorNumber: '123',
-      zipCode: '43219',
-      state: 'Jalisco',
-      municipality: 'Guadalajara',
-      neighborhood: 'centro'
-    },
-    place: 'Bosque Colomos',
-    startDate: new Date(2022, 12, 12),
-    endDate: new Date(2022, 12, 15),
-    startTime: '10:00AM',
-    endTime: '5:00PM',
-    imageUrl: ''
-  }
-]
 const displayWelcomeMessage = (): string => {
   const currentTime = new Date().getHours()
   if (currentTime >= 5 && currentTime < 12) {
@@ -83,6 +48,8 @@ const displayWelcomeMessage = (): string => {
 
 export const HomeScreen = (): JSX.Element => {
   const [priorityQueueItems, setPriorityQueueItems] = useState<PriorityQueueItemProps[]>([])
+  const [donationEvents, setDonationEvents] = useState<DonationEvent[]>([])
+
 
   const client = useClient()
 
@@ -91,6 +58,12 @@ export const HomeScreen = (): JSX.Element => {
       const inventories = await client.getInventories()
       setPriorityQueueItems(inventories.map(inventoryAdapter))
     }
+
+    const loadDonationEvents = async (): Promise<void> => {
+      const events = await client.getEvents()
+      setDonationEvents(events)
+    }
+    void loadDonationEvents()
 
     void loadPriorityQueueItems()
   }, [])
@@ -122,7 +95,7 @@ export const HomeScreen = (): JSX.Element => {
         </View>
       </View>
       <EventCarousel>
-        {EVENT_CARDS.map((event, index) => {
+        {donationEvents.map((event, index) => {
           return <EventCard event={event} key={index}/>
         })}
       </EventCarousel>

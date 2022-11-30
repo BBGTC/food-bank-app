@@ -9,6 +9,7 @@ class AddressSerializer(serializers.ModelSerializer):
             'exterior_number',
             'interior_number',
             'zip_code',
+            'state',
             'municipality',
             'neighborhood'
         )
@@ -21,8 +22,10 @@ class EventSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'address',
-            'start_date',
+            'title',
+            'start_date',   
             'end_date',
             'start_time',
-            'end_time'
+            'end_time',
+            'image_url'
         )
