@@ -121,6 +121,7 @@ class HttpClient {
     const rawEvents = await this.instance.get<EventPayload[]>('events')
     return rawEvents.map(EventAdapter.inwards)
   }
+
 }
 
 export default HttpClient
