@@ -4,7 +4,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from contributors.selectors import select_contributor
-
+from .exceptions import DonationNotFound
 from .serializers import DonationSerializer
 from .selectors import select_donation, select_donations_by_contributor
 from .models import Donation
@@ -61,7 +61,16 @@ class DonationViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.data)
 
-
+    def retrieve(self, request, pk):
+        donation = select_donation(pk)
+      
+        if donation is None:  
+            raise(DonationNotFound)
+      
+        serializer = DonationSerializer(donation)
+        
+        return Response(serializer.data)
+    
     def list(self, request: Request):
         contributor = select_contributor(request.user)
         donations = select_donations_by_contributor(contributor)

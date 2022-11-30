@@ -7,5 +7,8 @@ urlpatterns = [
         'put': 'update',
         'get': 'list',
     })),
+    path('<uuid:pk>/', DonationViewSet.as_view(
+        { 'get': 'retrieve' }
+    )),
     path('verify/<uuid:donation_id>', VerifyDonation.as_view())
 ]
