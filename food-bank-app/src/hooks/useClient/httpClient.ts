@@ -112,6 +112,7 @@ class HttpClient {
   public getEvent = async (id: string): Promise<DonationEvent> => {
     return EventAdapter.inwards(await this.instance.get<EventPayload>(`events/${id}`))
   }
+<<<<<<< HEAD
 
   public readonly getInventories = async (): Promise<InventoryModel[]> => {
     return await this.instance.get<InventoryModel[]>('/inventory/')
@@ -122,6 +123,8 @@ class HttpClient {
     return rawEvents.map(EventAdapter.inwards)
   }
 
+=======
+>>>>>>> 558a9067 (feat(donation): add event model adapter)
 }
 
 export default HttpClient
