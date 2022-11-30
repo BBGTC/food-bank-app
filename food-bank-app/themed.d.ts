@@ -5,6 +5,7 @@ declare module '@rneui/themed' {
     gray: {
       A: string
       B: string
+      date: string
     }
     red: string
     green: string

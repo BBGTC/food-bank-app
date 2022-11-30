@@ -1,7 +1,6 @@
 import {
   Text,
   View,
-  Image,
   ScrollView
 } from 'react-native'
 import { useEffect, useState } from 'react'
@@ -200,6 +199,7 @@ const DonationScreen = (): JSX.Element => {
       padding: 32
     }}>
       <DonationModal
+        type='add'
         isVisible={donationModalIsVisible}
         handleAdd={toggleSelectedCategory}
         availableCategories={filterAvailableCategories()}

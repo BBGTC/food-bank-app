@@ -10,13 +10,11 @@ const NO_PICTURE_URL = 'https://upload.wikimedia.org/wikipedia/en/6/60/No_Pictur
 export interface EventCardProps {
   event: DonationEvent
   hideButtons?: boolean
-  navigation?: any
 }
 
 const EventCard = ({
   event,
-  hideButtons = false,
-  navigation
+  hideButtons = false
 }: EventCardProps): JSX.Element => {
   const { theme } = useTheme()
   const navigation = useNavigation()
@@ -39,11 +37,7 @@ const EventCard = ({
         height: !hideButtons ? 180 : 130,
         width: !hideButtons ? '96%' : '100%',
         maxWidth: !hideButtons ? '96%' : '100%',
-<<<<<<< HEAD
         marginHorizontal: !hideButtons ? 4 : 0
-=======
-        marginRight: !hideButtons ? 10 : 0
->>>>>>> 067b32a5 (working donation with QR code)
       }]}
     >
       <Image
@@ -75,21 +69,22 @@ const EventCard = ({
           />
         </View>
 <<<<<<< HEAD
-        { !hideButtons &&
-          <View style={styles.buttonsContainer}>
-            <EventButton
-              onPress={() => null}
-              title= {'CÓMO\nLLEGAR'}
-              rightBorder={ true }
-            />
-            <EventButton
-              onPress={() => navigation.navigate('Donation', { eventId: event.id })}
-              title= {'DONAR'}
-            />
-          </View>
-          }
-      </View>
-    </View>)
+  {
+    !hideButtons &&
+    <View style={styles.buttonsContainer}>
+      <EventButton
+        onPress={() => null}
+        title={'CÓMO\nLLEGAR'}
+        rightBorder={true}
+      />
+      <EventButton
+        onPress={() => navigation.navigate('Donation', { eventId: event.id })}
+        title={'DONAR'}
+      />
+    </View>
+  }
+      </View >
+    </View >)
 =======
         {!hideButtons &&
           <View style={styles.buttonsContainer}>
@@ -99,39 +94,25 @@ const EventCard = ({
               rightBorder={true}
             />
             <EventButton
-              onPress={() => navigation?.navigate('Donation', {
-                itemId: 0 // aquí irá el id
-              })}
+              onPress={() => navigation.navigate('Donation', { itemId: 0 })}
               title={'DONAR'}
             />
           </View>
         }
       </View>
-    </View>
-  )
->>>>>>> 067b32a5 (working donation with QR code)
+    </View>)
 }
 
 const styles = StyleSheet.create({
   cardContainer: {
-<<<<<<< HEAD
     maxWidth: '95%',
-=======
-    // flexBasis: '100%',
-    // flex: 1,
-    maxWidth: '96%',
->>>>>>> 067b32a5 (working donation with QR code)
     flexDirection: 'row',
     backgroundColor: 'white',
     borderRadius: 10,
     shadowOffset: { width: 2, height: 4 },
     shadowOpacity: 0.5,
-<<<<<<< HEAD
     shadowRadius: 3,
     flex: 1
-=======
-    shadowRadius: 3
->>>>>>> 067b32a5 (working donation with QR code)
   },
   buttonsContainer: {
     flexDirection: 'row',
