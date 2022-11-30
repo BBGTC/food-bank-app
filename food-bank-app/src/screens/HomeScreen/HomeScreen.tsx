@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import {
   Image,
   StyleSheet,
@@ -5,46 +6,33 @@ import {
   View,
   Text
 } from 'react-native'
-import EventCarousel from '../../components/EventCarousel'
-import PriorityQueue from '../../components/PriorityQueueItem/PriorityQueue'
-import EventCard from '../../components/EventCard'
+import { EventCarousel, EventCard, PriorityQueue } from '../../components'
+import { DonationEvent, InventoryModel } from '../../models'
+import { useClient } from '../../hooks'
+import { PriorityQueueItemProps } from '../../components/PriorityQueueItem'
 
-const EVENT_CARDS = [
-  {
-    address: {
-      street: 'Calle El Chaco',
-      exteriorNumber: '3200',
-      interiorNumber: '',
-      zipCode: '43219',
-      state: 'Jalisco',
-      municipality: 'Guadalajara',
-      neighborhood: 'Providencia'
-    },
-    place: 'Bosque Colomos',
-    startDate: new Date(2022, 12, 12),
-    endDate: new Date(2022, 12, 15),
-    startTime: '10:00AM',
-    endTime: '5:00PM',
-    imageUrl: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/2f/1c/7b/jardin-japones.jpg?w=1200&h=-1&s=1'
-  },
-  {
-    address: {
-      street: 'asdasa',
-      exteriorNumber: '12',
-      interiorNumber: '123',
-      zipCode: '43219',
-      state: 'Jalisco',
-      municipality: 'Guadalajara',
-      neighborhood: 'centro'
-    },
-    place: 'Bosque Colomos',
-    startDate: new Date(2022, 12, 12),
-    endDate: new Date(2022, 12, 15),
-    startTime: '10:00AM',
-    endTime: '5:00PM',
-    imageUrl: ''
+const inventoryAdapter = (inventory: InventoryModel): PriorityQueueItemProps => {
+  const CATEGORY_LABELS: { [key: string]: string } = {
+    BB: 'Canasta básica',
+    FV: 'Frutas y verduras',
+    DA: 'Embutidos y lácteos',
+    IE: 'No comestibles',
+    GR: 'Abarrotes'
   }
-]
+
+  const CATEGORY_IMAGES: { [key: string]: string } = {
+    BB: 'https://www.gob.mx/cms/uploads/image/file/475639/canasta_ba_sica2.jpg',
+    FV: 'https://s1.eestatic.com/2021/05/28/ciencia/nutricion/584702647_186499572_1024x576.jpg',
+    DA: 'https://agraria.pe/imgs/a/lx/en-nuestro-pais-se-consume-2-5-kilos-de-embutidos-por-person-19553.jpg'
+  }
+
+  return {
+    title: CATEGORY_LABELS[inventory.category],
+    priority: inventory.urgency,
+    examples: inventory.examples,
+    imageUrl: CATEGORY_IMAGES[inventory.category]
+  }
+}
 
 const displayWelcomeMessage = (): string => {
   const currentTime = new Date().getHours()
@@ -57,15 +45,33 @@ const displayWelcomeMessage = (): string => {
   return 'Buenas noches'
 }
 
-const HomeScreen = (): JSX.Element => {
+export const HomeScreen = (): JSX.Element => {
+  const [priorityQueueItems, setPriorityQueueItems] = useState<PriorityQueueItemProps[]>([])
+  const [donationEvents, setDonationEvents] = useState<DonationEvent[]>([])
+
+  const client = useClient()
+
+  useEffect(() => {
+    const loadPriorityQueueItems = async (): Promise<void> => {
+      const inventories = await client.getInventories()
+      setPriorityQueueItems(inventories.map(inventoryAdapter))
+    }
+
+    const loadDonationEvents = async (): Promise<void> => {
+      const events = await client.getEvents()
+      setDonationEvents(events)
+    }
+    void loadDonationEvents()
+    void loadPriorityQueueItems()
+  }, [])
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={{
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
-        height: 100,
-        marginTop: 30
+        height: 100
       }}>
         <View style={{
           marginLeft: 10,
@@ -85,62 +91,20 @@ const HomeScreen = (): JSX.Element => {
           />
         </View>
       </View>
-      <View style={{
-        width: '100%',
-        marginTop: 20,
-        marginLeft: 10,
-        justifyContent: 'flex-start'
-      }}>
-        <Text style={{
-          fontSize: 25
-        }}>
-          ¡Ven a apoyarnos!
-        </Text>
-      </View>
       <EventCarousel>
-        {EVENT_CARDS.map((event, index) => {
+        {donationEvents.map((event, index) => {
           return <EventCard event={event} key={index}/>
         })}
       </EventCarousel>
-      <View style={{
-        width: '100%',
-        marginTop: 20,
-        marginBottom: 10
-      }}>
-        <Text style={{
-          fontSize: 25
-        }}>Prioridades</Text>
-        <PriorityQueue
-          items={[{
-            title: 'Canasta básica',
-            priorityLevel: 2,
-            imageUrl: 'https://www.gob.mx/cms/uploads/image/file/475639/canasta_ba_sica2.jpg',
-            modal: 'Huevo, Arroz, Pasta, Azúcar, Avena, Soya, Frijol, Aceite, Trigo, Garbanzo'
-          }, {
-            title: 'Frutas y verduras',
-            priorityLevel: 1,
-            imageUrl: 'https://s1.eestatic.com/2021/05/28/ciencia/nutricion/584702647_186499572_1024x576.jpg',
-            modal: 'Naranja, Fresa, Manzana, Sandía, Papá, Cebolla, Jitomate, Pera, Zanahoria'
-          }, {
-            title: 'Embutidos y lácteos',
-            priorityLevel: 0,
-            imageUrl: 'https://agraria.pe/imgs/a/lx/en-nuestro-pais-se-consume-2-5-kilos-de-embutidos-por-person-19553.jpg',
-            modal: 'Leche, Mantequilla, Yogurt, Queso, Jamón, Salchicha, Gelatina, Crema'
-          }]}
-        />
-      </View>
+      <PriorityQueue items={priorityQueueItems} />
     </SafeAreaView>
   )
 }
-
-export default HomeScreen
-
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    alignSelf: 'center',
-    height: '105%',
-    width: '95%'
+    margin: 16
   }
 })

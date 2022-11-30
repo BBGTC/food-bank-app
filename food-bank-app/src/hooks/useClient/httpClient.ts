@@ -3,10 +3,13 @@ import axios, {
   AxiosInstance,
   AxiosResponse
 } from 'axios'
+import InventoryModel from '../../models/InventoryModel'
 
 import ContributorModel from '../../models/ContributorModel'
 import { contributorAdapter } from '../../adapters'
 import { ContributorPayload, inwardsContributorAdapter } from '../../adapters/contributorAdapter'
+import { DonationEvent } from '../../models'
+import EventAdapter, { EventPayload } from '../../adapters/donationEventAdapter'
 
 declare module 'axios' {
   interface AxiosResponse<T = any> extends Promise<T> { }
@@ -104,6 +107,19 @@ class HttpClient {
       }
       throw error
     }
+  }
+
+  public getEvent = async (id: string): Promise<DonationEvent> => {
+    return EventAdapter.inwards(await this.instance.get<EventPayload>(`events/${id}`))
+  }
+
+  public readonly getInventories = async (): Promise<InventoryModel[]> => {
+    return await this.instance.get<InventoryModel[]>('/inventory/')
+  }
+
+  public readonly getEvents = async (): Promise<DonationEvent[]> => {
+    const rawEvents = await this.instance.get<EventPayload[]>('events')
+    return rawEvents.map(EventAdapter.inwards)
   }
 }
 

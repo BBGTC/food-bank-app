@@ -6,8 +6,9 @@ import { DonationEvent } from '../../models'
 import { useNavigation } from '@react-navigation/native'
 
 const NO_PICTURE_URL = 'https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg'
+const EVENT_ID = 'd4f14c6a-3def-4b45-a100-4893556e66f0'
 
-interface EventCardProps {
+export interface EventCardProps {
   event: DonationEvent
   hideButtons?: boolean
 }
@@ -37,7 +38,7 @@ const EventCard = ({
         height: !hideButtons ? 180 : 130,
         width: !hideButtons ? '96%' : '100%',
         maxWidth: !hideButtons ? '96%' : '100%',
-        marginRight: !hideButtons ? 10 : 0
+        marginHorizontal: !hideButtons ? 4 : 0
       }]}
     >
       <Image
@@ -50,7 +51,7 @@ const EventCard = ({
       <View style={{ width: '70%' }}>
         <View style={{ maxHeight: 120, marginBottom: 10 }}>
           <Text style={{ fontSize: 20, margin: 10 }}>
-            {event.place}
+            {event.title}
           </Text>
           <EventCardField
             icon='location-sharp'
@@ -76,7 +77,7 @@ const EventCard = ({
               rightBorder={ true }
             />
             <EventButton
-              onPress={() => navigation.navigate('Donation', { itemId: 0 })}
+              onPress={() => navigation.navigate('Donation', { eventId: EVENT_ID })}
               title= {'DONAR'}
             />
           </View>
@@ -87,16 +88,14 @@ const EventCard = ({
 
 const styles = StyleSheet.create({
   cardContainer: {
-    // flexBasis: '100%',
-    // flex: 1,
-    maxWidth: '96%',
+    maxWidth: '95%',
     flexDirection: 'row',
     backgroundColor: 'white',
     borderRadius: 10,
-    marginTop: 30,
     shadowOffset: { width: 2, height: 4 },
     shadowOpacity: 0.5,
-    shadowRadius: 3
+    shadowRadius: 3,
+    flex: 1
   },
   buttonsContainer: {
     flexDirection: 'row',
