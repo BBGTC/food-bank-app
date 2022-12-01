@@ -15,7 +15,7 @@ const TextInputWithIcon = ({ placeholder, icon, value, type, handleChange }: Tex
       value={value}
       placeholder={placeholder}
       onChangeText={newValue => handleChange(type, newValue)}
-      secureTextEntry={type === 'password'}
+      secureTextEntry={type === 'password' || type === 'passwordConfirm'}
       keyboardType={type === 'email' ? 'email-address' : 'default'}
       rightIcon={
         <Icon name={icon} type="material" color={theme.colors.gray.A} />

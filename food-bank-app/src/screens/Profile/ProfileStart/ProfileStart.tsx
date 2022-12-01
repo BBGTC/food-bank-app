@@ -2,11 +2,11 @@ import { View, Text } from 'react-native'
 import { ButtonGroup, Icon, useTheme } from '@rneui/themed'
 
 import {
-  ProfileCard,
-  Header
+  FooterButton,
+  Header,
+  ProfileCard
 } from '../../../components/'
 import { useAuthContext } from '../../../contexts/AuthContext'
-import { Contributor } from '../../../models'
 
 const BUTTONS = [
   {
@@ -29,7 +29,15 @@ const BUTTONS = [
 const ProfileStart = ({ navigation }: any): JSX.Element => {
   const { theme } = useTheme()
 
-  const { profile } = useAuthContext() as { profile: Contributor }
+  const { profile, clearAuth } = useAuthContext()
+
+  if (profile === null) {
+    return (
+      <View>
+        <Text>Ocurrió un error y no se encontró ningún perfil asociado a esta cuenta</Text>
+      </View>
+    )
+  }
 
   return (
     <View style={{
@@ -81,6 +89,9 @@ const ProfileStart = ({ navigation }: any): JSX.Element => {
         }}
         vertical
       />
+      <View style={{ marginTop: 64, width: '100%' }}>
+        <FooterButton title="Cerrar sesión" onPress={clearAuth}/>
+      </View>
     </View>
   )
 }

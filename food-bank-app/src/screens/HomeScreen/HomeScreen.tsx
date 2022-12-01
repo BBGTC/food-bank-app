@@ -55,7 +55,6 @@ export const HomeScreen = (): JSX.Element => {
   const { profile } = useAuthContext() as { profile: Contributor }
 
   useEffect(() => {
-    console.log(isFocused)
     const loadPriorityQueueItems = async (): Promise<void> => {
       const inventories = await client.getInventories()
       setPriorityQueueItems(inventories.map(inventoryAdapter))

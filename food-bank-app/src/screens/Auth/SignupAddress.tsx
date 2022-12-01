@@ -31,7 +31,7 @@ export const SignupAddress = (): JSX.Element => {
   const handleChange = (type: string, value: string): void => {
     setAddress((prevAddress) => ({
       ...prevAddress,
-      [type]: value.trim()
+      [type]: value
     }))
   }
 
