@@ -1,8 +1,7 @@
 import {
   Text,
   View,
-  ScrollView,
-  Image
+  ScrollView
 } from 'react-native'
 import { useEffect, useState } from 'react'
 import { Icon } from '@rneui/base'
@@ -10,15 +9,14 @@ import { Button, useTheme } from '@rneui/themed'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import DonationCategoryItem from '../../components/DonationCategoryItem/DonationCategoryItem'
 import DonationModal from '../../components/DonationModal/DonationModal'
-import { Category } from '../../../types'
+import { CategoryModel, Donation, DonationEvent } from '../../models'
 import { EventCard } from '../../components/EventCard'
 import FooterButton from '../../components/FooterButton'
 import QRModal from '../../components/QRModal/QRModal'
-import { Donation, DonationEvent } from '../../models'
 import useClient from '../../hooks/useClient'
 import Header from '../../components/Header'
 
-const CATEGORIES: Category[] = [
+const CATEGORIES: CategoryModel[] = [
   {
     id: 0,
     name: 'basicBasket',
@@ -68,7 +66,7 @@ const DonationScreen = (): JSX.Element => {
   const { eventId } = route.params as any
   const navigation = useNavigation()
 
-  const [categories, setCategories] = useState<Category[]>(CATEGORIES)
+  const [categories, setCategories] = useState<CategoryModel[]>(CATEGORIES)
   const [donationModalIsVisible, setDonationModalIsVisible] = useState(false)
   const [qrModalIsVisible, setQrModalIsVisible] = useState(false)
   const [donation, setDonation] = useState<Donation>({
@@ -147,11 +145,11 @@ const DonationScreen = (): JSX.Element => {
     }))
   }
 
-  const filterAvailableCategories = (): Category[] => {
+  const filterAvailableCategories = (): CategoryModel[] => {
     return categories.filter(category => !category.isSelected)
   }
 
-  const filterSelectedCategories = (): Category[] => {
+  const filterSelectedCategories = (): CategoryModel[] => {
     return categories.filter(category => category.isSelected)
   }
 

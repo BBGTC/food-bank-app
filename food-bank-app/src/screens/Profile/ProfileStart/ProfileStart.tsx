@@ -49,7 +49,9 @@ const ProfileStart = ({ navigation }: any): JSX.Element => {
       <Header title='Mi perfil' />
       <ProfileCard
         name={`${profile?.name} ${profile?.middleName}\n${profile?.surname} ${profile?.secondSurname}`}
-        email={profile?.email} />
+        email={profile?.email}
+        initials={`${profile.name[0]}${profile.surname[0]}`}
+      />
       <ButtonGroup
         buttons={BUTTONS.map((button, index) => ({
           element: () =>
@@ -90,7 +92,7 @@ const ProfileStart = ({ navigation }: any): JSX.Element => {
         vertical
       />
       <View style={{ marginTop: 64, width: '100%' }}>
-        <FooterButton title="Cerrar sesión" onPress={clearAuth}/>
+        <FooterButton title="Cerrar sesión" onPress={clearAuth} />
       </View>
     </View>
   )
