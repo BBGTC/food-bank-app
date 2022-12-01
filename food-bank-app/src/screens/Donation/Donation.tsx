@@ -21,7 +21,7 @@ const CATEGORIES: CategoryModel[] = [
     id: 0,
     name: 'basicBasket',
     displayName: 'Canasta básica',
-    icon: 'home',
+    icon: 'basket',
     quantity: 0,
     isSelected: false
   },
@@ -29,7 +29,7 @@ const CATEGORIES: CategoryModel[] = [
     id: 1,
     name: 'fruitsAndVegies',
     displayName: 'Frutas y vegetales',
-    icon: 'home',
+    icon: 'food-apple',
     quantity: 0,
     isSelected: false
   },
@@ -37,7 +37,7 @@ const CATEGORIES: CategoryModel[] = [
     id: 2,
     name: 'dairy',
     displayName: 'Lácteos',
-    icon: 'home',
+    icon: 'fridge',
     quantity: 0,
     isSelected: false
   },
@@ -45,7 +45,7 @@ const CATEGORIES: CategoryModel[] = [
     id: 3,
     name: 'inedibles',
     displayName: 'No comestibles',
-    icon: 'home',
+    icon: 'paper-roll-outline',
     quantity: 0,
     isSelected: false
   },
@@ -53,11 +53,13 @@ const CATEGORIES: CategoryModel[] = [
     id: 4,
     name: 'groceries',
     displayName: 'Abarrotes',
-    icon: 'home',
+    icon: 'rice',
     quantity: 0,
     isSelected: false
   }
 ]
+
+const ADMIN_CLIENT_URL = 'https://food-bank-prod.web.app/'
 
 const DonationScreen = (): JSX.Element => {
   const { theme } = useTheme()
@@ -197,7 +199,7 @@ const DonationScreen = (): JSX.Element => {
       alignItems: 'center',
       padding: 32
     }}>
-      <Header title='Tu donacion' />
+      <Header title='Tu donación' />
       <DonationModal
         type='add'
         isVisible={donationModalIsVisible}
@@ -208,11 +210,11 @@ const DonationScreen = (): JSX.Element => {
       {donation.id !== '' && (
         <QRModal
           isVisible={qrModalIsVisible}
-          value={donation.id as string}
+          value={`${ADMIN_CLIENT_URL}/verify/${(donation.id as string)}`}
           onPress={() => setQrModalIsVisible(false)}
         />
       )}
-      <Text style={{ fontSize: 20, width: '100%' }}>En donde vas a donar</Text>
+      <Text style={{ fontSize: 20, width: '100%' }}>¿En dónde vas a donar?</Text>
       <View style={{
         flexDirection: 'row',
         maxHeight: 235,
@@ -236,7 +238,7 @@ const DonationScreen = (): JSX.Element => {
           />
         ))}
       </ScrollView>
-      {filterSelectedCategories().length < 4 &&
+      {filterSelectedCategories().length < categories.length &&
         <Button
           buttonStyle={{
             shadowOffset: {

@@ -37,5 +37,5 @@ jobs:
 
       - name: Run tests
         run: |
-          cd server/food_bank_app
+          cd server
           pipenv run python manage.py test

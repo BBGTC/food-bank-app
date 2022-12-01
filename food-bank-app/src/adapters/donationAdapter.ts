@@ -19,7 +19,7 @@ class DonationAdapter {
       event: data.event,
       date: data.date.toISOString(),
       basic_basket: data.basicBasket.trim() === '' ? 0 : parseInt(data.basicBasket),
-      fruits_and_vegies: data.fruitsAndVegies.trim() === '' ? 0 : parseInt(data.basicBasket),
+      fruits_and_vegies: data.fruitsAndVegies.trim() === '' ? 0 : parseInt(data.fruitsAndVegies),
       dairy: data.dairy.trim() === '' ? 0 : parseInt(data.dairy),
       inedibles: data.inedibles.trim() === '' ? 0 : parseInt(data.inedibles),
       groceries: data.groceries.trim() === '' ? 0 : parseInt(data.groceries)

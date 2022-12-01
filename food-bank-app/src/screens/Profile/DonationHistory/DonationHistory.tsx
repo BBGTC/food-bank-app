@@ -58,7 +58,7 @@ const DonationHistory = (): JSX.Element => {
       setDonationHistory(fetchedDonationHistory)
     }
     void fetchDonationHistory()
-  })
+  }, [])
 
   const parseCategories = (donationHistoryItem: Donation): CategoryModel[] => {
     const parsedCategories: CategoryModel[] = ALL_CATEGORIES.map((category, index) => {

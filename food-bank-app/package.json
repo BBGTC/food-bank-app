@@ -2,7 +2,7 @@
   "name": "food-bank-app",
   "version": "1.0.0",
   "scripts": {
-    "start": "API_URL=$API_URL expo start --clear",
+    "start": "API_URL=https://food-bank-app.herokuapp.com expo start --clear",
     "start:tunnel": "API_URL=$API_URL expo start --clear --tunnel",
     "test": "jest",
     "android": "expo start --android",
