@@ -102,7 +102,7 @@ const DonationCategoryItem = ({
         <Icon
           name={icon}
           size={48}
-          type="material"
+          type="material-community"
           color={theme.colors.gray.A}
         />
         <Text

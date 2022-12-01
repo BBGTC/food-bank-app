@@ -44,11 +44,6 @@ const DonationHistoryItem = ({ event, date, categories }: DonationHistoryItemPro
         <View>
           <Text
             style={{
-              fontSize: 16,
-              marginBottom: 4
-            }}>{event}</Text>
-          <Text
-            style={{
               fontSize: 12,
               marginBottom: 4,
               color: theme.colors.gray.A,
