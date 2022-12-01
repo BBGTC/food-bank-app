@@ -58,7 +58,7 @@ const DonationHistoryItem = ({ event, date, categories }: DonationHistoryItemPro
             fontSize: 12,
             color: theme.colors.red,
             fontWeight: 'bold'
-          }}>${categories[0].quantity}• ${categories[0].displayName}</Text>
+          }}>{`${categories[0].quantity}• ${categories[0].displayName}`}</Text>
         </View>
         <Button
           title={'DETALLES'}

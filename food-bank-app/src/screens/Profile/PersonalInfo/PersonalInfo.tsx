@@ -2,7 +2,8 @@ import {
   ScrollView,
   Text,
   KeyboardAvoidingView,
-  Platform
+  Platform,
+  View
 } from 'react-native'
 import { useState } from 'react'
 import { useTheme, Input } from '@rneui/themed'
@@ -10,9 +11,11 @@ import { FooterButton, Header } from '../../../components/'
 import { useAuthContext } from '../../../contexts/AuthContext'
 import useClient from '../../../hooks/useClient'
 import { Contributor } from '../../../models'
+import { useNavigation } from '@react-navigation/native'
 
 const PersonalInfo = (): JSX.Element => {
   const client = useClient()
+  const navigation = useNavigation()
   const { profile, saveProfile } = useAuthContext()
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const [personalInfo, setPersonalInfo] = useState<Contributor>({ ...profile! })
@@ -29,6 +32,7 @@ const PersonalInfo = (): JSX.Element => {
       const newInfo = await client.updateProfile(personalInfo)
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       saveProfile(newInfo!)
+      navigation.goBack()
     }
 
     void updateContributor()
@@ -40,7 +44,7 @@ const PersonalInfo = (): JSX.Element => {
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       keyboardVerticalOffset={40}
-      behavior={Platform.OS === 'ios' ? 'padding' : null}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <ScrollView style={{
         padding: 32,
@@ -126,6 +130,7 @@ const PersonalInfo = (): JSX.Element => {
           keyboardType='email-address'
           onChangeText={newValue => handleChangeContributor('email', newValue)} />
         <FooterButton title='Guardar cambios' onPress={() => handleSubmit()} />
+        <View style={{ height: 50 }} />
       </ScrollView>
     </KeyboardAvoidingView>
   )
