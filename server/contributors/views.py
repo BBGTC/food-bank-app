@@ -25,10 +25,8 @@ class ContributorViewSet(ViewSet):
         if select_contributor(request.user) is not None:
             raise ContributorExistsException()
 
-        serializer = ContributorSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        create_contributor(request.user, request.data)
+        contributor = create_contributor(request.user, request.data)
+        serializer = ContributorSerializer(contributor)
 
         return Response(serializer.data)
 

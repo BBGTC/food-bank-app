@@ -160,7 +160,7 @@ const DonationScreen = (): JSX.Element => {
 
     const createDonation = async (): Promise<void> => {
       const createdDonation = await client.createDonation({ ...donation, id: undefined })
-      console.log(createdDonation.id)
+
       setDonation((prevDonation) => ({
         ...prevDonation,
         ...createdDonation
