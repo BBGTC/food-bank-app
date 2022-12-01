@@ -25,7 +25,9 @@ const inventoryAdapter = (inventory: InventoryModel): PriorityQueueItemProps => 
   const CATEGORY_IMAGES: { [key: string]: string } = {
     BB: 'https://www.gob.mx/cms/uploads/image/file/475639/canasta_ba_sica2.jpg',
     FV: 'https://s1.eestatic.com/2021/05/28/ciencia/nutricion/584702647_186499572_1024x576.jpg',
-    DA: 'https://agraria.pe/imgs/a/lx/en-nuestro-pais-se-consume-2-5-kilos-de-embutidos-por-person-19553.jpg'
+    DA: 'https://agraria.pe/imgs/a/lx/en-nuestro-pais-se-consume-2-5-kilos-de-embutidos-por-person-19553.jpg',
+    IE: 'https://img.freepik.com/fotos-premium/botellas-detergente-sobre-fondo-azul-detergente-liquido-ropa-envases-colores_357889-1104.jpg?w=2000',
+    GR: 'https://media.istockphoto.com/id/1216828053/photo/shopping-basket-with-fresh-food-grocery-supermarket-food-and-eats-online-buying-and-delivery.jpg?s=612x612&w=0&k=20&c=Chd527v9-ho7a-S5k24kcWWfB92Pj3Vh2eM0erk74AU='
   }
 
   return {
