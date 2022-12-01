@@ -11,6 +11,7 @@ import DonationModal from './DonationModal'
 import QRModal from './QRModal'
 import Header from './Header'
 import ProfileCard from './ProfileCard'
+import DonationReceiptRequest from './DonationReceiptRequest'
 
 export {
   EventCard,
@@ -26,5 +27,6 @@ export {
   DonationModal,
   QRModal,
   Header,
-  ProfileCard
+  ProfileCard,
+  DonationReceiptRequest
 }

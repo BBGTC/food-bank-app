@@ -41,7 +41,9 @@ const ProfileStart = ({ navigation }: any): JSX.Element => {
       <Header title='Mi perfil' />
       <ProfileCard
         name={`${profile?.name} ${profile?.middleName}\n${profile?.surname} ${profile?.secondSurname}`}
-        email={profile?.email} />
+        email={profile?.email}
+        image={`${profile.name[0]}${profile.surname[0]}`}
+      />
       <ButtonGroup
         buttons={BUTTONS.map((button, index) => ({
           element: () =>

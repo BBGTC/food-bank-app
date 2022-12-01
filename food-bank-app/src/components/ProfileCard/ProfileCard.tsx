@@ -4,9 +4,10 @@ import { Avatar, Text, useTheme } from '@rneui/themed'
 interface ProfileCardProps {
   name: string
   email: string
+  image: string
 }
 
-const ProfileCard = ({ name, email }: ProfileCardProps): JSX.Element => {
+const ProfileCard = ({ name, email, image }: ProfileCardProps): JSX.Element => {
   const { theme } = useTheme()
 
   return (
@@ -14,7 +15,7 @@ const ProfileCard = ({ name, email }: ProfileCardProps): JSX.Element => {
       <Avatar
         size={72}
         rounded
-        title=""
+        title={image}
         containerStyle={{ backgroundColor: theme.colors.disabled }}
       />
       <View style={{ marginLeft: 12, justifyContent: 'center' }}>

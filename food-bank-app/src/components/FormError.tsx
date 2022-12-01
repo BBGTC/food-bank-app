@@ -1,11 +1,11 @@
-import { StyleSheet, Text } from 'react-native';
-import { Card } from '@rneui/themed';
+import { StyleSheet, Text } from 'react-native'
+import { Card } from '@rneui/themed'
 
 interface FormErrorProps {
-  message: string;
+  message: string
 }
 
-export const FormError = ({message}: FormErrorProps) => {
+export const FormError = ({ message }: FormErrorProps): JSX.Element => {
   return (
     <Card containerStyle={styles.cardContainer}>
       <Text>{message}</Text>
